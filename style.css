@@ -1,0 +1,58 @@
+:root{
+    --x-font-color: red;
+    --o-font-color:blue;
+}
+
+body{
+    display:flex;
+    align-items: center;
+    justify-content:space-around;
+    flex-direction:column;
+}
+
+button{
+    margin:10px;
+}
+
+.header {
+    background-color:blue;
+    padding:10px;
+}
+
+.setuparea {
+    background-color:purple;
+    padding:10px;
+}
+
+.playerChoiceArea {
+    background-color:pink;
+    /* display:none; */
+    padding:10px;
+}
+
+#oneplayerformcontainer {
+    /* display:none; */
+}
+
+.gameareacontainer {
+    display:none;
+    padding:10px;
+}
+
+.oneplayerbutton {
+    color: blue;
+}
+
+.twoplayerbutton {
+    color: red;
+}
+
+.gameboard {
+    display:grid;
+    width:900px;
+    height:900px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    background-color: blanchedalmond;
+    border-color:black;
+}
