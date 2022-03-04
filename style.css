@@ -24,15 +24,48 @@ button{
     padding:10px;
 }
 
-.playerChoiceArea {
+.playerchoicearea {
     background-color:pink;
-    /* display:none; */
+    display:none;
     padding:10px;
 }
 
+
+/* One Player Form */
+
 #oneplayerformcontainer {
-    /* display:none; */
+    background-color:turquoise;
+    display:none;
 }
+
+#oneplayerform {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:1fr 1fr;
+    padding:25px;
+    justify-items:center;
+}
+
+#player1name{
+    margin-top:10px;
+}
+
+fieldset{
+    border:0;
+}
+
+#startbutton{
+    grid-area: 2 / 1 / 3 / 3;
+    width:20ch;
+    height:3em;
+    padding:10px 10px 10px 10px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    align-self: end;
+}
+
+/* Game area */
 
 .gameareacontainer {
     display:none;
@@ -47,6 +80,10 @@ button{
     color: red;
 }
 
+.radiobuttoncontainer {
+    text-align: left;
+}
+
 .gameboard {
     display:grid;
     width:900px;
@@ -56,3 +93,4 @@ button{
     background-color: blanchedalmond;
     border-color:black;
 }
+

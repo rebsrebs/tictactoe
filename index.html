@@ -15,43 +15,59 @@
     <h1 class="pagetitle">Tic Tac Toe</h1>
 </div>
 
-<div class="setuparea">
+<!-- NEW GAME BUTTON -->
+<div class="setuparea" id="setuparea">
 <button class="newgamebutton button" id="newgamebutton" type="button">NEW GAME</button>
 </div>
 
+<!-- PLAYER CHOICE BUTTONS -->
 <!-- Hidden at first -->
-<div class="playerChoiceArea" id ="playerChoiceArea">
+<div class="playerchoicearea" id ="playerchoicearea">
     <button class="oneplayerbutton button" id="oneplayerbutton" type="button">1 Player</button>
     <button class="twoplayerbutton button" id="twoplayerbutton" type="button">2 Players</button>
 </div>
 
+<!-- ONE PLAYER FORM -->
 <!-- Hidden at first -->
-<div class="formcontainer" id="oneplayerformcontainer">
-<form action="">
+<div class="formcontainer oneplayerformcontainer" id="oneplayerformcontainer">
+
+<form action="" id="oneplayerform">
 
     <!-- Name of player 1 -->
-    <label for="name">Player 1 Name:</label>
+    <div>
+    <label for="name">Player 1 Name:</label></br>
     <input type="text" id="player1name" name="player1name"><br>
+    </div>
 
     <!-- Difficulty level -->
     <fieldset id="difficultylevelradiobuttons">
         <legend>Difficulty Level</legend>
+
+        <div class="radiobuttoncontainer">
+    <input type="radio" id="easy" name="difficultylevel" value="easy">
     <label for="easy">Easy</label>
-    <input type="radio" id="easy" name="difficultylevel" value="easy"><br>
-    
-    <label for="hard">Hard</label>
-    <input type="radio" id="hard" name="difficultylevel" value="hard"><br>
-    
+    <br>
+
+   
+    <input type="radio" id="hard" name="difficultylevel" value="hard">
+     <label for="hard">Hard</label>
+     <br>
+   
+    <input type="radio" id="impossible" name="difficultylevel" value="impossible">
     <label for="impossible">Impossible</label>
-    <input type="radio" id="impossible" name="difficultylevel" value="impossible"><br>
-    </fieldset>
+    <br>
+</div></fieldset>
 
 <button class="startbutton button" id="startbutton" type="button">START</button>
 
 </form>
 </div>
 
-<div class="formcontainer" id="twoplayerformcontainer">
+
+<!-- TWO PLAYER FORM -->
+<div class="formcontainer twoplayerformcontainer" id="twoplayerformcontainer">
+
+<!-- in progress -->
 
 </div>
 
@@ -82,12 +98,7 @@
 
 
 
-
-
-
-
-
-<script src="script.js" defer></script>
+<script src="script.js"></script>
 
 
    
