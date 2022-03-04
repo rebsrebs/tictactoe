@@ -35,8 +35,8 @@
 
     <!-- Name of player 1 -->
     <div>
-    <label for="name">Player 1 Name:</label></br>
-    <input type="text" id="player1name" name="player1name"><br>
+    <label for="name">Player Name:</label></br>
+    <input type="text" id="player1name" name="player1name" class="playernameinput"><br>
     </div>
 
     <!-- Difficulty level -->
@@ -58,7 +58,7 @@
     <br>
 </div></fieldset>
 
-<button class="startbutton button" id="startbutton" type="button">START</button>
+<button class="startbutton button" id="startbutton1" type="button">START</button>
 
 </form>
 </div>
@@ -67,7 +67,25 @@
 <!-- TWO PLAYER FORM -->
 <div class="formcontainer twoplayerformcontainer" id="twoplayerformcontainer">
 
-<!-- in progress -->
+    <form action="" id="oneplayerform">
+
+        <!-- Name of player 1 -->
+        <div>
+        <label for="name">Player 1 Name:</label></br>
+        <input type="text" id="player1name" name="player1name" class="playernameinput"><br>
+        </div>
+
+        <!-- Name of player 2 -->
+        <div>
+            <label for="name">Player 2 Name:</label></br>
+            <input type="text" id="player2name" name="player2name" class="playernameinput"><br>
+            </div>
+    
+        
+    
+    <button class="startbutton button" id="startbutton2" type="button">START</button>
+    
+    </form>
 
 </div>
 
@@ -79,12 +97,13 @@
 
     <!-- This will say whose turn it is X or O" -->
     <div class="whosturn" id="whosturn">
+        Whose turn
     </div>
 
     <div class="controller" id="controller">
     </div>
 
-    <div class="gameboardr" id="gameboard">
+    <div class="gameboardcontainer" id="gameboardcontainer">
     </div>
 
     <div class="resetarea" id="resetarea">

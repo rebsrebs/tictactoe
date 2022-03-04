@@ -10,6 +10,11 @@ const onePlayerFormContainer = document.getElementById('oneplayerformcontainer')
 const twoPlayerButton = document.getElementById('twoplayerbutton');
 const twoPlayerFormContainer = document.getElementById('twoplayerformcontainer');
 
+const startButton1 = document.getElementById('startbutton1');
+const startButton2 = document.getElementById('startbutton2');
+
+const gameBoardContainer = document.getElementById('gameboardcontainer');
+
 // UTILITY FUNCTIONS
 
 function displayElement(element, display){
@@ -31,6 +36,11 @@ function removeAllChildNodes(parent) {
 
 //EVENT LISTENERS
 
+//when you load page, create game board but grayed out
+document.addEventListener('DOMContentLoaded', function(){
+    fillGameBoard();
+});
+
 //when you click new game
 newGameButton.addEventListener('click', function(){
     displayElement(playerChoiceArea, 'block');
@@ -39,18 +49,80 @@ newGameButton.addEventListener('click', function(){
 
 // when you click one player button
 onePlayerButton.addEventListener('click', function(){
-    displayElement(onePlayerFormContainer,'grid');
+
+if (twoPlayerButton.classList.contains('clicked')) {
+    twoPlayerButton.classList.remove('clicked');
+    hideElement(twoPlayerFormContainer);
+}
+
+    onePlayerButton.classList.add("clicked");
+    displayElement(onePlayerFormContainer,'block');
+});
+
+// when you click two player button
+twoPlayerButton.addEventListener('click', function(){
+
+    if (onePlayerButton.classList.contains('clicked')) {
+        onePlayerButton.classList.remove('clicked');
+        hideElement(onePlayerFormContainer);
+    }
+
+    twoPlayerButton.classList.add("clicked");
+    displayElement(twoPlayerFormContainer,'block');
 });
 
 
+// when you click start button 1
+startButton1.addEventListener('click', function(){
+    hideElement(onePlayerFormContainer);
+
+      //create player1 using form data
+    //create bot or game using difficulty level
+    //display gameboard
+
+});
+
+
+  
+
+
+// when you click start button 2
+    //hideElement(twoPlayerFormContainer);
+    // playerOne.name = document.getElementById('player1name').value;
+    // playerTwo.name = document.getElementById('player2name').value;
+    //display gameboard
 
 
 
+    
 
 
 
+//GAMEBOARD OBJECT
 
+const fillGameBoard = function (){
 
+    for (let i = 1; i <= 9; i++){
+        var cell = document.createElement('div');
+        cell.classList.add('cell');
+        cell.id=`cell-${i}`;
+        gameBoardContainer.appendChild(cell);
+    };
+
+    const gameBoardCells = [] 
+
+    for (var i=0; i<9; i++) {
+        gameBoardCells[i] = {
+            name: "square-" + i+1,
+            squareText: "P",
+            fillText: function(i){
+                document.getElementById(`cell-${i}`).textContent = squareText;
+            }
+
+        };
+    }
+
+}
 
 
 
