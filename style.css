@@ -123,3 +123,11 @@ fieldset{
     background-color: rgb(236, 181, 181);
 }
 
+.cell{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    border:1px solid black;
+    font-size: 30px;
+}
+

@@ -37,9 +37,9 @@ function removeAllChildNodes(parent) {
 //EVENT LISTENERS
 
 //when you load page, create game board but grayed out
-document.addEventListener('DOMContentLoaded', function(){
-    fillGameBoard();
-});
+// document.addEventListener('DOMContentLoaded', function(){
+//     fillGameBoard();
+// });
 
 //when you click new game
 newGameButton.addEventListener('click', function(){
@@ -100,50 +100,54 @@ startButton1.addEventListener('click', function(){
 
 //GAMEBOARD OBJECT
 
-const fillGameBoard = function (){
+const gameBoard = function() {
 
-    for (let i = 1; i <= 9; i++){
+    var gameBoardArray = ['X','O','X','O','X','O','X','O','X'];
+    console.log(gameBoardArray.length); 
+    let a=1;
+    //for each item in gameBoardArray
+    gameBoardArray.forEach((i) => {
         var cell = document.createElement('div');
         cell.classList.add('cell');
-        cell.id=`cell-${i}`;
+        cell.id=`cell-${a}`;
+        cell.textContent=i;
         gameBoardContainer.appendChild(cell);
-    };
-
-    const gameBoardCells = [] 
-
-    for (var i=0; i<9; i++) {
-        gameBoardCells[i] = {
-            name: "square-" + i+1,
-            squareText: "P",
-            fillText: function(i){
-                document.getElementById(`cell-${i}`).textContent = squareText;
-            }
-
-        };
-    }
-
+        a=a+1;
+        // console.log(gameBoardArray[i]);
+        
+    });
 }
 
 
 
 
+// const fillGameBoard = function (){
+
+//     for (let i = 1; i <= 9; i++){
+//         var cell = document.createElement('div');
+//         cell.classList.add('cell');
+//         cell.id=`cell-${i}`;
+//         gameBoardContainer.appendChild(cell);
+//     };
+
+//     const gameBoardCells = [] 
+
+//     for (var i=0; i<9; i++) {
+//         gameBoardCells[i] = {
+//             name: "square-" + i+1,
+//             squareText: "P",
+//             fillText: function(i){
+//                 document.getElementById(`cell-${i}`).textContent = squareText;
+//             }
+
+//         };
+//     }
+
+// }
 
 
 
 
-
-
-
-// NOT USING AT THE MOMENT
-
-
-// when you press start, create gameboard, or create it at the beginning.
-
-
-
-//modules - one of something
-    //gameboard
-    //displayController
 
 //FACTORY FUNCTION TO CREATE PLAYERS
 
@@ -162,6 +166,25 @@ const fillGameBoard = function (){
     //         scorePlusOne,
     //     }
     // }
+
+
+
+
+
+
+
+// NOT USING AT THE MOMENT
+
+
+// when you press start, create gameboard, or create it at the beginning.
+
+
+
+//modules - one of something
+    //gameboard
+    //displayController
+
+
 
 
 
