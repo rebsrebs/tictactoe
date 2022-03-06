@@ -4,6 +4,7 @@
 
 const newGameBtnDiv = document.getElementById('newgamebtndiv');
 const playerChoiceArea = document.querySelector('#playerchoicearea');
+const whoseTurn = document.getElementById('whoseturn');s
 
 //new game button opens div to select further options before starting game
 const newGameButton = document.getElementById('newgamebutton');
@@ -84,6 +85,7 @@ twoPlayerButton.addEventListener('click', function(){
 // when you click start button 1
 startButton1.addEventListener('click', function(){
     hideElement(onePlayerFormContainer);
+    const playerTurn = player1;
 
       //create player1 using form data
     //create bot or game using difficulty level
@@ -140,6 +142,13 @@ const gameBoard = function() {
 //function to check for winners
 const checkForWinners = function() {
 
+     //utility function - check if all items in an array are equal
+     const allEqual = arr => arr.every(value => value === arr[0]);
+
+     // utlity function - check if all items in array are full
+     const allFull = arr => arr.every(value => value === 'X' || value === 'O');
+ 
+
     //create arrays of rows to check
     const rowOneArray = gameBoardArray.slice(0,3);
     const rowTwoArray = gameBoardArray.slice(3,6);
@@ -162,11 +171,6 @@ const checkForWinners = function() {
         diagonalTwoArray,
     ]
 
-    //utility function - check if all items in an array are equal
-    const allEqual = arr => arr.every(value => value === arr[0]);
-
-    // utlity function - check if all items in array are full
-    const allFull = arr => arr.every(value => value === 'X' || value === 'O');
 
     //FOR EACH LOOP
     //for every stretch of gameboard where someone could win
@@ -221,7 +225,44 @@ const checkForWinners = function() {
 
 //GAME FLOW OBJECT
 
-//when 
+//when you press start game
+    //playerTurn = player one
+    //display it's player one's tur
+
+
+//play game fuctiom    
+    
+    //when you click a square, get the id of that square
+
+    //if playerTurn is playerOne
+    if (playerTurn = player1){
+        console.log(playerTurn);
+        whoseTurn.textContent=`${player2}'\s turn.`;
+   
+        // input X to the gameboard array and 
+        // input x to cell's textCotetn
+        //check if there's a winner or tie
+        //if game is still going
+            //playerTurn = player two
+            //display it's player two's turn
+            //return
+      //else if playerTurn is playerTwo
+    } else if (playerTurn = player2) {
+        console.log(playerTurn);
+        whoseTurn.textContent=`${player1}'\s turn.`;
+   
+  
+        // input O to the gameboard array and 
+        // input O to cell's textCotetn
+        //check if there's a winner or tie
+        //if game is still going
+            //playerTurn = player one
+            //display it's player two's turn
+            //return
+    }
+
+
+
 
 
 
@@ -256,7 +297,11 @@ const checkForWinners = function() {
 
 //FACTORY FUNCTION TO CREATE PLAYERS
 
-    // function playerFactory(name) {
+    // function playerFactory() {
+
+    // var playerOneName  = document.getElementById('player1name').value;
+    // var playerTwoName = document.getElementById('player2name').value;
+
 
     //     const score = 0;
 
