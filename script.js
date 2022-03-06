@@ -4,7 +4,7 @@
 
 const newGameBtnDiv = document.getElementById('newgamebtndiv');
 const playerChoiceArea = document.querySelector('#playerchoicearea');
-const whoseTurn = document.getElementById('whoseturn');s
+const whoseTurn = document.getElementById('whoseturn');
 
 //new game button opens div to select further options before starting game
 const newGameButton = document.getElementById('newgamebutton');
@@ -81,44 +81,55 @@ twoPlayerButton.addEventListener('click', function(){
     displayElement(twoPlayerFormContainer,'block');
 });
 
+//FACTORY FUNCTION TO CREATE PLAYERS
+const playerFactory = (name,letter) => {
+    const playerText = letter;
+    const turnMessage = () => `${name}'s turn`; 
+    const winnerMessage = () => `${name} is the winner!`;
+    return {
+        name,
+        playerText,
+        turnMessage,
+        winnerMessage,
+    }
+}
 
-// when you click start button 1
-startButton1.addEventListener('click', function(){
-    hideElement(onePlayerFormContainer);
-    const playerTurn = player1;
 
-      //create player1 using form data
-    //create bot or game using difficulty level
-    //display gameboard
 
-});
+
 
 
   
 
 
-// when you click start button 2
-    //hideElement(twoPlayerFormContainer);
-    // playerOne.name = document.getElementById('player1name').value;
-    // playerTwo.name = document.getElementById('player2name').value;
-    //display gameboard
-
-
-
-    
-
-
 
 //GAMEBOARD OBJECT
 
-const gameBoard = function() {
+const gameBoard = (() => {
 
-    //Filling in default X's and O's for now.
-    var gameBoardArray = ['X','O','X','O','X','O','X','O','X'];
-    
+    const createCells = function() {
+        for (let step = 1; step <= 9; step++) {
+            var cell = document.createElement('div');
+            cell.classList.add('cell');
+            cell.id=`cell-${step}`;
+          }
+    }
+
+    // var tttArray = ['T','I','C','T','A','C','T','O','E'];
+    var blankArray = [' ',' ',' ',' ',' ',' ',' ',' ',' '];
+
+
+
+
+    //create array with default text
+    var gameBoardArray = ['T','I','C','T','A','C','T','O','E'];
     //Counting variable for naming the cell ID's
     let a=1;
 
+    
+
+
+    const createInitial = function() {
     //for each item in gameBoardArray
     gameBoardArray.forEach((i) => {
         //create a div and give it class and ID
@@ -134,9 +145,26 @@ const gameBoard = function() {
 
         //increase counting variable
         a=a+1;
-        
     });
 }
+
+    const makeArrayBlank = function(array) {
+    array.fill(' ');
+    }
+
+    return {
+        gameBoardArray,
+        blankArray,
+        createCells,
+        createInitial,
+        makeArrayBlank,
+    }
+    
+})();
+
+
+
+
 
 
 //function to check for winners
@@ -171,6 +199,14 @@ const checkForWinners = function() {
         diagonalTwoArray,
     ]
 
+    
+    // when you click start button 2
+        //hideElement(twoPlayerFormContainer);
+        // playerOne.name = document.getElementById('player1name').value;
+        // playerTwo.name = document.getElementById('player2name').value;
+        //display gameboard
+
+
 
     //FOR EACH LOOP
     //for every stretch of gameboard where someone could win
@@ -186,7 +222,7 @@ const checkForWinners = function() {
 
         //otherwise keep playing
         } else {
-            continue;
+            // continue;
         }
     });
 }
@@ -196,29 +232,49 @@ const checkForWinners = function() {
 
 
 //Function to let player fill in grid
-//when you click on gameBoardContainer
-    gameBoardContainer.onclick = function(event) {
+// //when you click on gameBoardContainer
+//     gameBoardContainer.addEventListener("click",makeAMove) 
 
-        //figure out which cell was clicked
-        let target = event.target;
-
-        //if cell is empty and has classname cell
-        if (target.innerText='' && event.target.className === 'cell') {
-
-            //put current playerText into the array index 
-            //location of that cell
-            gameBoardArray[event]='x';
-            target.innerText = 'x' ;
-            //or should I just run
-            //gameBoard() 
-
-        } else {
-            return;
-        }
-    }
+//     const makeAMove = function(event) {
+//         //figure out which cell was clicked
+//         let target = event.target;
+//         //if cell is empty and has classname cell
+//         if (target.innerText='' && event.target.className === 'cell') {
+//             //put current playerText into the array index 
+//             //location of that cell
+//             gameBoardArray[event]='x';
+//             target.innerText = 'x' ;
+//             //or should I just run
+//             //gameBoard() 
+//         } else {
+//             return;
+//         }
+//     }
 
 
 
+// GAME FLOW
+    //start button 2 event listener 
+        //call playerFactory with names from input form for two player
+//         - set player1 text to X and player2 text to 0
+//         - set playerTurn to player 1
+//     - map over gamebaord array and makes the all just have ' ' - 
+//there should be clear gameboard function for that.
+
+// when you click start button 1
+startButton2.addEventListener('click', function(){
+    hideElement(onePlayerFormContainer);
+    const playerTurn = playerOneName; //??
+
+var playerOneName =  document.getElementById('player1name').value;
+var playerTwoName = document.getElementById('player2name').value;
+
+const player1 = playerFactory(playerOneName,'X');
+const player2 = playerFactory(playerTwoName,'O');
+
+    //create bot or game using difficulty level
+    //display gameboard
+});
 
 
 
@@ -234,22 +290,24 @@ const checkForWinners = function() {
     
     //when you click a square, get the id of that square
 
+    //player.turnMessage();
+
     //if playerTurn is playerOne
-    if (playerTurn = player1){
-        console.log(playerTurn);
-        whoseTurn.textContent=`${player2}'\s turn.`;
+    // if (playerTurn = player1){
+    //     console.log(playerTurn);
+    //     whoseTurn.textContent=`${player2}'\s turn.`;
    
-        // input X to the gameboard array and 
-        // input x to cell's textCotetn
-        //check if there's a winner or tie
-        //if game is still going
-            //playerTurn = player two
-            //display it's player two's turn
-            //return
-      //else if playerTurn is playerTwo
-    } else if (playerTurn = player2) {
-        console.log(playerTurn);
-        whoseTurn.textContent=`${player1}'\s turn.`;
+    //     // input X to the gameboard array and 
+    //     // input x to cell's textCotetn
+    //     //check if there's a winner or tie
+    //     //if game is still going
+    //         //playerTurn = player two
+    //         //display it's player two's turn
+    //         //return
+    //   //else if playerTurn is playerTwo
+    // } else if (playerTurn = player2) {
+    //     console.log(playerTurn);
+    //     whoseTurn.textContent=`${player1}'\s turn.`;
    
   
         // input O to the gameboard array and 
@@ -259,7 +317,7 @@ const checkForWinners = function() {
             //playerTurn = player one
             //display it's player two's turn
             //return
-    }
+    // }
 
 
 
@@ -295,17 +353,16 @@ const checkForWinners = function() {
 
 
 
-//FACTORY FUNCTION TO CREATE PLAYERS
+
 
     // function playerFactory() {
 
-    // var playerOneName  = document.getElementById('player1name').value;
-    // var playerTwoName = document.getElementById('player2name').value;
+    
 
 
     //     const score = 0;
 
-    //     const winnerMessage = () => `${name} is the winner!`;
+    
     //     const scorePlusOne = () => score += 1;
     //     const getTeamValue = team => (team = 'x') ? 'x' : 'o';
 
