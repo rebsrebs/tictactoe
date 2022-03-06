@@ -81,6 +81,11 @@ twoPlayerButton.addEventListener('click', function(){
     displayElement(twoPlayerFormContainer,'block');
 });
 
+
+
+
+
+
 //FACTORY FUNCTION TO CREATE PLAYERS
 const playerFactory = (name,letter) => {
     const playerText = letter;
@@ -107,6 +112,13 @@ const playerFactory = (name,letter) => {
 
 const gameBoard = (() => {
 
+    //create array with default text
+    var gameBoardArray = ['T','I','C','T','A','C','T','O','E'];
+
+    //Counting variable for naming the cell ID's
+    let a=1;
+
+    // Function to create cells in gameBoard grid
     const createCells = function() {
         for (let step = 1; step <= 9; step++) {
             var cell = document.createElement('div');
@@ -115,49 +127,26 @@ const gameBoard = (() => {
           }
     }
 
-    // var tttArray = ['T','I','C','T','A','C','T','O','E'];
-    var blankArray = [' ',' ',' ',' ',' ',' ',' ',' ',' '];
-
-
-
-
-    //create array with default text
-    var gameBoardArray = ['T','I','C','T','A','C','T','O','E'];
-    //Counting variable for naming the cell ID's
-    let a=1;
-
-    
-
-
-    const createInitial = function() {
-    //for each item in gameBoardArray
-    gameBoardArray.forEach((i) => {
-        //create a div and give it class and ID
-        var cell = document.createElement('div');
-        cell.classList.add('cell');
-        cell.id=`cell-${a}`;
-
-        //put the current array item in each cell
-        cell.textContent=i;
-
-        //add the div as a cell to the game board grid
-        gameBoardContainer.appendChild(cell);
-
-        //increase counting variable
-        a=a+1;
-    });
-}
-
+    //function to make an array blank
     const makeArrayBlank = function(array) {
-    array.fill(' ');
+        array.fill(' ');
+        }
+
+    //function to fill textContent of game board cells with array
+    const fillCells = function(array) {
+        array.forEach((i) => {
+            var currentCell = document.getElementById(`cell-${a}`);
+            // currentCell.textContent=' ';
+            currentCell.textContent='i';
+            a=a+1;
+        });
     }
 
     return {
         gameBoardArray,
-        blankArray,
         createCells,
-        createInitial,
         makeArrayBlank,
+        fillCells,
     }
     
 })();
@@ -318,139 +307,3 @@ const player2 = playerFactory(playerTwoName,'O');
             //display it's player two's turn
             //return
     // }
-
-
-
-
-
-
-
-// const fillGameBoard = function (){
-
-//     for (let i = 1; i <= 9; i++){
-//         var cell = document.createElement('div');
-//         cell.classList.add('cell');
-//         cell.id=`cell-${i}`;
-//         gameBoardContainer.appendChild(cell);
-//     };
-
-//     const gameBoardCells = [] 
-
-//     for (var i=0; i<9; i++) {
-//         gameBoardCells[i] = {
-//             name: "square-" + i+1,
-//             squareText: "P",
-//             fillText: function(i){
-//                 document.getElementById(`cell-${i}`).textContent = squareText;
-//             }
-
-//         };
-//     }
-
-// }
-
-
-
-
-
-
-
-    // function playerFactory() {
-
-    
-
-
-    //     const score = 0;
-
-    
-    //     const scorePlusOne = () => score += 1;
-    //     const getTeamValue = team => (team = 'x') ? 'x' : 'o';
-
-    //     return {
-    //         name, // this is shorthand for name: name
-    //         score,
-    //         winnerMessage,
-    //         scorePlusOne,
-    //     }
-    // }
-
-
-
-
-
-
-
-// NOT USING AT THE MOMENT
-
-
-// when you press start, create gameboard, or create it at the beginning.
-
-
-
-//modules - one of something
-    //gameboard
-    //displayController
-
-
-
-
-
-
-
-//gameboard array lives inside gameboard object
-// const gameBoard = (() => {
-
-//     const cellBottomLeftText = null;
-//     const cellBottomCenterText = null;
-//     const cellBottomRightText = null;
-
-//     const cellMiddleLeftText = null;
-//     const cellMiddleCenterText = null;
-//     const cellMiddleRightText = null;
-
-//     const cellTopLeftText = null;
-//     const cellTopCenterText = null;
-//     const cellTopRightText = null;
-
-//     //or
-
-//     let gameBoardArray = [
-//         {
-//             "color": "purple",
-//              "type": "minivan",
-//             "registration": new Date('2017-01-03'),
-//             "capacity": 7
-//         },
-//         {
-//             "color": "purple",
-//              "type": "minivan",
-//             "registration": new Date('2017-01-03'),
-//             "capacity": 7
-//         }
-//     ]
-    
-
-
-// }
-// )();
-
-
-
-
-
-// const playerChoiceArea = document.createElement("div");
-// playerChoiceArea.classList.add( "playerChoiceArea");
-// playerChoiceArea.textContent = 'Choose';
-
-
-
-// const twoPlayerButton = document.createElement("button");
-// twoPlayerButton.classList.add( "twoplayerbutton", "button");
-// twoPlayerButton.textContent = '2 Players';
-
-
-
-// const onePlayerButton = document.createElement("button");
-// onePlayerButton.classList.add( "oneplayerbutton", "button");
-// onePlayerButton.textContent = '1 Player';
-
