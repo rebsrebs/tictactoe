@@ -19,7 +19,7 @@ button{
     padding:10px;
 }
 
-.setuparea {
+.newgamebtndiv {
     background-color:rgb(228, 196, 228);
     padding:10px;
 }
@@ -117,6 +117,7 @@ fieldset{
     grid-template-rows: repeat(3, 1fr);
     background-color: lightgray;
     border-color:black;
+    z-index:-1;
 }
 
 .gameboardcontainer-active {
