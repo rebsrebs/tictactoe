@@ -183,6 +183,7 @@ startButton2.addEventListener('click', function(){
     whoseTurn.textContent=`${playerOneName}'s turn.`;
     gameBoard.makeArrayBlank(gameBoard.gameBoardArray);
     gameBoard.fillCells(gameBoard.gameBoardArray);
+    gameBoardContainer.classList.add('gameboardcontainer-active');
 })
 
 
