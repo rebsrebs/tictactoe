@@ -47,9 +47,10 @@ function removeAllChildNodes(parent) {
 //EVENT LISTENERS
 
 //when you load page, create game board but grayed out
-// document.addEventListener('DOMContentLoaded', function(){
-//     fillGameBoard();
-// });
+document.addEventListener('DOMContentLoaded', function(){
+    gameBoard.createCells();
+    // gameBoard.fillCells();
+});
 
 //when you click new game
 newGameButton.addEventListener('click', function(){
@@ -100,16 +101,11 @@ const playerFactory = (name,letter) => {
 }
 
 
-
-
-
-
-  
-
-
+//DISPLAY CONTROLS OBJECT
+const displayControls = (() => {
+});
 
 //GAMEBOARD OBJECT
-
 const gameBoard = (() => {
 
     //create array with default text
@@ -124,6 +120,8 @@ const gameBoard = (() => {
             var cell = document.createElement('div');
             cell.classList.add('cell');
             cell.id=`cell-${step}`;
+            gameBoardContainer.appendChild(cell);
+            console.log(cell.id);
           }
     }
 
@@ -133,11 +131,13 @@ const gameBoard = (() => {
         }
 
     //function to fill textContent of game board cells with array
-    const fillCells = function(array) {
-        array.forEach((i) => {
+    const fillCells = function() {
+        gameBoard.gameBoardArray.forEach((i) => {
             var currentCell = document.getElementById(`cell-${a}`);
+            console.log(`a is ${a} and i is ${i}`)
+            console.log(currentCell.id);
             // currentCell.textContent=' ';
-            currentCell.textContent='i';
+            currentCell.textContent=i;
             a=a+1;
         });
     }
@@ -150,6 +150,59 @@ const gameBoard = (() => {
     }
     
 })();
+
+// GAME FLOW
+const gameFlow = (() => {
+
+    //fill in game flow stuff here
+
+})();
+
+
+
+// startButton2.addEventListener('click',startTwoPlayerGame);
+
+// const startTwoPlayerGame = function(){
+//     //hide the form you just filled out
+//     hideElement(onePlayerFormContainer);
+//     //get name of playerOne
+//     var playerOneName =  document.getElementById('player1name').value;
+//     //get name of playerTwo
+//     var playerTwoName = document.getElementById('player2name').value;
+//     //create player1 and assign to X
+//     const player1 = playerFactory(playerOneName,'X');
+//     //create player2 and assign to O
+//     const player2 = playerFactory(playerTwoName,'O');
+//     //set first turn at player one's turn
+//     const playerTurn = '1';
+//     //write it's player one's turn
+//     whoseTurn.textContent=`${player1}'\s turn.`;
+//     //makeArrayBlank - at some point createCells was already run,
+//     // maybe in the controls object
+//     gameBoard.makeArrayBlank(gameBoard.gameBoardArray);
+//     //
+// }
+
+//Function to let player fill in grid
+// //when you click on gameBoardContainer
+//     gameBoardContainer.addEventListener("click",makeAMove) 
+
+//     const makeAMove = function(event) {
+//         //figure out which cell was clicked
+//         let target = event.target;
+//         //if cell is empty and has classname cell
+//         if (target.innerText='' && event.target.className === 'cell') {
+//             //put current playerText into the array index 
+//             //location of that cell
+//             gameBoardArray[event]='x';
+//             target.innerText = 'x' ;
+//             //or should I just run
+//             //gameBoard() 
+//         } else {
+//             return;
+//         }
+//     }
+
 
 
 
@@ -188,15 +241,6 @@ const checkForWinners = function() {
         diagonalTwoArray,
     ]
 
-    
-    // when you click start button 2
-        //hideElement(twoPlayerFormContainer);
-        // playerOne.name = document.getElementById('player1name').value;
-        // playerTwo.name = document.getElementById('player2name').value;
-        //display gameboard
-
-
-
     //FOR EACH LOOP
     //for every stretch of gameboard where someone could win
     rowsToCheckArray.forEach((array) => {
@@ -217,55 +261,6 @@ const checkForWinners = function() {
 }
     
     
-
-
-
-//Function to let player fill in grid
-// //when you click on gameBoardContainer
-//     gameBoardContainer.addEventListener("click",makeAMove) 
-
-//     const makeAMove = function(event) {
-//         //figure out which cell was clicked
-//         let target = event.target;
-//         //if cell is empty and has classname cell
-//         if (target.innerText='' && event.target.className === 'cell') {
-//             //put current playerText into the array index 
-//             //location of that cell
-//             gameBoardArray[event]='x';
-//             target.innerText = 'x' ;
-//             //or should I just run
-//             //gameBoard() 
-//         } else {
-//             return;
-//         }
-//     }
-
-
-
-// GAME FLOW
-    //start button 2 event listener 
-        //call playerFactory with names from input form for two player
-//         - set player1 text to X and player2 text to 0
-//         - set playerTurn to player 1
-//     - map over gamebaord array and makes the all just have ' ' - 
-//there should be clear gameboard function for that.
-
-// when you click start button 1
-startButton2.addEventListener('click', function(){
-    hideElement(onePlayerFormContainer);
-    const playerTurn = playerOneName; //??
-
-var playerOneName =  document.getElementById('player1name').value;
-var playerTwoName = document.getElementById('player2name').value;
-
-const player1 = playerFactory(playerOneName,'X');
-const player2 = playerFactory(playerTwoName,'O');
-
-    //create bot or game using difficulty level
-    //display gameboard
-});
-
-
 
 
 //GAME FLOW OBJECT

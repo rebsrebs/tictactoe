@@ -130,5 +130,6 @@ fieldset{
     justify-content: center;
     border:1px solid black;
     font-size: 30px;
+    z-index:5;
 }
 
