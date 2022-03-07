@@ -21,7 +21,9 @@ const twoPlayerFormContainer = document.getElementById('twoplayerformcontainer')
 const startButton1 = document.getElementById('startbutton1');
 const startButton2 = document.getElementById('startbutton2');
 
+//gameBoard styling
 const gameBoardContainer = document.getElementById('gameboardcontainer');
+// const cells = document.querySelectorAll('.cell');
 
 
 // UTILITY FUNCTIONS
@@ -87,11 +89,13 @@ twoPlayerButton.addEventListener('click', function(){
 const playerFactory = (name, playerText) => {
     const turnMessage = `${name}'s turn`; 
     const winnerMessage = `${name} is the winner!`;
+    const styleSelector = `${playerText}-style`;
     return {
         name,
         playerText,
         turnMessage,
         winnerMessage,
+        styleSelector,
     }
 };
 
@@ -218,6 +222,7 @@ let currentPlayer = '';
         console.log(`Player Two is named ${playerTwo.name} and text is ${playerTwo.playerText}`);
         //set first turn at player one's turn
         currentPlayer = playerOne;
+        gameBoardContainer.classList.add('playeronestyling');
         //write that it's playerOne's turn
         whoseTurn.textContent=playerOne.turnMessage;
         // whoseTurn.textContent=`${playerOneName}'s turn.`;
@@ -240,11 +245,13 @@ let currentPlayer = '';
                 currentPlayer = playerTwo;
                 console.log(`to ${currentPlayer.name}`);
                 whoseTurn.textContent = currentPlayer.turnMessage;
+                
             } else if (currentPlayer == playerTwo) {
                 console.log(`Current player is 2 and switching from ${currentPlayer.name}`);
                 currentPlayer = playerOne;
                 console.log(`to ${currentPlayer.name}`);
                 whoseTurn.textContent = currentPlayer.turnMessage;
+                
             }
             return;
         }
@@ -262,6 +269,10 @@ let currentPlayer = '';
             //put current player text into the corresponding index in the array
             gameBoard.gameBoardArray[indexNum] = currentPlayer.playerText;
                 console.log(gameBoard.gameBoardArray[indexNum]);
+            
+            //styling
+            target.classList.add(currentPlayer.styleSelector);
+
             //put current player text into game board grid cell
             target.textContent = currentPlayer.playerText;
                 console.log(`Player One text is ${playerOne.playerText} and Player Two text is ${playerTwo.playerText} and current player text is ${currentPlayer.playerText}`);

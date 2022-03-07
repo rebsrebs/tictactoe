@@ -94,11 +94,11 @@ fieldset{
     padding:10px;
 }
 
-.oneplayerbutton {
+.X-style {
     color: blue;
 }
 
-.twoplayerbutton {
+.O-style {
     color: red;
 }
 
@@ -146,3 +146,10 @@ fieldset{
     padding:20px;
 }
 
+.playeronestyling{
+    color:red;
+}
+
+.playertwostyling{
+    color:blue;
+}
