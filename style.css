@@ -8,6 +8,7 @@ body{
     align-items: center;
     justify-content:space-around;
     flex-direction:column;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 button{
@@ -125,7 +126,7 @@ fieldset{
     align-items: center;
     justify-content: center;
     border:1px solid black;
-    font-size: 30px;
+    font-size: 80px;
     z-index:5;
 }
 
