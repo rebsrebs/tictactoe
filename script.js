@@ -49,13 +49,13 @@ function removeAllChildNodes(parent) {
 //when you load page, create game board but grayed out
 document.addEventListener('DOMContentLoaded', function(){
     gameBoard.createCells();
-    // gameBoard.fillCells();
+    gameBoard.fillCells(gameBoard.gameBoardArray);
 });
 
 //when you click new game
 newGameButton.addEventListener('click', function(){
     displayElement(playerChoiceArea, 'block');
-    hideElement(newGameBtnArea);
+    hideElement(newGameBtnDiv);
 });
 
 // when you click one player button
@@ -111,11 +111,12 @@ const gameBoard = (() => {
     //create array with default text
     var gameBoardArray = ['T','I','C','T','A','C','T','O','E'];
 
-    //Counting variable for naming the cell ID's
-    let a=1;
+    
 
     // Function to create cells in gameBoard grid
     const createCells = function() {
+        //Counting variable for naming the cell ID's
+        let a=1;
         for (let step = 1; step <= 9; step++) {
             var cell = document.createElement('div');
             cell.classList.add('cell');
@@ -131,14 +132,15 @@ const gameBoard = (() => {
         }
 
     //function to fill textContent of game board cells with array
-    const fillCells = function() {
-        gameBoard.gameBoardArray.forEach((i) => {
-            var currentCell = document.getElementById(`cell-${a}`);
-            console.log(`a is ${a} and i is ${i}`)
+    const fillCells = function(array) {
+        let b=1;
+        array.forEach((i) => {
+            var currentCell = document.getElementById(`cell-${b}`);
+            console.log(`a is ${b} and i is ${i}`)
             console.log(currentCell.id);
             // currentCell.textContent=' ';
             currentCell.textContent=i;
-            a=a+1;
+            b=b+1;
         });
     }
 
@@ -160,11 +162,40 @@ const gameFlow = (() => {
 
 
 
-// startButton2.addEventListener('click',startTwoPlayerGame);
 
+startButton2.addEventListener('click', function(){
+    console.log('start 2 button was pushed');
+    //hide the form you just filled out
+    hideElement(twoPlayerFormContainer);
+    //get name of playerOne
+    var playerOneName = document.getElementById('player1name2').value;
+    console.log(playerOneName);
+    //get name of playerTwo
+    var playerTwoName = document.getElementById('player2name').value;
+    console.log(playerTwoName);
+    //create player1 and assign to X
+    // const player1 = playerFactory(playerOneName,'X');
+    // //create player2 and assign to O
+    // const player2 = playerFactory(playerTwoName,'O');
+    // //set first turn at player one's turn
+    // const playerTurn = '1';
+    //write it's player one's turn
+    whoseTurn.textContent=`${playerOneName}'s turn.`;
+    gameBoard.makeArrayBlank(gameBoard.gameBoardArray);
+    gameBoard.fillCells(gameBoard.gameBoardArray);
+})
+
+
+
+//this did not work
+// startButton2.addEventListener('click',startTwoPlayerGame);
 // const startTwoPlayerGame = function(){
+//     console.log('start 2 button was pushed');
 //     //hide the form you just filled out
-//     hideElement(onePlayerFormContainer);
+//     hideElement(twoPlayerFormContainer);
+// }
+
+
 //     //get name of playerOne
 //     var playerOneName =  document.getElementById('player1name').value;
 //     //get name of playerTwo
