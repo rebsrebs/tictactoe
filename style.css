@@ -138,6 +138,10 @@ fieldset{
     background-color:rgba(115, 245, 245, 0.5);
 }
 
+.gameboardcontainer-active .cell:active{
+    background-color:rgba(115, 245, 245, 0.9);
+}
+
 
 
 #whoseturn{
