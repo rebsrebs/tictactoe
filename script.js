@@ -197,30 +197,9 @@ const checkForWinners = function() {
 // GAME FLOW
 const gameFlow = (() => {
 
-    //function to let a user place a letter
-    const makeAMove = function(event){
-
-        let target = event.target;
-        console.log(target);
-        //if cell is empty and has classname cell
-        if (target.innerText=' ' && event.target.className === 'cell') {
-            //put current playerText into the array index 
-            indexNum = Number(target.id.slice(-1))-1;
-            console.log(gameBoard.gameBoardArray[indexNum]);
-
-            //later change to 
-            //gameBoard.gameBoardArray[indexNum] = currentPlayer.playerText;
-            gameBoard.gameBoardArray[indexNum] = 'X';
-            console.log(gameBoard.gameBoardArray[indexNum]);
-
-            //later change to
-            //target.innerText = currentPlayer.playerText;
-            target.innerText = 'X' ;
-            switchPlayers();
-        } else {
-            return;
-        }
-    }
+let playerOne = '';
+let playerTwo = '';
+let currentPlayer = '';
 
     const startTwoPlayerGame = function(){
         //hide the form you just filled out
@@ -232,13 +211,13 @@ const gameFlow = (() => {
         const playerTwoName = document.getElementById('player2name').value;
         console.log(playerTwoName);
         //create playerOne using factory function and assign to X
-        const playerOne = playerFactory(playerOneName,'X');
-        console.log(`Player One is named ${playerOne.name}`)
+        playerOne = playerFactory(playerOneName,'X');
+        console.log(`Player One is named ${playerOne.name} andtext is ${playerOne.playerText}`);
         //create playerTwo using factory function and assign to O
-        const playerTwo = playerFactory(playerTwoName,'O');
-        console.log(`Player Two is named ${playerTwo.name}`)
+        playerTwo = playerFactory(playerTwoName,'O');
+        console.log(`Player Two is named ${playerTwo.name} and text is ${playerTwo.playerText}`);
         //set first turn at player one's turn
-        const currentPlayer = playerOne;
+        currentPlayer = playerOne;
         //write that it's playerOne's turn
         whoseTurn.textContent=playerOne.turnMessage;
         // whoseTurn.textContent=`${playerOneName}'s turn.`;
@@ -248,25 +227,59 @@ const gameFlow = (() => {
         gameBoardContainer.addEventListener('click', makeAMove);
         // switchPlayers;
         // whoseTurn.textContent=playerTwo.turnMessage;
+        return{
+            playerOne,
+            playerTwo
+        }
+    }
+
+         //function to switch players
+         const switchPlayers = function(){
+            if (currentPlayer == playerOne) {
+                console.log(`Current player is 1 and switching from ${currentPlayer.name}`);
+                currentPlayer = playerTwo;
+                console.log(`to ${currentPlayer.name}`);
+                whoseTurn.textContent = currentPlayer.turnMessage;
+            } else if (currentPlayer == playerTwo) {
+                console.log(`Current player is 2 and switching from ${currentPlayer.name}`);
+                currentPlayer = playerOne;
+                console.log(`to ${currentPlayer.name}`);
+                whoseTurn.textContent = currentPlayer.turnMessage;
+            }
+            return;
+        }
+
+     //function to let a user place a letter
+     const makeAMove = function(event){
+
+        let target = event.target;
+        console.log(target);
+        //if cell is empty and has classname cell
+        if (target.innerText=' ' && event.target.className === 'cell') {
+            //get corresponding index number for gameBoardArray by finding cell ID name number minus one
+            indexNum = Number(target.id.slice(-1))-1;
+                console.log(gameBoard.gameBoardArray[indexNum]);
+            //put current player text into the corresponding index in the array
+            gameBoard.gameBoardArray[indexNum] = currentPlayer.playerText;
+                console.log(gameBoard.gameBoardArray[indexNum]);
+            //put current player text into game board grid cell
+            target.textContent = currentPlayer.playerText;
+                console.log(`Player One text is ${playerOne.playerText} and Player Two text is ${playerTwo.playerText} and current player text is ${currentPlayer.playerText}`);
+            //run switch players function to change who the current player is and 
+            //display whose turn it is 
+            switchPlayers();
+        } else {
+            return;
+        }
     }
 
     startButton2.addEventListener('click', startTwoPlayerGame);
-
     gameBoardContainer.addEventListener('click', makeAMove);
 
-     //function to switch players
-     const switchPlayers = function(){
-        if (currentPlayer = playerOne) {
-            currentPlayer = playerTwo;
-        } else if (currentPlayer = playerTwo) {
-            currentPlayer = playerOne;
-        }
-        console.log(currentPlayer.turnMessage);
-    }
-
-    return{
+    return {
         playerOne,
         playerTwo,
+        currentPlayer,
     }
 
 })();
