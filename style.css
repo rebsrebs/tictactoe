@@ -94,13 +94,7 @@ fieldset{
     padding:10px;
 }
 
-.X-style {
-    color: blue;
-}
 
-.O-style {
-    color: red;
-}
 
 .clicked {
     border: 2px solid red;
@@ -150,10 +144,20 @@ fieldset{
     padding:20px;
 }
 
-.playeronestyling{
+.X-style {
+    color: blue;
+}
+
+.O-style {
+    color: red;
+}
+
+
+/* I would like the hover highlight to be different eventually depending on the player
+ .playeroneshighlight{
     color:red;
 }
 
-.playertwostyling{
+.playertwohighlight{
     color:blue;
-}
+} */

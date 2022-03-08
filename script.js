@@ -26,6 +26,8 @@ const gameBoardContainer = document.getElementById('gameboardcontainer');
 // const cells = document.querySelectorAll('.cell');
 
 
+
+
 // UTILITY FUNCTIONS
 
 // Function to show one element
@@ -44,6 +46,8 @@ function removeAllChildNodes(parent) {
         parent.removeChild(parent.firstChild);
     }
 }
+
+
 
 
 //EVENT LISTENERS
@@ -85,6 +89,8 @@ twoPlayerButton.addEventListener('click', function(){
 });
 
 
+
+
 //FACTORY FUNCTION TO CREATE PLAYERS
 const playerFactory = (name, playerText) => {
     const turnMessage = `${name}'s turn`; 
@@ -98,6 +104,8 @@ const playerFactory = (name, playerText) => {
         styleSelector,
     }
 };
+
+
 
 
 //GAMEBOARD OBJECT
@@ -121,7 +129,7 @@ const gameBoard = (() => {
 
     //function to make an array blank
     const makeArrayBlank = function(array) {
-        array.fill(' ');
+        array.fill('');
         }
 
     //function to fill textContent of game board cells with array
@@ -146,17 +154,17 @@ const checkForWinners = function() {
     const allFull = arr => arr.every(value => value === 'X' || value === 'O');
      
    //create arrays of rows to check
-   const rowOneArray = gameBoardArray.slice(0,3);
-   const rowTwoArray = gameBoardArray.slice(3,6);
-   const rowThreeArray = gameBoardArray.slice(6);
-   const columnOneArray = [gameBoardArray.at(0), gameBoardArray.at(3), gameBoardArray.at(6)];
-   const columnTwoArray = [gameBoardArray.at(1), gameBoardArray.at(4), gameBoardArray.at(7)];
-   const columnThreeArray = [gameBoardArray.at(2), gameBoardArray.at(5), gameBoardArray.at(8)];
-   const diagonalOneArray = [gameBoardArray.at(0), gameBoardArray.at(4),gameBoardArray.at(8)];
-   const diagonalTwoArray = [gameBoardArray.at(2), gameBoardArray.at(4),gameBoardArray.at(6)];
+    var rowOneArray = gameBoardArray.slice(0,3);
+    var rowTwoArray = gameBoardArray.slice(3,6);
+    var rowThreeArray = gameBoardArray.slice(6);
+    var columnOneArray = [gameBoardArray.at(0), gameBoardArray.at(3), gameBoardArray.at(6)];
+    var columnTwoArray = [gameBoardArray.at(1), gameBoardArray.at(4), gameBoardArray.at(7)];
+    var columnThreeArray = [gameBoardArray.at(2), gameBoardArray.at(5), gameBoardArray.at(8)];
+    var diagonalOneArray = [gameBoardArray.at(0), gameBoardArray.at(4),gameBoardArray.at(8)];
+    var diagonalTwoArray = [gameBoardArray.at(2), gameBoardArray.at(4),gameBoardArray.at(6)];
 
    //should I then make an array of these arrays?
-   const rowsToCheckArray = [
+   var rowsToCheckArray = [
        rowOneArray,
        rowTwoArray,
        rowThreeArray,
@@ -185,6 +193,10 @@ const checkForWinners = function() {
            return;
        }
    });
+   return {
+       rowOneArray,
+       rowTwoArray,
+   }
 }
 
     return {
@@ -193,7 +205,7 @@ const checkForWinners = function() {
         makeArrayBlank,
         fillCells,
         checkForWinners,
-    }  
+    } 
 })();
 
 
@@ -262,7 +274,7 @@ let currentPlayer = '';
         let target = event.target;
         console.log(target);
         //if cell is empty and has classname cell
-        if (target.innerText=' ' && event.target.className === 'cell') {
+        if (target.innerText == '' && event.target.className === 'cell') {
             //get corresponding index number for gameBoardArray by finding cell ID name number minus one
             indexNum = Number(target.id.slice(-1))-1;
                 console.log(gameBoard.gameBoardArray[indexNum]);
@@ -276,10 +288,18 @@ let currentPlayer = '';
             //put current player text into game board grid cell
             target.textContent = currentPlayer.playerText;
                 console.log(`Player One text is ${playerOne.playerText} and Player Two text is ${playerTwo.playerText} and current player text is ${currentPlayer.playerText}`);
+
+            //check to see if there's a winner
+        //    gameBoard.alternateCheckForWinner();
+
+
+
+           //stuff to do based on result returned from Check Winner
+
             //run switch players function to change who the current player is and 
-            //display whose turn it is 
+            //it also displays whose turn it is 
             switchPlayers();
-        } else {
+        } else if (target.innerText !== '' && event.target.className === 'cell'){
             return;
         }
     }
