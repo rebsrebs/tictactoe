@@ -111,6 +111,8 @@ const playerFactory = (name, playerText) => {
 //GAMEBOARD OBJECT
 const gameBoard = (() => {
 
+    var resultsValue = '';
+
     //create array with default text
     var gameBoardArray = ['T','I','C','T','A','C','T','O','E'];
 
@@ -148,7 +150,7 @@ const gameBoard = (() => {
 const checkForWinners = function() {
 
     //utility function - check if all items in an array are equal
-    const allEqual = arr => arr.every(value => value === arr[0]);
+    const allEqual = arr => arr.every(value => value === arr[0] && arr[0] !== '');
 
     // utlity function - check if all items in array are full
     const allFull = arr => arr.every(value => value === 'X' || value === 'O');
@@ -174,29 +176,32 @@ const checkForWinners = function() {
        diagonalOneArray,
        diagonalTwoArray,
    ]
+   console.log('Below is the rowsToCheckArray');
+   console.log(rowsToCheckArray);
 
    //FOR EACH LOOP
    //for every stretch of gameboard where someone could win
    rowsToCheckArray.forEach((array) => {
+       console.log('Checking all 8 rows to see if there is a winner, this should be written 8 times if there is not one');
 
        //if there are three x's or three o's in a row there's a winner 
        if (allEqual(array) == true) {
-           console.log('There is a winner');
+        console.log('There is a winner');
+           resultsValue = 'There is a Winner';
            //will fill in later how to check who won
 
        //if the gameboard is full and there are not three in a row it's a tie
        } else if (allFull(array) == true && allEqual(array) == false) {
            console.log('It\'s a tie!');
+           resultsValue = 'Tie!';
 
        //otherwise keep playing
        } else {
-           return;
-       }
+           resultsValue = 'keep playing';
+           console.log('keep playing');
+               }
+       return resultsValue;
    });
-   return {
-       rowOneArray,
-       rowTwoArray,
-   }
 }
 
     return {
@@ -205,12 +210,13 @@ const checkForWinners = function() {
         makeArrayBlank,
         fillCells,
         checkForWinners,
+        resultsValue,
     } 
 })();
 
 
 
-// GAME FLOW
+// GAME FLOW OBJECT
 const gameFlow = (() => {
 
 let playerOne = '';
@@ -290,7 +296,7 @@ let currentPlayer = '';
                 console.log(`Player One text is ${playerOne.playerText} and Player Two text is ${playerTwo.playerText} and current player text is ${currentPlayer.playerText}`);
 
             //check to see if there's a winner
-        //    gameBoard.alternateCheckForWinner();
+           gameBoard.checkForWinners();
 
 
 
@@ -305,7 +311,7 @@ let currentPlayer = '';
     }
 
     startButton2.addEventListener('click', startTwoPlayerGame);
-    gameBoardContainer.addEventListener('click', makeAMove);
+    // gameBoardContainer.addEventListener('click', makeAMove);
 
     return {
         playerOne,
