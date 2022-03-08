@@ -5,6 +5,9 @@
 const newGameBtnDiv = document.getElementById('newgamebtndiv');
 const playerChoiceArea = document.querySelector('#playerchoicearea');
 const whoseTurn = document.getElementById('whoseturn');
+const playerList = document.getElementById('playerlist');
+const playerOneDisplay = document.getElementById('player1display');
+const playerTwoDisplay = document.getElementById('player2display');
 
 //new game button opens div to select further options before starting game
 const newGameButton = document.getElementById('newgamebutton');
@@ -111,6 +114,7 @@ const playerFactory = (name, playerText) => {
 //GAMEBOARD OBJECT
 const gameBoard = (() => {
 
+    //result for checkForWinner fuction
     var resultsValue = '';
 
     //create array with default text
@@ -179,29 +183,33 @@ const checkForWinners = function() {
    console.log('Below is the rowsToCheckArray');
    console.log(rowsToCheckArray);
 
-   //FOR EACH LOOP
+   //FOR LOOP
    //for every stretch of gameboard where someone could win
-   rowsToCheckArray.forEach((array) => {
+
+for (let iter = 0; iter < rowsToCheckArray.length; iter++) {
+//    rowsToCheckArray.forEach((array) => {
        console.log('Checking all 8 rows to see if there is a winner, this should be written 8 times if there is not one');
 
        //if there are three x's or three o's in a row there's a winner 
-       if (allEqual(array) == true) {
+       if (allEqual(rowsToCheckArray) == true) {
         console.log('There is a winner');
-           resultsValue = 'There is a Winner';
+           resultsValue = 'winner';
+           break;
            //will fill in later how to check who won
 
        //if the gameboard is full and there are not three in a row it's a tie
-       } else if (allFull(array) == true && allEqual(array) == false) {
+       } else if (allFull(rowsToCheckArray) == true && allEqual(rowsToCheckArray) == false) {
            console.log('It\'s a tie!');
-           resultsValue = 'Tie!';
+           resultsValue = 'tie';
+           break;
 
        //otherwise keep playing
        } else {
-           resultsValue = 'keep playing';
-           console.log('keep playing');
+           resultsValue = 'play';
+           console.log('play');
                }
        return resultsValue;
-   });
+   };
 }
 
     return {
@@ -226,12 +234,18 @@ let currentPlayer = '';
     const startTwoPlayerGame = function(){
         //hide the form you just filled out
         hideElement(twoPlayerFormContainer);
+        hideElement(playerChoiceArea);
         //get name of playerOne from the form input
         const playerOneName = document.getElementById('player1name2').value;
         console.log(playerOneName);
         //get name of playerTwo from the form input
         const playerTwoName = document.getElementById('player2name').value;
         console.log(playerTwoName);
+        //display player names
+        playerOneDisplay.textContent=`Player 1: ${playerOneName}`;
+        playerTwoDisplay.textContent=`Player 2: ${playerTwoName}`;
+        displayElement(playerList);
+        console.log('did i show the player list?')
         //create playerOne using factory function and assign to X
         playerOne = playerFactory(playerOneName,'X');
         console.log(`Player One is named ${playerOne.name} andtext is ${playerOne.playerText}`);
@@ -297,18 +311,22 @@ let currentPlayer = '';
 
             //check to see if there's a winner
            gameBoard.checkForWinners();
-
-
-
-           //stuff to do based on result returned from Check Winner
-
-            //run switch players function to change who the current player is and 
-            //it also displays whose turn it is 
-            switchPlayers();
+           
+            if (gameBoard.resultsValue === 'winner') {
+                whoseTurn.textContent = 'Winner!';
+            } else if (gameBoard.resultsValue === 'tie') {
+                whoseTurn.textContent = 'Tie!';
+            } else if (gameBoard.resultsValue === 'play') {
+                console.log('keep playing');
+                switchPlayers();
+                console.log('did I switch players?');
+            }
+           
         } else if (target.innerText !== '' && event.target.className === 'cell'){
             return;
         }
     }
+    //end make a move function
 
     startButton2.addEventListener('click', startTwoPlayerGame);
     // gameBoardContainer.addEventListener('click', makeAMove);

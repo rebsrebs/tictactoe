@@ -31,6 +31,17 @@ button{
     padding:10px;
 }
 
+#playerlist {
+    background-color:rgb(209, 55, 81);
+    display:none;
+    padding:10px;
+    width:300px;
+}
+
+.player1display, .player2display{
+    padding:10px;
+}
+
 
 /* One Player Form */
 
