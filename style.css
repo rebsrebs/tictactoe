@@ -16,23 +16,23 @@ button{
 }
 
 .header {
-    /* background-color:rgb(223, 223, 244); */
+    background-color:rgb(223, 223, 244);
     padding:10px;
 }
 
 .newgamebtndiv {
-    /* background-color:rgb(228, 196, 228); */
+    background-color:rgb(228, 196, 228);
     padding:10px;
 }
 
 .playerchoicearea {
-    /* background-color:pink; */
+    background-color:pink;
     display:none;
     padding:10px;
 }
 
 #playerlist {
-    /* background-color:rgb(209, 55, 81); */
+    background-color:rgb(209, 55, 81);
     display:none;
     padding:10px;
     width:300px;
@@ -87,6 +87,7 @@ button{
     padding:25px;
     gap:10px;
     justify-items:center;
+    background-color:palevioletred;
 }
 
 /* general form stuff */
@@ -111,14 +112,6 @@ fieldset{
 }
 
 /* Game area */
-
-.gameareacontainer {
-    /* display:none; */
-    /* padding:10px; */
-    padding:0px;
-}
-
-
 
 .clicked {
     border: 2px solid red;
@@ -149,7 +142,7 @@ fieldset{
 }
 
 .gameboardcontainer-active {
-    background-color: rgb(232, 212, 212);
+    background-color: rgba(232, 212, 212,0.5);
 }
 
 .gameboardcontainer-active .cell:hover{
@@ -166,6 +159,8 @@ fieldset{
     font-size:20px;
     text-align:center;
     padding:20px;
+    background-color: aqua;
+    height:30px;
 }
 
 .X-style {
@@ -175,6 +170,18 @@ fieldset{
 .O-style {
     color: red;
 }
+
+
+/* .gameboardcontainer-active .X-style:hover {
+    background-color:pink;
+}
+
+.gameboardcontainer-active .O-style:hover {
+    background-color:green;
+} */
+
+
+
 
 .resetarea{
     display:flex;
