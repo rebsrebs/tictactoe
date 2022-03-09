@@ -26,8 +26,8 @@ const twoPlayerForm = document.getElementById("twoplayerform");
 const startButton1 = document.getElementById('startbutton1');
 const startButton2 = document.getElementById('startbutton2');
 
-// //reset button
-// const resetButton = document.getElementById('resetbutton');
+//reset button
+const resetButton = document.getElementById('resetbutton');
 
 //gameBoard styling
 const gameBoardContainer = document.getElementById('gameboardcontainer');
@@ -303,19 +303,17 @@ let currentPlayer = '';
 
 
     
-
-    // const resetGame = function(){
-    //     currentPlayer = playerOne;
-    //     gameBoardContainer.classList.add('playeronestyling');
-    //     //write that it's playerOne's turn
-    //     whoseTurn.textContent=playerOne.turnMessage;
-    //     // whoseTurn.textContent=`${playerOneName}'s turn.`;
-    //     gameBoard.makeArrayBlank(gameBoard.gameBoardArray);
-    //     gameBoard.fillCells(gameBoard.gameBoardArray);
-    //     gameBoardContainer.classList.add('gameboardcontainer-active');
-    //     gameBoardContainer.addEventListener('click', makeAMove);
-    //     //something is not wokring in this yet.
-    // }
+//something still not working - colors after starting over is messed up - i think it's not just from this
+//it's something in the whole game, happens on third game sometimes second
+    const resetGame = function(){
+        currentPlayer = playerOne;
+        whoseTurn.textContent=currentPlayer.turnMessage;
+        gameBoard.resetCellClass();
+        gameBoard.makeArrayBlank(gameBoard.gameBoardArray);
+        gameBoard.fillCells(gameBoard.gameBoardArray);
+        gameBoardContainer.classList.add('gameboardcontainer-active');
+        gameBoardContainer.addEventListener('click', makeAMove);
+    }
 
          //function to switch players
          const switchPlayers = function(){
@@ -383,7 +381,9 @@ let currentPlayer = '';
 
 
     startButton2.addEventListener('click', startTwoPlayerGame);
-    // resetButton.addEventListener('click', resetGame);
+    resetButton.addEventListener('click', resetGame);
+
+    
 
     return {
         playerOne,
