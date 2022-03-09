@@ -129,7 +129,7 @@ fieldset{
     grid-template-rows: repeat(3, 1fr);
     background-color: lightgray;
     border-color:black;
-    z-index:-1;
+    z-index:4;
 }
 
 .cell{
@@ -152,7 +152,6 @@ fieldset{
 .gameboardcontainer-active .cell:active{
     background-color:rgba(115, 245, 245, 0.9);
 }
-
 
 
 #whoseturn{

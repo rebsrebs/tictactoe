@@ -274,9 +274,10 @@ let currentPlayer = '';
         console.log(`Player Two is named ${playerTwo.name} and text is ${playerTwo.playerText}`);
         //set first turn at player one's turn
         currentPlayer = playerOne;
-
-        // gameBoardContainer.classList.add(currentPlayer.styleSelector);
-        gameBoardContainer.classList.add('playeronestyling');
+        console.log(currentPlayer.name);
+        gameBoardContainer.classList.add(currentPlayer.styleSelector);
+        console.log(currentPlayer.styleSelector);
+        // gameBoardContainer.classList.add('playeronestyling');
         //write that it's playerOne's turn
         whoseTurn.textContent=playerOne.turnMessage;
         gameBoard.makeArrayBlank(gameBoard.gameBoardArray);
