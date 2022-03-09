@@ -297,7 +297,7 @@ let currentPlayer = '';
         let target = event.target;
         console.log(target);
         //if cell is empty and has classname cell
-        if (target.innerText == '' && event.target.className === 'cell') {
+        if (target.innerText == '' && event.target.className === 'cell' && gameBoardContainer.classList.contains('gameboardcontainer-active')) {
             //get corresponding index number for gameBoardArray by finding cell ID name number minus one
             indexNum = Number(target.id.slice(-1))-1;
                 console.log(gameBoard.gameBoardArray[indexNum]);
