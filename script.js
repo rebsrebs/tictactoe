@@ -156,6 +156,10 @@ const checkForWinners = function(array) {
     //utility function - check if all items in an array are equal
     const allEqual = arr => arr.every(value => value === arr[0] && arr[0] !== '');
 
+    const allXs = arr => arr.every(value => value === arr[0] && arr[0] ==='X');
+
+    const allOs = arr => arr.every(value => value === arr[0] && arr[0] ==='O');
+
     // utlity function - check if all items in array are full
     const allFull = arr => arr.every(value => value === 'X' || value === 'O');
      
@@ -184,9 +188,13 @@ const checkForWinners = function(array) {
    console.log(rowsToCheckArray);
 
 //checking
-    if (rowsToCheckArray.some(allEqual) == true){
-        console.log('winner');
-        resultsValue='winner';
+    if (rowsToCheckArray.some(allXs) == true){
+        const playerOneName = document.getElementById('player1name2').value;
+        resultsValue = `${playerOneName} wins!`
+        whoseTurn.textContent = resultsValue;
+    } else if (rowsToCheckArray.some(allOs) == true){
+        const playerTwoName = document.getElementById('player2name2').value;
+        resultsValue = `${playerTwoName} wins!`
         whoseTurn.textContent = resultsValue;
     } else if (allFull(gameBoardArray) == true){
         console.log('tie');
@@ -318,7 +326,6 @@ let currentPlayer = '';
     //end make a move function
 
     startButton2.addEventListener('click', startTwoPlayerGame);
-    // gameBoardContainer.addEventListener('click', makeAMove);
 
     return {
         playerOne,
