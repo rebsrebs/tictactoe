@@ -175,11 +175,10 @@ const gameBoard = (() => {
 //function to check for winners or tie
 const checkForWinners = function(array) {
 
-    //utility function - check if all items in an array are equal
-    const allEqual = arr => arr.every(value => value === arr[0] && arr[0] !== '');
-
+    //check if array contains all X's
     const allXs = arr => arr.every(value => value === arr[0] && arr[0] ==='X');
 
+    //check if array contains all O's
     const allOs = arr => arr.every(value => value === arr[0] && arr[0] ==='O');
 
     // utlity function - check if all items in array are full
@@ -209,23 +208,22 @@ const checkForWinners = function(array) {
    console.log('Below is the rowsToCheckArray');
    console.log(rowsToCheckArray);
 
-//checking
+//if one of the arrays to check has all X's
     if (rowsToCheckArray.some(allXs) == true){
         const playerOneName = document.getElementById('player1name2').value;
-        // displayElement(newGameBtnDiv,'block');
+        //show the New Game Button
         displayElement(newGameButton,'block');
-        console.log('did i display the button?');
         resultsValue = `${playerOneName} wins!`
         whoseTurn.textContent = resultsValue;
         gameBoardContainer.classList.remove('gameboardcontainer-active');
+        gameBoard.resetCellClass();
     } else if (rowsToCheckArray.some(allOs) == true){
         const playerTwoName = document.getElementById('player2name').value;
         resultsValue = `${playerTwoName} wins!`
         whoseTurn.textContent = resultsValue;
-        //stop background highlighting on gameBoard
         gameBoardContainer.classList.remove('gameboardcontainer-active');
-        // displayElement(newGameBtnDiv,'block');
         displayElement(newGameButton,'block');
+        gameBoard.resetCellClass();
     } else if (allFull(gameBoardArray) == true){
         console.log('tie');
         resultsValue='tie';
@@ -234,10 +232,12 @@ const checkForWinners = function(array) {
         gameBoardContainer.classList.remove('gameboardcontainer-active');
         // displayElement(newGameBtnDiv,'block');
         displayElement(newGameButton,'block');
+        gameBoard.resetCellClass();
     } else {
         console.log('play');
         resultsValue='play';
         gameFlow.switchPlayers();
+        console.log('we have switched players!')
     }
     return resultsValue;
     }
@@ -270,16 +270,13 @@ let currentPlayer = '';
         hideElement(playerChoiceArea);
         //get name of playerOne from the form input
         const playerOneName = document.getElementById('player1name2').value;
-        console.log(playerOneName);
         //get name of playerTwo from the form input
         const playerTwoName = document.getElementById('player2name').value;
         onePlayerForm.reset();
-        console.log(playerTwoName);
         //display player names
         playerOneDisplay.textContent=`${playerOneName}`;
         playerTwoDisplay.textContent=`${playerTwoName}`;
         displayElement(playerList,'flex');
-        console.log('did i show the player list?')
         //create playerOne using factory function and assign to X
         playerOne = playerFactory(playerOneName,'X');
         console.log(`Player One is named ${playerOne.name} andtext is ${playerOne.playerText}`);
@@ -288,11 +285,9 @@ let currentPlayer = '';
         console.log(`Player Two is named ${playerTwo.name} and text is ${playerTwo.playerText}`);
         //set first turn at player one's turn
         currentPlayer = playerOne;
-        console.log(currentPlayer.name);
-        gameBoardContainer.classList.add(currentPlayer.styleSelector);
-        console.log(currentPlayer.styleSelector);
+        // gameBoardContainer.classList.add(currentPlayer.styleSelector);
+        console.log(`current player is ${currentPlayer.name} and their style is ${currentPlayer.styleSelector}`);
         // gameBoardContainer.classList.add('playeronestyling');
-        //write that it's playerOne's turn
         whoseTurn.textContent=playerOne.turnMessage;
         gameBoard.makeArrayBlank(gameBoard.gameBoardArray);
         gameBoard.fillCells(gameBoard.gameBoardArray);
@@ -335,7 +330,6 @@ let currentPlayer = '';
                 currentPlayer = playerOne;
                 console.log(`to ${currentPlayer.name}`);
                 whoseTurn.textContent = currentPlayer.turnMessage;
-                
             }
             return;
         }
@@ -344,19 +338,19 @@ let currentPlayer = '';
      const makeAMove = function(event){
 
         let target = event.target;
-        console.log(target);
+        console.log(`Target is ${target}`);
+        //styling
+        target.classList.add(currentPlayer.styleSelector);
         //if cell is empty and has classname cell
         if (target.innerText == '' && target.classList.contains('cell') && gameBoardContainer.classList.contains('gameboardcontainer-active')) {
             console.log(`target class list is ${target.classList} and we can make a mark`);
             //get corresponding index number for gameBoardArray by finding cell ID name number minus one
             indexNum = Number(target.id.slice(-1))-1;
-                console.log(gameBoard.gameBoardArray[indexNum]);
             //put current player text into the corresponding index in the array
             gameBoard.gameBoardArray[indexNum] = currentPlayer.playerText;
                 console.log(gameBoard.gameBoardArray[indexNum]);
             
-            //styling
-            target.classList.add(currentPlayer.styleSelector);
+            
 
             //put current player text into game board grid cell
             target.textContent = currentPlayer.playerText;
