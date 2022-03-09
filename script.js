@@ -74,6 +74,7 @@ newGameButton.addEventListener('click', function(){
     // hideElement(newGameBtnDiv);
     hideElement(newGameButton);
     hideElement(playerList);
+    gameBoard.resetCellClass();
     gameBoard.makeArrayBlank(gameBoard.gameBoardArray);
     gameBoard.fillCells(gameBoard.gameBoardArray);
 });
@@ -134,7 +135,7 @@ const gameBoard = (() => {
     // Function to create cells in gameBoard grid
     const createCells = function() {
         //Counting variable for naming the cell ID's
-        let a=1;
+        // let a=1;
         for (let step = 1; step <= 9; step++) {
             var cell = document.createElement('div');
             cell.classList.add('cell');
@@ -142,6 +143,16 @@ const gameBoard = (() => {
             gameBoardContainer.appendChild(cell);
             // console.log(cell.id);
           }
+    }
+
+    //Function to remove player classes from cells after game
+    const resetCellClass = function() {
+        for (let hey = 1; hey <= 9; hey++){
+            var theCell = document.getElementById(`cell-${hey}`);
+            theCell.classList.remove('.X-style');
+            theCell.classList.remove('.O-style');
+            console.log(`we have removed player styles from cell-${hey}`)
+        }
     }
 
     //function to make an array blank
@@ -240,6 +251,7 @@ const checkForWinners = function(array) {
      fillCells,
      checkForWinners,
      resultsValue,
+     resetCellClass,
  } 
 })();
 
