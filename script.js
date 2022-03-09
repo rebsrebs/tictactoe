@@ -190,6 +190,8 @@ const checkForWinners = function(array) {
 //checking
     if (rowsToCheckArray.some(allXs) == true){
         const playerOneName = document.getElementById('player1name2').value;
+        displayElement(newGameBtnDiv,'block');
+        console.log('did i display the button?');
         resultsValue = `${playerOneName} wins!`
         whoseTurn.textContent = resultsValue;
         gameBoardContainer.classList.remove('gameboardcontainer-active');
@@ -199,12 +201,14 @@ const checkForWinners = function(array) {
         whoseTurn.textContent = resultsValue;
         //stop background highlighting on gameBoard
         gameBoardContainer.classList.remove('gameboardcontainer-active');
+        displayElement(newGameBtnDiv,'block');
     } else if (allFull(gameBoardArray) == true){
         console.log('tie');
         resultsValue='tie';
         whoseTurn.textContent = resultsValue;
         //stop background highlighting on gameBoard
         gameBoardContainer.classList.remove('gameboardcontainer-active');
+        displayElement(newGameBtnDiv,'block');
     } else {
         console.log('play');
         resultsValue='play';
@@ -247,7 +251,7 @@ let currentPlayer = '';
         //display player names
         playerOneDisplay.textContent=`Player 1: ${playerOneName}`;
         playerTwoDisplay.textContent=`Player 2: ${playerTwoName}`;
-        displayElement(playerList);
+        displayElement(playerList,'flex');
         console.log('did i show the player list?')
         //create playerOne using factory function and assign to X
         playerOne = playerFactory(playerOneName,'X');

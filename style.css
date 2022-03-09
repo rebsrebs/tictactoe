@@ -36,6 +36,7 @@ button{
     display:none;
     padding:10px;
     width:300px;
+    justify-content: center;
 }
 
 .player1display, .player2display{
