@@ -192,14 +192,19 @@ const checkForWinners = function(array) {
         const playerOneName = document.getElementById('player1name2').value;
         resultsValue = `${playerOneName} wins!`
         whoseTurn.textContent = resultsValue;
+        gameBoardContainer.classList.remove('gameboardcontainer-active');
     } else if (rowsToCheckArray.some(allOs) == true){
         const playerTwoName = document.getElementById('player2name2').value;
         resultsValue = `${playerTwoName} wins!`
         whoseTurn.textContent = resultsValue;
+        //stop background highlighting on gameBoard
+        gameBoardContainer.classList.remove('gameboardcontainer-active');
     } else if (allFull(gameBoardArray) == true){
         console.log('tie');
         resultsValue='tie';
         whoseTurn.textContent = resultsValue;
+        //stop background highlighting on gameBoard
+        gameBoardContainer.classList.remove('gameboardcontainer-active');
     } else {
         console.log('play');
         resultsValue='play';
@@ -207,6 +212,8 @@ const checkForWinners = function(array) {
     }
     return resultsValue;
     }
+
+
 
  return {
      gameBoardArray,
