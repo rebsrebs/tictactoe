@@ -74,6 +74,8 @@ newGameButton.addEventListener('click', function(){
     // hideElement(newGameBtnDiv);
     hideElement(newGameButton);
     hideElement(playerList);
+    gameBoard.makeArrayBlank(gameBoard.gameBoardArray);
+    gameBoard.fillCells(gameBoard.gameBoardArray);
 });
 
 // when you click one player button
@@ -200,7 +202,7 @@ const checkForWinners = function(array) {
     if (rowsToCheckArray.some(allXs) == true){
         const playerOneName = document.getElementById('player1name2').value;
         // displayElement(newGameBtnDiv,'block');
-        displayElement(newGameButton);
+        displayElement(newGameButton,'block');
         console.log('did i display the button?');
         resultsValue = `${playerOneName} wins!`
         whoseTurn.textContent = resultsValue;
@@ -212,7 +214,7 @@ const checkForWinners = function(array) {
         //stop background highlighting on gameBoard
         gameBoardContainer.classList.remove('gameboardcontainer-active');
         // displayElement(newGameBtnDiv,'block');
-        displayElement(newGameButton);
+        displayElement(newGameButton,'block');
     } else if (allFull(gameBoardArray) == true){
         console.log('tie');
         resultsValue='tie';
@@ -220,7 +222,7 @@ const checkForWinners = function(array) {
         //stop background highlighting on gameBoard
         gameBoardContainer.classList.remove('gameboardcontainer-active');
         // displayElement(newGameBtnDiv,'block');
-        displayElement(newGameButton);
+        displayElement(newGameButton,'block');
     } else {
         console.log('play');
         resultsValue='play';
@@ -292,6 +294,9 @@ let currentPlayer = '';
         }
     }
 
+
+    
+
     // const resetGame = function(){
     //     currentPlayer = playerOne;
     //     gameBoardContainer.classList.add('playeronestyling');
@@ -329,8 +334,8 @@ let currentPlayer = '';
         let target = event.target;
         console.log(target);
         //if cell is empty and has classname cell
-        if (target.innerText == '' && event.target.className === 'cell' && gameBoardContainer.classList.contains('gameboardcontainer-active')) {
-            console.log('we can make a mark');
+        if (target.innerText == '' && target.classList.contains('cell') && gameBoardContainer.classList.contains('gameboardcontainer-active')) {
+            console.log(`target class list is ${target.classList} and we can make a mark`);
             //get corresponding index number for gameBoardArray by finding cell ID name number minus one
             indexNum = Number(target.id.slice(-1))-1;
                 console.log(gameBoard.gameBoardArray[indexNum]);
@@ -360,9 +365,10 @@ let currentPlayer = '';
             //     console.log('did I switch players?');
             // }
            
-        } else if (target.innerText !== '' && event.target.className === 'cell'){
-            console.log('cannot make a move')
-            return;
+        // } else if (target.innerText !== '' && event.target.className === 'cell'){
+        //     console.log('cannot make a move')
+        }else {
+            console.log(`target class list is ${target.classList} and i cannot make a move`);
         }
     }
     //end make a move function
