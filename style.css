@@ -16,27 +16,38 @@ button{
 }
 
 .header {
-    background-color:rgb(223, 223, 244);
+    /* background-color:rgb(223, 223, 244); */
     padding:10px;
 }
 
 .newgamebtndiv {
-    background-color:rgb(228, 196, 228);
+    /* background-color:rgb(228, 196, 228); */
     padding:10px;
 }
 
 .playerchoicearea {
-    background-color:pink;
+    /* background-color:pink; */
     display:none;
     padding:10px;
 }
 
 #playerlist {
-    background-color:rgb(209, 55, 81);
+    /* background-color:rgb(209, 55, 81); */
     display:none;
     padding:10px;
     width:300px;
-    justify-content: center;
+    justify-content:space-around;
+}
+
+.playernamearea {
+    display:flex;
+    flex-direction:row;
+    justify-content:center;
+    align-items:center;
+}
+
+.playerlabel {
+    font-weight:bold;
 }
 
 .player1display, .player2display{
@@ -65,7 +76,7 @@ button{
 /* two player form */
 
 #twoplayerformcontainer {
-    background-color:yellow;
+    /* background-color:yellow; */
     display:none;
 }
 
@@ -103,7 +114,8 @@ fieldset{
 
 .gameareacontainer {
     /* display:none; */
-    padding:10px;
+    /* padding:10px; */
+    padding:0px;
 }
 
 

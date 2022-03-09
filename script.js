@@ -249,8 +249,8 @@ let currentPlayer = '';
         const playerTwoName = document.getElementById('player2name').value;
         console.log(playerTwoName);
         //display player names
-        playerOneDisplay.textContent=`Player 1: ${playerOneName}`;
-        playerTwoDisplay.textContent=`Player 2: ${playerTwoName}`;
+        playerOneDisplay.textContent=`${playerOneName}`;
+        playerTwoDisplay.textContent=`${playerTwoName}`;
         displayElement(playerList,'flex');
         console.log('did i show the player list?')
         //create playerOne using factory function and assign to X
