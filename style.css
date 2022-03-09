@@ -176,6 +176,12 @@ fieldset{
     color: red;
 }
 
+.resetarea{
+    display:flex;
+    align-content:center;
+    justify-content:center;
+}
+
 
 /* I would like the hover highlight to be different eventually depending on the player
  .playeroneshighlight{

@@ -24,6 +24,9 @@ const twoPlayerFormContainer = document.getElementById('twoplayerformcontainer')
 const startButton1 = document.getElementById('startbutton1');
 const startButton2 = document.getElementById('startbutton2');
 
+//reset button
+const resetButton = document.getElementById('resetbutton');
+
 //gameBoard styling
 const gameBoardContainer = document.getElementById('gameboardcontainer');
 // const cells = document.querySelectorAll('.cell');
@@ -277,6 +280,19 @@ let currentPlayer = '';
         }
     }
 
+    const resetGame = function(){
+        currentPlayer = playerOne;
+        gameBoardContainer.classList.add('playeronestyling');
+        //write that it's playerOne's turn
+        whoseTurn.textContent=playerOne.turnMessage;
+        // whoseTurn.textContent=`${playerOneName}'s turn.`;
+        gameBoard.makeArrayBlank(gameBoard.gameBoardArray);
+        gameBoard.fillCells(gameBoard.gameBoardArray);
+        gameBoardContainer.classList.remove('gameboardcontainer-active');
+        gameBoardContainer.classList.add('gameboardcontainer-active');
+        gameBoardContainer.addEventListener('click', makeAMove);
+    }
+
          //function to switch players
          const switchPlayers = function(){
             if (currentPlayer == playerOne) {
@@ -320,6 +336,7 @@ let currentPlayer = '';
            gameBoard.checkForWinners();
 
            //somehow things are not coming back here.
+           //why didn't this version work?
            
             // if (gameBoard.resultsValue === 'winner') {
             //     whoseTurn.textContent = 'Winner!';
@@ -331,12 +348,14 @@ let currentPlayer = '';
             // }
            
         } else if (target.innerText !== '' && event.target.className === 'cell'){
+            console.log('cannot make a move')
             return;
         }
     }
     //end make a move function
 
     startButton2.addEventListener('click', startTwoPlayerGame);
+    resetButton.addEventListener('click', resetGame);
 
     return {
         playerOne,
