@@ -151,7 +151,7 @@ const gameBoard = (() => {
     }
 
 //function to check for winners or tie
-const checkForWinners = function() {
+const checkForWinners = function(array) {
 
     //utility function - check if all items in an array are equal
     const allEqual = arr => arr.every(value => value === arr[0] && arr[0] !== '');
@@ -183,43 +183,31 @@ const checkForWinners = function() {
    console.log('Below is the rowsToCheckArray');
    console.log(rowsToCheckArray);
 
-   //FOR LOOP
-   //for every stretch of gameboard where someone could win
+//checking
+    if (rowsToCheckArray.some(allEqual) == true){
+        console.log('winner');
+        resultsValue='winner';
+        whoseTurn.textContent = resultsValue;
+    } else if (allFull(gameBoardArray) == true){
+        console.log('tie');
+        resultsValue='tie';
+        whoseTurn.textContent = resultsValue;
+    } else {
+        console.log('play');
+        resultsValue='play';
+        gameFlow.switchPlayers();
+    }
+    return resultsValue;
+    }
 
-for (let iter = 0; iter < rowsToCheckArray.length; iter++) {
-//    rowsToCheckArray.forEach((array) => {
-       console.log('Checking all 8 rows to see if there is a winner, this should be written 8 times if there is not one');
-
-       //if there are three x's or three o's in a row there's a winner 
-       if (allEqual(rowsToCheckArray) == true) {
-        console.log('There is a winner');
-           resultsValue = 'winner';
-           break;
-           //will fill in later how to check who won
-
-       //if the gameboard is full and there are not three in a row it's a tie
-       } else if (allFull(rowsToCheckArray) == true && allEqual(rowsToCheckArray) == false) {
-           console.log('It\'s a tie!');
-           resultsValue = 'tie';
-           break;
-
-       //otherwise keep playing
-       } else {
-           resultsValue = 'play';
-           console.log('play');
-               }
-       return resultsValue;
-   };
-}
-
-    return {
-        gameBoardArray,
-        createCells,
-        makeArrayBlank,
-        fillCells,
-        checkForWinners,
-        resultsValue,
-    } 
+ return {
+     gameBoardArray,
+     createCells,
+     makeArrayBlank,
+     fillCells,
+     checkForWinners,
+     resultsValue,
+ } 
 })();
 
 
@@ -311,16 +299,17 @@ let currentPlayer = '';
 
             //check to see if there's a winner
            gameBoard.checkForWinners();
+
+           //somehow things are not coming back here.
            
-            if (gameBoard.resultsValue === 'winner') {
-                whoseTurn.textContent = 'Winner!';
-            } else if (gameBoard.resultsValue === 'tie') {
-                whoseTurn.textContent = 'Tie!';
-            } else if (gameBoard.resultsValue === 'play') {
-                console.log('keep playing');
-                switchPlayers();
-                console.log('did I switch players?');
-            }
+            // if (gameBoard.resultsValue === 'winner') {
+            //     whoseTurn.textContent = 'Winner!';
+            // } else if (gameBoard.resultsValue === 'tie') {
+            //     whoseTurn.textContent = 'Tie!';
+            // } else if (gameBoard.resultsValue === 'play') {
+            //     console.log('keep playing');
+            //     console.log('did I switch players?');
+            // }
            
         } else if (target.innerText !== '' && event.target.className === 'cell'){
             return;
@@ -335,6 +324,7 @@ let currentPlayer = '';
         playerOne,
         playerTwo,
         currentPlayer,
+        switchPlayers,
     }
 
 })();
