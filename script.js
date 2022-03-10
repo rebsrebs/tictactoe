@@ -213,6 +213,7 @@ const checkForWinners = function(array) {
 //if one of the arrays to check has all X's
     if (rowsToCheckArray.some(allXs) == true){
         const playerOneName = document.getElementById('player1name2').value;
+        hideElement(playerList);
         //show the New Game Button
         displayElement(newGameBtnDiv,'block');
         resultsValue = `${playerOneName} wins!`
@@ -220,6 +221,7 @@ const checkForWinners = function(array) {
         gameBoardContainer.classList.remove('gameboardcontainer-active');
         gameBoard.resetCellClass();
     } else if (rowsToCheckArray.some(allOs) == true){
+        hideElement(playerList);
         const playerTwoName = document.getElementById('player2name').value;
         resultsValue = `${playerTwoName} wins!`
         whoseTurn.textContent = resultsValue;
@@ -227,6 +229,7 @@ const checkForWinners = function(array) {
         displayElement(newGameBtnDiv,'block');
         gameBoard.resetCellClass();
     } else if (allFull(gameBoardArray) == true){
+        hideElement(playerList);
         console.log('tie');
         resultsValue='It\'s a tie!';
         whoseTurn.textContent = resultsValue;

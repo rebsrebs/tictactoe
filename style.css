@@ -12,6 +12,10 @@ body{
     position:relative;
 }
 
+h1{
+    font-size:40px;
+}
+
 /* button{
     margin:10px;
 } */
@@ -29,36 +33,40 @@ button{
     padding:10px;
 }
 
-.newgamebtndiv {
+/* .newgamebtndiv {
     background-color:rgb(228, 196, 228);
-}
+} */
 
 .playerchoicearea {
-    background-color:pink;
+    /* background-color:pink; */
     display:none;
     /* justify-content:space-between; */
 }
 
 #playerlist {
-    background-color:rgb(209, 55, 81);
+    /* background-color:rgb(209, 55, 81); */
     display:none;
     width:300px;
     justify-content:space-around;
+    align-items:center;
 }
 
 .playernamearea {
     display:flex;
     flex-direction:row;
     justify-content:center;
-    align-items:center;
+    align-items:baseline;
 }
 
 .playerlabel {
     font-weight:bold;
+    font-size:16px;
+    text-transform: uppercase;
 }
 
 .player1display, .player2display{
     padding:10px;
+    font-size:22px;
 }
 
 
@@ -162,9 +170,9 @@ fieldset{
 
 
 #whoseturn{
-    font-size:20px;
+    font-size:22px;
     text-align:center;
-    background-color: aqua;
+    /* background-color: aqua; */
     display:flex;
     align-items: center;
 }
