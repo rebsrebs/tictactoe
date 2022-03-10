@@ -2,7 +2,7 @@
 
 //DOM VARIABLES
 
-// const newGameBtnDiv = document.getElementById('newgamebtndiv');
+const newGameBtnDiv = document.getElementById('newgamebtndiv');
 const playerChoiceArea = document.querySelector('#playerchoicearea');
 const playerList = document.getElementById('playerlist');
 const playerOneDisplay = document.getElementById('player1display');
@@ -71,8 +71,7 @@ newGameButton.addEventListener('click', function(){
     console.log('New Game Button was pushed');
     whoseTurn.textContent='';
     displayElement(playerChoiceArea, 'block');
-    // hideElement(newGameBtnDiv);
-    hideElement(newGameButton);
+    hideElement(newGameBtnDiv);
     hideElement(playerList);
     gameBoard.resetCellClass();
     gameBoard.makeArrayBlank(gameBoard.gameBoardArray);
@@ -215,7 +214,7 @@ const checkForWinners = function(array) {
     if (rowsToCheckArray.some(allXs) == true){
         const playerOneName = document.getElementById('player1name2').value;
         //show the New Game Button
-        displayElement(newGameButton,'block');
+        displayElement(newGameBtnDiv,'block');
         resultsValue = `${playerOneName} wins!`
         whoseTurn.textContent = resultsValue;
         gameBoardContainer.classList.remove('gameboardcontainer-active');
@@ -225,16 +224,16 @@ const checkForWinners = function(array) {
         resultsValue = `${playerTwoName} wins!`
         whoseTurn.textContent = resultsValue;
         gameBoardContainer.classList.remove('gameboardcontainer-active');
-        displayElement(newGameButton,'block');
+        displayElement(newGameBtnDiv,'block');
         gameBoard.resetCellClass();
     } else if (allFull(gameBoardArray) == true){
         console.log('tie');
-        resultsValue='tie';
+        resultsValue='It\'s a tie!';
         whoseTurn.textContent = resultsValue;
         //stop background highlighting on gameBoard
         gameBoardContainer.classList.remove('gameboardcontainer-active');
         // displayElement(newGameBtnDiv,'block');
-        displayElement(newGameButton,'block');
+        displayElement(newGameBtnDiv,'block');
         gameBoard.resetCellClass();
     } else {
         console.log('play');
