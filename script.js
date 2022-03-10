@@ -2,7 +2,7 @@
 
 //DOM VARIABLES
 
-const newGameBtnDiv = document.getElementById('newgamebtndiv');
+
 const playerChoiceArea = document.querySelector('#playerchoicearea');
 const playerList = document.getElementById('playerlist');
 const playerOneDisplay = document.getElementById('player1display');
@@ -29,7 +29,7 @@ const startButton2 = document.getElementById('startbutton2');
 //reset button
 const resetButton = document.getElementById('resetbutton');
 
-//gameBoard styling
+// for gameBoard styling
 const gameBoardContainer = document.getElementById('gameboardcontainer');
 // const cells = document.querySelectorAll('.cell');
 
@@ -66,17 +66,7 @@ document.addEventListener('DOMContentLoaded', function(){
     gameBoard.fillCells(gameBoard.gameBoardArray);
 });
 
-//when you click new game
-newGameButton.addEventListener('click', function(){
-    console.log('New Game Button was pushed');
-    messageArea.textContent='';
-    displayElement(playerChoiceArea, 'flex');
-    hideElement(newGameBtnDiv);
-    hideElement(playerList);
-    gameBoard.resetCellClass();
-    gameBoard.makeArrayBlank(gameBoard.gameBoardArray);
-    gameBoard.fillCells(gameBoard.gameBoardArray);
-});
+
 
 // when you click one player button
 onePlayerButton.addEventListener('click', function(){
@@ -105,6 +95,29 @@ twoPlayerButton.addEventListener('click', function(){
 
 
 
+// //DISPLAY CONTROLS OBJECT
+// const displayControls = (() => {
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //FACTORY FUNCTION TO CREATE PLAYERS
 const playerFactory = (name, playerText) => {
     const turnMessage = `${name}'s turn.`; 
@@ -122,15 +135,45 @@ const playerFactory = (name, playerText) => {
 
 
 
-//GAMEBOARD OBJECT
-const gameBoard = (() => {
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// GAMEBOARD OBJECT
+const gameBoard = (() => {
+    const newGameBtnDiv = document.getElementById('newgamebtndiv');
+
+    //when you click new game button
+newGameButton.addEventListener('click', function(){
+    console.log('New Game Button was pushed');
+    messageArea.textContent='';
+    displayElement(playerChoiceArea, 'flex');
+    hideElement(newGameBtnDiv);
+    hideElement(playerList);
+    gameBoard.resetCellClass();
+    gameBoard.makeArrayBlank(gameBoard.gameBoardArray);
+    gameBoard.fillCells(gameBoard.gameBoardArray);
+});
     //result for checkForWinner fuction
     var resultsValue = '';
-
     //create array with default text
     var gameBoardArray = ['T','I','C','T','A','C','T','O','E'];
-
     // Function to create cells in gameBoard grid
     const createCells = function() {
         //Counting variable for naming the cell ID's
@@ -143,9 +186,7 @@ const gameBoard = (() => {
             // console.log(cell.id);
           }
     }
-
     //Function to remove player classes from cells after game
-    //this does not work yet!
     const resetCellClass = function() {
         for (let hey = 1; hey <= 9; hey++){
             var theCell = document.getElementById(`cell-${hey}`);
@@ -157,12 +198,12 @@ const gameBoard = (() => {
         }
     }
 
-    //function to make an array blank
+    // FUNCTION to make an array blank
     const makeArrayBlank = function(array) {
         array.fill('');
         }
 
-    //function to fill textContent of game board cells with array
+    // FUNCTION to fill textContent of game board cells with array
     const fillCells = function(array) {
         let b=1;
         array.forEach((i) => {
@@ -174,7 +215,7 @@ const gameBoard = (() => {
         });
     }
 
-//function to check for winners or tie
+// FUNCTION to check for winners or tie
 const checkForWinners = function(array) {
 
     //check if array contains all X's
@@ -235,7 +276,6 @@ const checkForWinners = function(array) {
         messageArea.textContent = resultsValue;
         //stop background highlighting on gameBoard
         gameBoardContainer.classList.remove('gameboardcontainer-active');
-        // displayElement(newGameBtnDiv,'block');
         displayElement(newGameBtnDiv,'block');
         gameBoard.resetCellClass();
     } else {
@@ -244,10 +284,9 @@ const checkForWinners = function(array) {
         gameFlow.switchPlayers();
         console.log('we have switched players!')
     }
-    return resultsValue;
+    // return resultsValue;
     }
-
-
+// END FUNCTION to check for winners
 
  return {
      gameBoardArray,
@@ -262,6 +301,26 @@ const checkForWinners = function(array) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // GAME FLOW OBJECT
 const gameFlow = (() => {
 
@@ -269,6 +328,7 @@ let playerOne = '';
 let playerTwo = '';
 let currentPlayer = '';
 
+    //FUNCTION to start two player game
     const startTwoPlayerGame = function(){
         console.log('start 2 player game button was pushed');
         //hide the form you just filled out
@@ -308,10 +368,7 @@ let currentPlayer = '';
         }
     }
 
-
-    
-//something still not working - colors after starting over is messed up - i think it's not just from this
-//it's something in the whole game, happens on third game sometimes second
+    // FUNCTION to reset game
     const resetGame = function(){
         currentPlayer = playerOne;
         messageArea.textContent=currentPlayer.turnMessage;
@@ -322,11 +379,11 @@ let currentPlayer = '';
         gameBoardContainer.addEventListener('click', makeAMove);
     }
 
-         //function to switch players
-         const switchPlayers = function(){
-            if (currentPlayer === playerOne) {
-                console.log(`Current player is 1 and switching from ${currentPlayer.name}`);
-                currentPlayer = playerTwo;
+    // FUNCTION to switch players
+    const switchPlayers = function(){
+        if (currentPlayer === playerOne) {
+            console.log(`Current player is 1 and switching from ${currentPlayer.name}`);
+            currentPlayer = playerTwo;
                 console.log(`to ${currentPlayer.name}`);
                 messageArea.textContent = currentPlayer.turnMessage;
                 
@@ -339,7 +396,7 @@ let currentPlayer = '';
             return;
         }
 
-     //function to let a user place a letter
+     // FUNCTION to make a move
      const makeAMove = function(event){
 
         let target = event.target;
@@ -353,43 +410,19 @@ let currentPlayer = '';
             //put current player text into the corresponding index in the array
             gameBoard.gameBoardArray[indexNum] = currentPlayer.playerText;
                 console.log(gameBoard.gameBoardArray[indexNum]);
-            
-            
-
             //put current player text into game board grid cell
             target.textContent = currentPlayer.playerText;
                 // console.log(`Player One text is ${playerOne.playerText} and Player Two text is ${playerTwo.playerText} and current player text is ${currentPlayer.playerText}`);
-            
             //check to see if there's a winner
            gameBoard.checkForWinners();
-
-           //somehow things are not coming back here.
-           //why didn't this version work?
-           
-            // if (gameBoard.resultsValue === 'winner') {
-            //     messageArea.textContent = 'Winner!';
-            // } else if (gameBoard.resultsValue === 'tie') {
-            //     messageArea.textContent = 'Tie!';
-            // } else if (gameBoard.resultsValue === 'play') {
-            //     console.log('keep playing');
-            //     console.log('did I switch players?');
-            // }
-           
-        // } else if (target.innerText !== '' && event.target.className === 'cell'){
-        //     console.log('cannot make a move')
         }else {
             console.log(`target class list is ${target.classList} and i cannot make a move`);
         }
     }
     //end make a move function
 
-
-
-
     startButton2.addEventListener('click', startTwoPlayerGame);
     resetButton.addEventListener('click', resetGame);
-
-    
 
     return {
         playerOne,
@@ -397,12 +430,8 @@ let currentPlayer = '';
         currentPlayer,
         switchPlayers,
     }
-
 })();
 
    
 
-// //DISPLAY CONTROLS OBJECT
-// const displayControls = (() => {
-// });
 
