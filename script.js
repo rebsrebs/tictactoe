@@ -107,7 +107,7 @@ twoPlayerButton.addEventListener('click', function(){
 
 //FACTORY FUNCTION TO CREATE PLAYERS
 const playerFactory = (name, playerText) => {
-    const turnMessage = `${name}'s turn`; 
+    const turnMessage = `${name}'s turn.`; 
     const winnerMessage = `${name} is the winner!`;
     const styleSelector = `${playerText}-style`;
     return {

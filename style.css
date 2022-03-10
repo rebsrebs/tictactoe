@@ -56,12 +56,15 @@ button{
     flex-direction:row;
     justify-content:center;
     align-items:baseline;
+    margin-right:15px;
+    margin-left:15px;
 }
 
 .playerlabel {
-    font-weight:bold;
+    /* font-weight:bold; */
     font-size:16px;
     text-transform: uppercase;
+    white-space: nowrap
 }
 
 .player1display, .player2display{
@@ -145,6 +148,7 @@ fieldset{
     background-color: lightgray;
     border-color:black;
     z-index:4;
+    margin-top:10px;
 }
 
 .cell{
