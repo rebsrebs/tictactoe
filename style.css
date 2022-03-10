@@ -15,9 +15,9 @@ body{
     margin:10px;
 } */
 
-.newgamebutton{
+/* .newgamebutton{
     margin:10px;
-}
+} */
 
 button{
     height:40px;
@@ -30,23 +30,18 @@ button{
 
 .newgamebtndiv {
     background-color:rgb(228, 196, 228);
-    padding:10px;
 }
 
 .playerchoicearea {
-    /* background-color:pink; */
+    background-color:pink;
     display:none;
-    padding:10px;
 }
 
 #playerlist {
     background-color:rgb(209, 55, 81);
     display:none;
-    padding:10px;
     width:300px;
     justify-content:space-around;
-    box-sizing:border-box;
-    height:60px;
 }
 
 .playernamearea {
@@ -167,9 +162,7 @@ fieldset{
 #whoseturn{
     font-size:20px;
     text-align:center;
-    padding:20px;
     background-color: aqua;
-    height:30px;
 }
 
 .X-style {
@@ -212,4 +205,11 @@ button{
     background-color: rgb(203, 157, 247);
     border-style:none;
     padding:10px 20px 10px 20px;
+}
+
+.strip {
+    box-sizing: border-box;
+    height:40px;
+    margin-top:10px;
+    margin-bottom:10px;
 }
