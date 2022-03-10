@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function(){
 newGameButton.addEventListener('click', function(){
     console.log('New Game Button was pushed');
     whoseTurn.textContent='';
-    displayElement(playerChoiceArea, 'block');
+    displayElement(playerChoiceArea, 'flex');
     hideElement(newGameBtnDiv);
     hideElement(playerList);
     gameBoard.resetCellClass();

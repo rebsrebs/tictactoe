@@ -9,6 +9,7 @@ body{
     justify-content:space-around;
     flex-direction:column;
     font-family: Arial, Helvetica, sans-serif;
+    position:relative;
 }
 
 /* button{
@@ -35,6 +36,7 @@ button{
 .playerchoicearea {
     background-color:pink;
     display:none;
+    /* justify-content:space-between; */
 }
 
 #playerlist {
@@ -163,6 +165,8 @@ fieldset{
     font-size:20px;
     text-align:center;
     background-color: aqua;
+    display:flex;
+    align-items: center;
 }
 
 .X-style {
@@ -205,6 +209,8 @@ button{
     background-color: rgb(203, 157, 247);
     border-style:none;
     padding:10px 20px 10px 20px;
+    margin-left:10px;
+    margin-right:10px;
 }
 
 .strip {
@@ -212,4 +218,11 @@ button{
     height:40px;
     margin-top:10px;
     margin-bottom:10px;
+}
+
+.formcontainer {
+    position:absolute;
+    z-index:50;
+    box-shadow: 6px 5px 5px rgba(0, 0, 0, 0.467);
+    top:25%;
 }
