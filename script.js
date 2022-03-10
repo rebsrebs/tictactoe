@@ -146,12 +146,15 @@ const gameBoard = (() => {
     }
 
     //Function to remove player classes from cells after game
+    //this does not work yet!
     const resetCellClass = function() {
         for (let hey = 1; hey <= 9; hey++){
             var theCell = document.getElementById(`cell-${hey}`);
-            theCell.classList.remove('.X-style');
-            theCell.classList.remove('.O-style');
-            console.log(`we have removed player styles from cell-${hey}`)
+            // console.log(`${theCell} class list was ${theCell.classList} `);
+            theCell.classList.remove('X-style');
+            theCell.classList.remove('O-style');
+            // console.log(`Now ${theCell} class list is ${theCell.classList} `);
+            // console.log(`we have removed player styles from cell-${hey}`)
         }
     }
 
@@ -265,7 +268,9 @@ let playerTwo = '';
 let currentPlayer = '';
 
     const startTwoPlayerGame = function(){
+        console.log('start 2 player game button was pushed');
         //hide the form you just filled out
+        twoPlayerButton.classList.remove('clicked');
         hideElement(twoPlayerFormContainer);
         hideElement(playerChoiceArea);
         //get name of playerOne from the form input
@@ -279,7 +284,7 @@ let currentPlayer = '';
         displayElement(playerList,'flex');
         //create playerOne using factory function and assign to X
         playerOne = playerFactory(playerOneName,'X');
-        console.log(`Player One is named ${playerOne.name} andtext is ${playerOne.playerText}`);
+        console.log(`Player One is named ${playerOne.name} and text is ${playerOne.playerText}`);
         //create playerTwo using factory function and assign to O
         playerTwo = playerFactory(playerTwoName,'O');
         console.log(`Player Two is named ${playerTwo.name} and text is ${playerTwo.playerText}`);
@@ -317,13 +322,13 @@ let currentPlayer = '';
 
          //function to switch players
          const switchPlayers = function(){
-            if (currentPlayer == playerOne) {
+            if (currentPlayer === playerOne) {
                 console.log(`Current player is 1 and switching from ${currentPlayer.name}`);
                 currentPlayer = playerTwo;
                 console.log(`to ${currentPlayer.name}`);
                 whoseTurn.textContent = currentPlayer.turnMessage;
                 
-            } else if (currentPlayer == playerTwo) {
+            } else if (currentPlayer === playerTwo) {
                 console.log(`Current player is 2 and switching from ${currentPlayer.name}`);
                 currentPlayer = playerOne;
                 console.log(`to ${currentPlayer.name}`);
@@ -336,12 +341,11 @@ let currentPlayer = '';
      const makeAMove = function(event){
 
         let target = event.target;
-        console.log(`Target is ${target}`);
         //styling
         target.classList.add(currentPlayer.styleSelector);
         //if cell is empty and has classname cell
         if (target.innerText == '' && target.classList.contains('cell') && gameBoardContainer.classList.contains('gameboardcontainer-active')) {
-            console.log(`target class list is ${target.classList} and we can make a mark`);
+            console.log(`target class list is ${target.classList} and we can make an ${currentPlayer.playerText}`);
             //get corresponding index number for gameBoardArray by finding cell ID name number minus one
             indexNum = Number(target.id.slice(-1))-1;
             //put current player text into the corresponding index in the array
@@ -352,8 +356,8 @@ let currentPlayer = '';
 
             //put current player text into game board grid cell
             target.textContent = currentPlayer.playerText;
-                console.log(`Player One text is ${playerOne.playerText} and Player Two text is ${playerTwo.playerText} and current player text is ${currentPlayer.playerText}`);
-
+                // console.log(`Player One text is ${playerOne.playerText} and Player Two text is ${playerTwo.playerText} and current player text is ${currentPlayer.playerText}`);
+            
             //check to see if there's a winner
            gameBoard.checkForWinners();
 
