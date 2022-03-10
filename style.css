@@ -11,22 +11,30 @@ body{
     font-family: Arial, Helvetica, sans-serif;
 }
 
-button{
+/* button{
+    margin:10px;
+} */
+
+.newgamebutton{
     margin:10px;
 }
 
+button{
+    height:40px;
+}
+
 .header {
-    background-color:rgb(223, 223, 244);
+    /* background-color:rgb(223, 223, 244); */
     padding:10px;
 }
 
-.newgamebtndiv {
+/* .newgamebtndiv {
     background-color:rgb(228, 196, 228);
     padding:10px;
-}
+} */
 
 .playerchoicearea {
-    background-color:pink;
+    /* background-color:pink; */
     display:none;
     padding:10px;
 }
@@ -37,6 +45,8 @@ button{
     padding:10px;
     width:300px;
     justify-content:space-around;
+    box-sizing:border-box;
+    height:60px;
 }
 
 .playernamearea {
@@ -58,7 +68,7 @@ button{
 /* One Player Form */
 
 #oneplayerformcontainer {
-    background-color:turquoise;
+    /* background-color:turquoise; */
     display:none;
 }
 
@@ -123,8 +133,8 @@ fieldset{
 
 .gameboardcontainer {
     display:grid;
-    width:500px;
-    height:500px;
+    width:400px;
+    height:400px;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
     background-color: lightgray;
@@ -137,7 +147,7 @@ fieldset{
     align-items: center;
     justify-content: center;
     border:1px solid black;
-    font-size: 80px;
+    font-size: 70px;
     z-index:5;
 }
 
