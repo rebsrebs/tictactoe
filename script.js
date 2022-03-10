@@ -7,7 +7,7 @@ const playerChoiceArea = document.querySelector('#playerchoicearea');
 const playerList = document.getElementById('playerlist');
 const playerOneDisplay = document.getElementById('player1display');
 const playerTwoDisplay = document.getElementById('player2display');
-const whoseTurn = document.getElementById('whoseturn');
+const messageArea = document.getElementById('messagearea');
 
 //new game button opens div to select further options before starting game
 const newGameButton = document.getElementById('newgamebutton');
@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function(){
 //when you click new game
 newGameButton.addEventListener('click', function(){
     console.log('New Game Button was pushed');
-    whoseTurn.textContent='';
+    messageArea.textContent='';
     displayElement(playerChoiceArea, 'flex');
     hideElement(newGameBtnDiv);
     hideElement(playerList);
@@ -217,14 +217,14 @@ const checkForWinners = function(array) {
         //show the New Game Button
         displayElement(newGameBtnDiv,'block');
         resultsValue = `${playerOneName} wins!`
-        whoseTurn.textContent = resultsValue;
+        messageArea.textContent = resultsValue;
         gameBoardContainer.classList.remove('gameboardcontainer-active');
         gameBoard.resetCellClass();
     } else if (rowsToCheckArray.some(allOs) == true){
         hideElement(playerList);
         const playerTwoName = document.getElementById('player2name').value;
         resultsValue = `${playerTwoName} wins!`
-        whoseTurn.textContent = resultsValue;
+        messageArea.textContent = resultsValue;
         gameBoardContainer.classList.remove('gameboardcontainer-active');
         displayElement(newGameBtnDiv,'block');
         gameBoard.resetCellClass();
@@ -232,7 +232,7 @@ const checkForWinners = function(array) {
         hideElement(playerList);
         console.log('tie');
         resultsValue='It\'s a tie!';
-        whoseTurn.textContent = resultsValue;
+        messageArea.textContent = resultsValue;
         //stop background highlighting on gameBoard
         gameBoardContainer.classList.remove('gameboardcontainer-active');
         // displayElement(newGameBtnDiv,'block');
@@ -295,13 +295,13 @@ let currentPlayer = '';
         // gameBoardContainer.classList.add(currentPlayer.styleSelector);
         console.log(`current player is ${currentPlayer.name} and their style is ${currentPlayer.styleSelector}`);
         // gameBoardContainer.classList.add('playeronestyling');
-        whoseTurn.textContent=playerOne.turnMessage;
+        messageArea.textContent=playerOne.turnMessage;
         gameBoard.makeArrayBlank(gameBoard.gameBoardArray);
         gameBoard.fillCells(gameBoard.gameBoardArray);
         gameBoardContainer.classList.add('gameboardcontainer-active');
         gameBoardContainer.addEventListener('click', makeAMove);
         // switchPlayers;
-        // whoseTurn.textContent=playerTwo.turnMessage;
+        // messageArea.textContent=playerTwo.turnMessage;
         return{
             playerOne,
             playerTwo
@@ -314,7 +314,7 @@ let currentPlayer = '';
 //it's something in the whole game, happens on third game sometimes second
     const resetGame = function(){
         currentPlayer = playerOne;
-        whoseTurn.textContent=currentPlayer.turnMessage;
+        messageArea.textContent=currentPlayer.turnMessage;
         gameBoard.resetCellClass();
         gameBoard.makeArrayBlank(gameBoard.gameBoardArray);
         gameBoard.fillCells(gameBoard.gameBoardArray);
@@ -328,13 +328,13 @@ let currentPlayer = '';
                 console.log(`Current player is 1 and switching from ${currentPlayer.name}`);
                 currentPlayer = playerTwo;
                 console.log(`to ${currentPlayer.name}`);
-                whoseTurn.textContent = currentPlayer.turnMessage;
+                messageArea.textContent = currentPlayer.turnMessage;
                 
             } else if (currentPlayer === playerTwo) {
                 console.log(`Current player is 2 and switching from ${currentPlayer.name}`);
                 currentPlayer = playerOne;
                 console.log(`to ${currentPlayer.name}`);
-                whoseTurn.textContent = currentPlayer.turnMessage;
+                messageArea.textContent = currentPlayer.turnMessage;
             }
             return;
         }
@@ -367,9 +367,9 @@ let currentPlayer = '';
            //why didn't this version work?
            
             // if (gameBoard.resultsValue === 'winner') {
-            //     whoseTurn.textContent = 'Winner!';
+            //     messageArea.textContent = 'Winner!';
             // } else if (gameBoard.resultsValue === 'tie') {
-            //     whoseTurn.textContent = 'Tie!';
+            //     messageArea.textContent = 'Tie!';
             // } else if (gameBoard.resultsValue === 'play') {
             //     console.log('keep playing');
             //     console.log('did I switch players?');
