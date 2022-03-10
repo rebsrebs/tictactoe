@@ -9,8 +9,7 @@ const playerOneDisplay = document.getElementById('player1display');
 const playerTwoDisplay = document.getElementById('player2display');
 const messageArea = document.getElementById('messagearea');
 
-//new game button opens div to select further options before starting game
-const newGameButton = document.getElementById('newgamebutton');
+
 
 //buttons to choose one player or two player game 
 const onePlayerButton = document.getElementById('oneplayerbutton');
@@ -31,7 +30,7 @@ const resetButton = document.getElementById('resetbutton');
 
 // for gameBoard styling
 const gameBoardContainer = document.getElementById('gameboardcontainer');
-// const cells = document.querySelectorAll('.cell');
+
 
 
 
@@ -48,12 +47,6 @@ function hideElement(element){
     element.style.display ='none';
 }
 
-// Function to remove all children elements
-function removeAllChildNodes(parent) {
-    while (parent.firstChild) {
-        parent.removeChild(parent.firstChild);
-    }
-}
 
 
 
@@ -71,13 +64,13 @@ document.addEventListener('DOMContentLoaded', function(){
 // when you click one player button
 onePlayerButton.addEventListener('click', function(){
 
-if (twoPlayerButton.classList.contains('clicked')) {
-    twoPlayerButton.classList.remove('clicked');
-    hideElement(twoPlayerFormContainer);
-}
+    if (twoPlayerButton.classList.contains('clicked')) {
+        twoPlayerButton.classList.remove('clicked');
+        hideElement(twoPlayerFormContainer);
+    }
 
-    onePlayerButton.classList.add("clicked");
-    displayElement(onePlayerFormContainer,'block');
+        onePlayerButton.classList.add("clicked");
+        displayElement(onePlayerFormContainer,'block');
 });
 
 // when you click two player button
@@ -157,7 +150,10 @@ const playerFactory = (name, playerText) => {
 
 // GAMEBOARD OBJECT
 const gameBoard = (() => {
-    const newGameBtnDiv = document.getElementById('newgamebtndiv');
+    
+//new game button opens div to select further options before starting game
+const newGameBtnDiv = document.getElementById('newgamebtndiv');
+const newGameButton = document.getElementById('newgamebutton');
 
     //when you click new game button
 newGameButton.addEventListener('click', function(){
@@ -339,7 +335,7 @@ let currentPlayer = '';
         const playerOneName = document.getElementById('player1name2').value;
         //get name of playerTwo from the form input
         const playerTwoName = document.getElementById('player2name').value;
-        onePlayerForm.reset();
+        twoPlayerForm.reset();
         //display player names
         playerOneDisplay.textContent=`${playerOneName}`;
         playerTwoDisplay.textContent=`${playerTwoName}`;
@@ -352,16 +348,12 @@ let currentPlayer = '';
         console.log(`Player Two is named ${playerTwo.name} and text is ${playerTwo.playerText}`);
         //set first turn at player one's turn
         currentPlayer = playerOne;
-        // gameBoardContainer.classList.add(currentPlayer.styleSelector);
         console.log(`current player is ${currentPlayer.name} and their style is ${currentPlayer.styleSelector}`);
-        // gameBoardContainer.classList.add('playeronestyling');
         messageArea.textContent=playerOne.turnMessage;
         gameBoard.makeArrayBlank(gameBoard.gameBoardArray);
         gameBoard.fillCells(gameBoard.gameBoardArray);
         gameBoardContainer.classList.add('gameboardcontainer-active');
         gameBoardContainer.addEventListener('click', makeAMove);
-        // switchPlayers;
-        // messageArea.textContent=playerTwo.turnMessage;
         return{
             playerOne,
             playerTwo
