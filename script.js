@@ -1,96 +1,119 @@
 
 
-//DOM VARIABLES
 
-
-const playerChoiceArea = document.querySelector('#playerchoicearea');
-const playerList = document.getElementById('playerlist');
-const playerOneDisplay = document.getElementById('player1display');
-const playerTwoDisplay = document.getElementById('player2display');
-const messageArea = document.getElementById('messagearea');
-
-
-
-//buttons to choose one player or two player game 
-const onePlayerButton = document.getElementById('oneplayerbutton');
-const twoPlayerButton = document.getElementById('twoplayerbutton');
-
-//forms and form containersfor one player name and difficulty level, and two player names
-const onePlayerFormContainer = document.getElementById('oneplayerformcontainer');
-const onePlayerForm = document.getElementById("oneplayerform");
-const twoPlayerFormContainer = document.getElementById('twoplayerformcontainer');
-const twoPlayerForm = document.getElementById("twoplayerform");
-
-//buttons to start one and two player games
-const startButton1 = document.getElementById('startbutton1');
-const startButton2 = document.getElementById('startbutton2');
-
-//reset button
 const resetButton = document.getElementById('resetbutton');
 
-// for gameBoard styling
-const gameBoardContainer = document.getElementById('gameboardcontainer');
+//DISPLAY CONTROLS OBJECT
+const displayControls = (() => {
 
+    //DOM VARIABLES
 
+    //buttons to choose one player or two player game 
+    const playerChoiceArea = document.querySelector('#playerchoicearea');
+    const onePlayerButton = document.getElementById('oneplayerbutton');
+    const twoPlayerButton = document.getElementById('twoplayerbutton');
 
+    //section that lists the current player names
+    const playerList = document.getElementById('playerlist');
 
+    //displays current player names in the player list area
+    const playerOneDisplay = document.getElementById('player1display');
+    const playerTwoDisplay = document.getElementById('player2display');
 
-// UTILITY FUNCTIONS
+    //shows whose turn it is or results of game
+    const messageArea = document.getElementById('messagearea');
 
-// Function to show one element
-function displayElement(element, display){
+    //forms and form containersfor one player name and difficulty level, and two player names
+    const onePlayerFormContainer = document.getElementById('oneplayerformcontainer');
+    const onePlayerForm = document.getElementById("oneplayerform");
+    const twoPlayerFormContainer = document.getElementById('twoplayerformcontainer');
+    const twoPlayerForm = document.getElementById("twoplayerform");
+
+    //buttons to start one and two player games
+    // const startButton1 = document.getElementById('startbutton1');
+    // const startButton2 = document.getElementById('startbutton2');
+
+    //reset button
+    // const resetButton = document.getElementById('resetbutton');
+
+    // for gameBoard styling
+    const gameBoardContainer = document.getElementById('gameboardcontainer');
+
+    // UTILITY FUNCTIONS
+
+    // Function to show one element
+    function displayElement(element, display){
     element.style.display = display;
-}
+    }
 
-// Function to hide one element
-function hideElement(element){
+    // Function to hide one element
+    function hideElement(element){
     element.style.display ='none';
-}
-
-
-
-
-
-//EVENT LISTENERS
-
-//when you load page, create game board but grayed out
-document.addEventListener('DOMContentLoaded', function(){
-    gameBoard.createCells();
-    gameBoard.fillCells(gameBoard.gameBoardArray);
-});
-
-
-
-// when you click one player button
-onePlayerButton.addEventListener('click', function(){
-
-    if (twoPlayerButton.classList.contains('clicked')) {
-        twoPlayerButton.classList.remove('clicked');
-        hideElement(twoPlayerFormContainer);
     }
 
-        onePlayerButton.classList.add("clicked");
-        displayElement(onePlayerFormContainer,'block');
-});
+    //EVENT LISTENERS
 
-// when you click two player button
-twoPlayerButton.addEventListener('click', function(){
+    // when you load page, create game board but grayed out
+    document.addEventListener('DOMContentLoaded', function(){
+        gameBoard.createCells();
+        gameBoard.fillCells(gameBoard.gameBoardArray);
+    });
 
-    if (onePlayerButton.classList.contains('clicked')) {
-        onePlayerButton.classList.remove('clicked');
-        hideElement(onePlayerFormContainer);
+    // when you click one player button
+    onePlayerButton.addEventListener('click', function(){
+
+        if (twoPlayerButton.classList.contains('clicked')) {
+            twoPlayerButton.classList.remove('clicked');
+            hideElement(twoPlayerFormContainer);
+        }
+
+            onePlayerButton.classList.add("clicked");
+            displayElement(onePlayerFormContainer,'block');
+    });
+
+    // when you click two player button
+    twoPlayerButton.addEventListener('click', function(){
+
+        if (onePlayerButton.classList.contains('clicked')) {
+            onePlayerButton.classList.remove('clicked');
+            hideElement(onePlayerFormContainer);
+        }
+
+        twoPlayerButton.classList.add("clicked");
+        displayElement(twoPlayerFormContainer,'block');
+    });
+
+    return{
+        playerChoiceArea,
+        onePlayerButton,
+        twoPlayerButton,
+        playerList,
+        playerOneDisplay,
+        playerTwoDisplay,
+        messageArea,
+        onePlayerFormContainer,
+        onePlayerForm,
+        twoPlayerFormContainer,
+        twoPlayerForm,
+        // startButton1,
+        // startButton2,
+        // resetButton,
+        gameBoardContainer,
+        displayElement,
+        hideElement,
     }
-
-    twoPlayerButton.classList.add("clicked");
-    displayElement(twoPlayerFormContainer,'block');
-});
+})();
+//END DISPLAY CONTROLS MODULE
 
 
 
 
-// //DISPLAY CONTROLS OBJECT
-// const displayControls = (() => {
-// });
+
+
+
+
+
+
 
 
 
@@ -158,10 +181,10 @@ const newGameButton = document.getElementById('newgamebutton');
     //when you click new game button
 newGameButton.addEventListener('click', function(){
     console.log('New Game Button was pushed');
-    messageArea.textContent='';
-    displayElement(playerChoiceArea, 'flex');
-    hideElement(newGameBtnDiv);
-    hideElement(playerList);
+    displayControls.messageArea.textContent='';
+    displayControls.displayElement(displayControls.playerChoiceArea, 'flex');
+    displayControls.hideElement(newGameBtnDiv);
+    displayControls.hideElement(displayControls.playerList);
     gameBoard.resetCellClass();
     gameBoard.makeArrayBlank(gameBoard.gameBoardArray);
     gameBoard.fillCells(gameBoard.gameBoardArray);
@@ -178,7 +201,7 @@ newGameButton.addEventListener('click', function(){
             var cell = document.createElement('div');
             cell.classList.add('cell');
             cell.id=`cell-${step}`;
-            gameBoardContainer.appendChild(cell);
+            displayControls.gameBoardContainer.appendChild(cell);
             // console.log(cell.id);
           }
     }
@@ -250,29 +273,31 @@ const checkForWinners = function(array) {
 //if one of the arrays to check has all X's
     if (rowsToCheckArray.some(allXs) == true){
         const playerOneName = document.getElementById('player1name2').value;
-        hideElement(playerList);
+        displayControls.hideElement(displayControls.playerList);
         //show the New Game Button
-        displayElement(newGameBtnDiv,'block');
+        displayControls.displayElement(newGameBtnDiv,'block');
         resultsValue = `${playerOneName} wins!`
-        messageArea.textContent = resultsValue;
-        gameBoardContainer.classList.remove('gameboardcontainer-active');
+        console.log(`${playerOneName} wins!`)
+        displayControls.messageArea.textContent = resultsValue;
+        displayControls.gameBoardContainer.classList.remove('gameboardcontainer-active');
         gameBoard.resetCellClass();
     } else if (rowsToCheckArray.some(allOs) == true){
-        hideElement(playerList);
+        displayControls.hideElement(displayControls.playerList);
         const playerTwoName = document.getElementById('player2name').value;
         resultsValue = `${playerTwoName} wins!`
-        messageArea.textContent = resultsValue;
-        gameBoardContainer.classList.remove('gameboardcontainer-active');
-        displayElement(newGameBtnDiv,'block');
+        console.log(`${playerTwoName} wins!`)
+        displayControls.messageArea.textContent = resultsValue;
+        displayControls.gameBoardContainer.classList.remove('gameboardcontainer-active');
+        displayControls.displayElement(newGameBtnDiv,'block');
         gameBoard.resetCellClass();
     } else if (allFull(gameBoardArray) == true){
-        hideElement(playerList);
+        displayControls.hideElement(displayControls.playerList);
         console.log('tie');
         resultsValue='It\'s a tie!';
-        messageArea.textContent = resultsValue;
+        displayControls.messageArea.textContent = resultsValue;
         //stop background highlighting on gameBoard
-        gameBoardContainer.classList.remove('gameboardcontainer-active');
-        displayElement(newGameBtnDiv,'block');
+        displayControls.gameBoardContainer.classList.remove('gameboardcontainer-active');
+        displayControls.displayElement(newGameBtnDiv,'block');
         gameBoard.resetCellClass();
     } else {
         console.log('play');
@@ -324,22 +349,24 @@ let playerOne = '';
 let playerTwo = '';
 let currentPlayer = '';
 
+const startButton2 = document.getElementById('startbutton2');
+
     //FUNCTION to start two player game
     const startTwoPlayerGame = function(){
         console.log('start 2 player game button was pushed');
         //hide the form you just filled out
-        twoPlayerButton.classList.remove('clicked');
-        hideElement(twoPlayerFormContainer);
-        hideElement(playerChoiceArea);
+        displayControls.twoPlayerButton.classList.remove('clicked');
+        displayControls.hideElement(displayControls.twoPlayerFormContainer);
+        displayControls.hideElement(displayControls.playerChoiceArea);
         //get name of playerOne from the form input
         const playerOneName = document.getElementById('player1name2').value;
         //get name of playerTwo from the form input
         const playerTwoName = document.getElementById('player2name').value;
-        twoPlayerForm.reset();
+        displayControls.twoPlayerForm.reset();
         //display player names
-        playerOneDisplay.textContent=`${playerOneName}`;
-        playerTwoDisplay.textContent=`${playerTwoName}`;
-        displayElement(playerList,'flex');
+        displayControls.playerOneDisplay.textContent=`${playerOneName}`;
+        displayControls.textContent=`${playerTwoName}`;
+        displayControls.displayElement(displayControls.playerList,'flex');
         //create playerOne using factory function and assign to X
         playerOne = playerFactory(playerOneName,'X');
         console.log(`Player One is named ${playerOne.name} and text is ${playerOne.playerText}`);
@@ -349,11 +376,11 @@ let currentPlayer = '';
         //set first turn at player one's turn
         currentPlayer = playerOne;
         console.log(`current player is ${currentPlayer.name} and their style is ${currentPlayer.styleSelector}`);
-        messageArea.textContent=playerOne.turnMessage;
+        displayControls.messageArea.textContent=playerOne.turnMessage;
         gameBoard.makeArrayBlank(gameBoard.gameBoardArray);
         gameBoard.fillCells(gameBoard.gameBoardArray);
-        gameBoardContainer.classList.add('gameboardcontainer-active');
-        gameBoardContainer.addEventListener('click', makeAMove);
+        displayControls.gameBoardContainer.classList.add('gameboardcontainer-active');
+        displayControls.gameBoardContainer.addEventListener('click', makeAMove);
         return{
             playerOne,
             playerTwo
@@ -363,12 +390,12 @@ let currentPlayer = '';
     // FUNCTION to reset game
     const resetGame = function(){
         currentPlayer = playerOne;
-        messageArea.textContent=currentPlayer.turnMessage;
+        displayControls.messageArea.textContent=currentPlayer.turnMessage;
         gameBoard.resetCellClass();
         gameBoard.makeArrayBlank(gameBoard.gameBoardArray);
         gameBoard.fillCells(gameBoard.gameBoardArray);
-        gameBoardContainer.classList.add('gameboardcontainer-active');
-        gameBoardContainer.addEventListener('click', makeAMove);
+        displayControls.gameBoardContainer.classList.add('gameboardcontainer-active');
+        displayControls.gameBoardContainer.addEventListener('click', makeAMove);
     }
 
     // FUNCTION to switch players
@@ -377,13 +404,13 @@ let currentPlayer = '';
             console.log(`Current player is 1 and switching from ${currentPlayer.name}`);
             currentPlayer = playerTwo;
                 console.log(`to ${currentPlayer.name}`);
-                messageArea.textContent = currentPlayer.turnMessage;
+                displayControls.messageArea.textContent = currentPlayer.turnMessage;
                 
             } else if (currentPlayer === playerTwo) {
                 console.log(`Current player is 2 and switching from ${currentPlayer.name}`);
                 currentPlayer = playerOne;
                 console.log(`to ${currentPlayer.name}`);
-                messageArea.textContent = currentPlayer.turnMessage;
+                displayControls.messageArea.textContent = currentPlayer.turnMessage;
             }
             return;
         }
@@ -395,7 +422,7 @@ let currentPlayer = '';
         //styling
         target.classList.add(currentPlayer.styleSelector);
         //if cell is empty and has classname cell
-        if (target.innerText == '' && target.classList.contains('cell') && gameBoardContainer.classList.contains('gameboardcontainer-active')) {
+        if (target.innerText == '' && target.classList.contains('cell') && displayControls.gameBoardContainer.classList.contains('gameboardcontainer-active')) {
             console.log(`target class list is ${target.classList} and we can make an ${currentPlayer.playerText}`);
             //get corresponding index number for gameBoardArray by finding cell ID name number minus one
             indexNum = Number(target.id.slice(-1))-1;
