@@ -133,6 +133,12 @@ const gameBoard = (() => {
     const newGameBtnDiv = document.getElementById('newgamebtndiv');
     const newGameButton = document.getElementById('newgamebutton');
 
+    //result for checkForWinner fuction
+    var resultsValue = '';
+        
+    //create array with default text
+    var gameBoardArray = ['T','I','C','T','A','C','T','O','E'];
+
     //when you click new game button
     newGameButton.addEventListener('click', function(){
         displayControls.twoPlayerForm.reset();
@@ -146,10 +152,7 @@ const gameBoard = (() => {
         gameBoard.fillCells(gameBoard.gameBoardArray);
     });
 
-    //result for checkForWinner fuction
-    var resultsValue = '';
-    //create array with default text
-    var gameBoardArray = ['T','I','C','T','A','C','T','O','E'];
+    // FUNCTIONS
 
     // Function to create cells in gameBoard grid
     const createCells = function() {
@@ -198,7 +201,7 @@ const gameBoard = (() => {
         //FUNCTION to check if all items in array are full
         const allFull = arr => arr.every(value => value === 'X' || value === 'O');
         
-    //create arrays of rows to check
+        //create arrays of rows to check
         var rowOneArray = gameBoardArray.slice(0,3);
         var rowTwoArray = gameBoardArray.slice(3,6);
         var rowThreeArray = gameBoardArray.slice(6);
@@ -208,61 +211,60 @@ const gameBoard = (() => {
         var diagonalOneArray = [gameBoardArray.at(0), gameBoardArray.at(4),gameBoardArray.at(8)];
         var diagonalTwoArray = [gameBoardArray.at(2), gameBoardArray.at(4),gameBoardArray.at(6)];
 
-    //create array of arrays to check
-    var rowsToCheckArray = [
-        rowOneArray,
-        rowTwoArray,
-        rowThreeArray,
-        columnOneArray,
-        columnTwoArray,
-        columnThreeArray,
-        diagonalOneArray,
-        diagonalTwoArray,
-    ]
+        //create array of arrays to check
+        var rowsToCheckArray = [
+            rowOneArray,
+            rowTwoArray,
+            rowThreeArray,
+            columnOneArray,
+            columnTwoArray,
+            columnThreeArray,
+            diagonalOneArray,
+            diagonalTwoArray,
+        ]
 
-    //if X wins
-    if (rowsToCheckArray.some(allXs) == true){
-        const playerOneName = document.getElementById('player1name2').value;
-        displayControls.hideElement(displayControls.playerList);
-        //show the New Game Button
-        displayControls.displayElement(newGameBtnDiv,'block');
-        resultsValue = `${playerOneName} wins!`
-        //something weird going on here
-        console.log(gameFlow.playerOne.winnerMessage);
-        console.log(`${gameFlow.playerOneName} wins!`)
-        displayControls.messageArea.textContent = resultsValue;
-        displayControls.gameBoardContainer.classList.remove('gameboardcontainer-active');
-        gameBoard.resetCellClass();
+        //if X wins
+        if (rowsToCheckArray.some(allXs) == true){
+            const playerOneName = document.getElementById('player1name2').value;
+            displayControls.hideElement(displayControls.playerList);
+            //show the New Game Button
+            displayControls.displayElement(newGameBtnDiv,'block');
+            resultsValue = `${playerOneName} wins!`
+            console.log(gameFlow.playerOne.winnerMessage);
+            console.log(`${gameFlow.playerOneName} wins!`)
+            displayControls.messageArea.textContent = resultsValue;
+            displayControls.gameBoardContainer.classList.remove('gameboardcontainer-active');
+            gameBoard.resetCellClass();
 
-    //if O wins
-    } else if (rowsToCheckArray.some(allOs) == true){
-        displayControls.hideElement(displayControls.playerList);
-        const playerTwoName = document.getElementById('player2name').value;
-        resultsValue = `${playerTwoName} wins!`
-        displayControls.messageArea.textContent = resultsValue;
-        displayControls.gameBoardContainer.classList.remove('gameboardcontainer-active');
-        displayControls.displayElement(newGameBtnDiv,'block');
-        gameBoard.resetCellClass();
+        //if O wins
+        } else if (rowsToCheckArray.some(allOs) == true){
+            displayControls.hideElement(displayControls.playerList);
+            const playerTwoName = document.getElementById('player2name').value;
+            resultsValue = `${playerTwoName} wins!`
+            displayControls.messageArea.textContent = resultsValue;
+            displayControls.gameBoardContainer.classList.remove('gameboardcontainer-active');
+            displayControls.displayElement(newGameBtnDiv,'block');
+            gameBoard.resetCellClass();
 
-    //if it's a tie
-    } else if (allFull(gameBoardArray) == true){
-        displayControls.hideElement(displayControls.playerList);
-        console.log('tie');
-        resultsValue='It\'s a tie!';
-        displayControls.messageArea.textContent = resultsValue;
-        //stop background highlighting on gameBoard
-        displayControls.gameBoardContainer.classList.remove('gameboardcontainer-active');
-        displayControls.displayElement(newGameBtnDiv,'block');
-        gameBoard.resetCellClass();
+        //if it's a tie
+        } else if (allFull(gameBoardArray) == true){
+            displayControls.hideElement(displayControls.playerList);
+            console.log('tie');
+            resultsValue='It\'s a tie!';
+            displayControls.messageArea.textContent = resultsValue;
+            //stop background highlighting on gameBoard
+            displayControls.gameBoardContainer.classList.remove('gameboardcontainer-active');
+            displayControls.displayElement(newGameBtnDiv,'block');
+            gameBoard.resetCellClass();
 
-    //if not win or no tie, keep playing
-    } else {
-        console.log('play');
-        resultsValue='play';
-        gameFlow.switchPlayers();
-        console.log('we have switched players!')
-    }
-    // return resultsValue;
+        //if not win or no tie, keep playing
+        } else {
+            console.log('play');
+            resultsValue='play';
+            gameFlow.switchPlayers();
+            console.log('we have switched players!')
+        }
+        // return resultsValue;
     }
 // END FUNCTION to check for winners
 
@@ -283,9 +285,34 @@ const gameBoard = (() => {
 // 4 GAME FLOW OBJECT MODULE
 const gameFlow = (() => {
 
-let currentPlayer = '';  
-let playerOne = '';
-let playerTwo = '';
+    let currentPlayer = '';  
+    let playerOne = '';
+    let playerTwo = '';
+    let difficultyLevel = '';
+
+    //FUNCTION to start one player game
+    const startOnePlayerGame = function(){
+        console.log('start 2 player game button was pushed');
+        //hide the form you just filled out
+        displayControls.onePlayerButton.classList.remove('clicked');
+        displayControls.hideElement(displayControls.playerChoiceArea);
+        displayControls.hideElement(displayControls.onePlayerFormContainer);
+        //get name of playerOne from the form input
+        const playerOneName = document.getElementById('player1name2').value;
+        const playerTwoName = 'Computer';
+
+        if (document.getElementById('easy').checked) {
+            console.log('easy radio button is checked');
+           difficultyLevel = 'easy';
+           }else if (document.getElementById('hard').checked) {
+            console.log('hard radio button is checked');
+           difficultyLevel = 'hard';
+           } else if (document.getElementById('impossible').checked) {
+           console.log('impossible radio button is checked');
+           difficultyLevel = 'impossible';
+           }
+    }
+    //end one player game
 
     //FUNCTION to start two player game
     const startTwoPlayerGame = function(){
@@ -322,6 +349,7 @@ let playerTwo = '';
             playerTwo
         }
     }
+    // End startTwoPlayerGame
 
     // FUNCTION to reset game
     const resetGame = function(){
@@ -377,6 +405,7 @@ let playerTwo = '';
     }
     //end make a move function
 
+    displayControls.startButton1.addEventListener('click', startOnePlayerGame);
     displayControls.startButton2.addEventListener('click', startTwoPlayerGame);
     displayControls.resetButton.addEventListener('click', resetGame);
 
@@ -385,6 +414,7 @@ let playerTwo = '';
         playerTwo,
         currentPlayer,
         switchPlayers,
+        difficultyLevel,
     }
 })();
 
