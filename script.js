@@ -156,7 +156,7 @@ const gameBoard = (() => {
 
     // Function to create cells in gameBoard grid
     const createCells = function() {
-        for (let step = 1; step <= 9; step++) {
+        for (let step = 0; step <= 8; step++) {
             var cell = document.createElement('div');
             cell.classList.add('cell');
             cell.id=`cell-${step}`;
@@ -167,7 +167,7 @@ const gameBoard = (() => {
 
     //Function to remove player classes from cells after game
     const resetCellClass = function() {
-        for (let hey = 1; hey <= 9; hey++){
+        for (let hey = 0; hey <= 8; hey++){
             var theCell = document.getElementById(`cell-${hey}`);
             theCell.classList.remove('X-style');
             theCell.classList.remove('O-style');
@@ -181,7 +181,7 @@ const gameBoard = (() => {
 
     // FUNCTION to fill textContent of game board cells with array
     const fillCells = function(array) {
-        let b=1;
+        let b=0;
         array.forEach((i) => {
             var currentCell = document.getElementById(`cell-${b}`);
             currentCell.textContent=i;
@@ -397,7 +397,7 @@ const gameFlow = (() => {
             //styling
             target.classList.add(currentPlayer.styleSelector);
             //get corresponding index number for gameBoardArray by finding cell ID name number minus one
-            indexNum = Number(target.id.slice(-1))-1;
+            indexNum = target.id.slice(-1);
             //put current player text into the corresponding index in the array
             gameBoard.gameBoardArray[indexNum] = currentPlayer.playerText;
                 console.log(gameBoard.gameBoardArray[indexNum]);
