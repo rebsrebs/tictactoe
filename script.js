@@ -355,11 +355,12 @@ let playerTwo = '';
      const makeAMove = function(event){
 
         let target = event.target;
-        //styling
-        target.classList.add(currentPlayer.styleSelector);
+        
         //if cell is empty and has classname cell
         if (target.innerText == '' && target.classList.contains('cell') && displayControls.gameBoardContainer.classList.contains('gameboardcontainer-active')) {
             console.log(`target class list is ${target.classList} and we can make an ${currentPlayer.playerText}`);
+            //styling
+            target.classList.add(currentPlayer.styleSelector);
             //get corresponding index number for gameBoardArray by finding cell ID name number minus one
             indexNum = Number(target.id.slice(-1))-1;
             //put current player text into the corresponding index in the array
