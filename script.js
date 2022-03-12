@@ -292,7 +292,7 @@ const gameFlow = (() => {
 
     //In Progress - FUNCTION to start one player game
     const startOnePlayerGame = function(){
-        console.log('start 2 player game button was pushed');
+        console.log('start 1 player game button was pushed');
 
         //hide the forms and buttons
         displayControls.onePlayerButton.classList.remove('clicked');
@@ -300,8 +300,7 @@ const gameFlow = (() => {
         displayControls.hideElement(displayControls.onePlayerFormContainer);
 
         //get name of playerOne from the form input
-        const playerOneName = document.getElementById('player1name2').value;
-        const playerTwoName = 'Computer';
+        const playerOneName = document.getElementById('player1name1').value;
 
         if (document.getElementById('easy').checked) {
             console.log('easy radio button is checked');
@@ -313,8 +312,31 @@ const gameFlow = (() => {
            console.log('impossible radio button is checked');
            difficultyLevel = 'impossible';
            }
+
+        //Create players
+        playerOne = playerFactory(playerOneName,'X');
+        playerTwo = playerFactory('Computer','O');
+        console.log(playerTwo);
+
+         //display player names
+         displayControls.playerOneDisplay.textContent=`${playerOne.name}`;
+         displayControls.playerTwoDisplay.textContent=`${playerTwo.name}`;
+         displayControls.displayElement(displayControls.playerList,'flex');
+         
+         //set first turn to player one's turn and display turn message
+         currentPlayer = playerOne;
+         displayControls.messageArea.textContent=playerOne.turnMessage;
+ 
+         // Make array blank and fill cells with it
+         gameBoard.makeArrayBlank(gameBoard.gameBoardArray);
+         gameBoard.fillCells(gameBoard.gameBoardArray);
+ 
+         // Change gameboard style to active and make clickable
+         displayControls.gameBoardContainer.classList.add('gameboardcontainer-active');
+         displayControls.gameBoardContainer.addEventListener('click', makeAMove);
     }
-    //END one player game
+    //END start one player game
+
 
     //FUNCTION to start two player game
     const startTwoPlayerGame = function(){
@@ -351,10 +373,7 @@ const gameFlow = (() => {
         // Change gameboard style to active and make clickable
         displayControls.gameBoardContainer.classList.add('gameboardcontainer-active');
         displayControls.gameBoardContainer.addEventListener('click', makeAMove);
-        return{
-            playerOne,
-            playerTwo
-        }
+    
     }
     // End startTwoPlayerGame
 
@@ -388,6 +407,13 @@ const gameFlow = (() => {
 
      // FUNCTION to make a move
      const makeAMove = function(event){
+
+        if (currentPlayer.playerName == 'Computer'){
+        computerMakeAMove();
+        } else {
+
+
+
         //Find out where player clicked
         let target = event.target;
         
@@ -410,7 +436,43 @@ const gameFlow = (() => {
             console.log(`target class list is ${target.classList} and i cannot make a move`);
         }
     }
+    }
     //end make a move function
+
+    //FUNCTION for computer to make a move
+    const computerMakeAMove = function() {
+
+        //make array for empty cells
+        var emptyCells = [];
+
+        for (const element of gameBoard.gameBoardArray) {
+        //if element is empty
+            if (element == '') {
+            //get index of element
+            var indexNo = gameBoard.gameBoardArray.indexOf(element);
+            //put index number into emptyCells array
+            emptyCells.push(indexNo);
+            }
+        }
+        
+        //pick a random element/number from emptyCells
+        //save it as computerMoveLocation
+        const randomIndex = Math.floor(Math.random() * emptyCells.length);
+        const computerMoveLocation = emptyCells[randomIndex];
+        //put playerText in that index number of the gameboard array
+        gameBoard.gameBoardArray(computerMoveLocation)=playerTwo.playerText;
+        //and put playerText in that cell ID number
+        var cellTarget = document.getElementById(`cell-${computerMoveLocation}`);
+        cellTarget.textContent = playerTwo.playerText;
+
+        //check to see if there's a winner
+        gameBoard.checkForWinners();
+        console.log('I am checking for winners');
+    }
+    
+    //END computer make a move
+
+
 
     displayControls.startButton1.addEventListener('click', startOnePlayerGame);
     displayControls.startButton2.addEventListener('click', startTwoPlayerGame);
