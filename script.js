@@ -293,10 +293,12 @@ const gameFlow = (() => {
     //FUNCTION to start one player game
     const startOnePlayerGame = function(){
         console.log('start 2 player game button was pushed');
-        //hide the form you just filled out
+
+        //hide the forms and buttons
         displayControls.onePlayerButton.classList.remove('clicked');
         displayControls.hideElement(displayControls.playerChoiceArea);
         displayControls.hideElement(displayControls.onePlayerFormContainer);
+
         //get name of playerOne from the form input
         const playerOneName = document.getElementById('player1name2').value;
         const playerTwoName = 'Computer';
@@ -317,23 +319,25 @@ const gameFlow = (() => {
     //FUNCTION to start two player game
     const startTwoPlayerGame = function(){
         console.log('start 2 player game button was pushed');
-        //hide the form you just filled out
+
+        //hide forms and buttons
         displayControls.twoPlayerButton.classList.remove('clicked');
         displayControls.hideElement(displayControls.playerChoiceArea);
         displayControls.hideElement(displayControls.twoPlayerFormContainer);
-        //get name of playerOne from the form input
+
+        //get player names from form inputs
         const playerOneName = document.getElementById('player1name2').value;
-        //get name of playerTwo from the form input
         const playerTwoName = document.getElementById('player2name').value;
-        //create playerOne using factory function and assign to X
+
+        //create players and assign letters
         playerOne = playerFactory(playerOneName,'X');
         console.log(`Player One is named ${playerOne.name} and text is ${playerOne.playerText}`);
-        //create playerTwo using factory function and assign to O
         playerTwo = playerFactory(playerTwoName,'O');
         console.log(`Player Two is named ${playerTwo.name} and text is ${playerTwo.playerText}`);
+
         //display player names
         displayControls.playerOneDisplay.textContent=`${playerOne.name}`;
-        displayControls.textContent=`${playerTwo.name}`;
+        displayControls.playerTwoDisplay.textContent=`${playerTwo.name}`;
         displayControls.displayElement(displayControls.playerList,'flex');
         
         //set first turn at player one's turn

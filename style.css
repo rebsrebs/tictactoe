@@ -10,6 +10,7 @@ body{
     flex-direction:column;
     font-family: Arial, Helvetica, sans-serif;
     position:relative;
+    accent-color:yellow;
 }
 
 h1{
@@ -67,7 +68,7 @@ button{
     white-space: nowrap
 }
 
-.player1display, .player2display{
+.playerdisplay{
     padding:10px;
     font-size:22px;
 }
