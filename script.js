@@ -290,7 +290,7 @@ const gameFlow = (() => {
     let playerTwo = '';
     let difficultyLevel = '';
 
-    //FUNCTION to start one player game
+    //In Progress - FUNCTION to start one player game
     const startOnePlayerGame = function(){
         console.log('start 2 player game button was pushed');
 
@@ -314,7 +314,7 @@ const gameFlow = (() => {
            difficultyLevel = 'impossible';
            }
     }
-    //end one player game
+    //END one player game
 
     //FUNCTION to start two player game
     const startTwoPlayerGame = function(){
@@ -340,12 +340,15 @@ const gameFlow = (() => {
         displayControls.playerTwoDisplay.textContent=`${playerTwo.name}`;
         displayControls.displayElement(displayControls.playerList,'flex');
         
-        //set first turn at player one's turn
+        //set first turn to player one's turn and display turn message
         currentPlayer = playerOne;
-        console.log(`current player is ${currentPlayer.name} and their style is ${currentPlayer.styleSelector}`);
         displayControls.messageArea.textContent=playerOne.turnMessage;
+
+        // Make array blank and fill cells with it
         gameBoard.makeArrayBlank(gameBoard.gameBoardArray);
         gameBoard.fillCells(gameBoard.gameBoardArray);
+
+        // Change gameboard style to active and make clickable
         displayControls.gameBoardContainer.classList.add('gameboardcontainer-active');
         displayControls.gameBoardContainer.addEventListener('click', makeAMove);
         return{
@@ -385,10 +388,10 @@ const gameFlow = (() => {
 
      // FUNCTION to make a move
      const makeAMove = function(event){
-
+        //Find out where player clicked
         let target = event.target;
         
-        //if cell is empty and has classname cell
+        //if cell is empty and has classname 'cell'
         if (target.innerText == '' && target.classList.contains('cell') && displayControls.gameBoardContainer.classList.contains('gameboardcontainer-active')) {
             console.log(`target class list is ${target.classList} and we can make an ${currentPlayer.playerText}`);
             //styling
