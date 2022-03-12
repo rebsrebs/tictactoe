@@ -1,9 +1,13 @@
+//Tic Tac Toe 
+//Contents
+    //1 Display Controls Object
+    //2 Player Factory Function
+    //3 Game Board Object
+    //4 Game Flow Object
 
 
 
-const resetButton = document.getElementById('resetbutton');
-
-//DISPLAY CONTROLS OBJECT
+//1 DISPLAY CONTROLS OBJECT
 const displayControls = (() => {
 
     //DOM VARIABLES
@@ -23,24 +27,24 @@ const displayControls = (() => {
     //shows whose turn it is or results of game
     const messageArea = document.getElementById('messagearea');
 
-    //forms and form containersfor one player name and difficulty level, and two player names
+    //form containers and forms for one player name, difficulty level, and two player names
     const onePlayerFormContainer = document.getElementById('oneplayerformcontainer');
     const onePlayerForm = document.getElementById("oneplayerform");
     const twoPlayerFormContainer = document.getElementById('twoplayerformcontainer');
     const twoPlayerForm = document.getElementById("twoplayerform");
 
     //buttons to start one and two player games
-    // const startButton1 = document.getElementById('startbutton1');
-    // const startButton2 = document.getElementById('startbutton2');
+    const startButton1 = document.getElementById('startbutton1');
+    const startButton2 = document.getElementById('startbutton2');
 
-    //reset button
-    // const resetButton = document.getElementById('resetbutton');
+    // reset button
+    const resetButton = document.getElementById('resetbutton');
 
     // for gameBoard styling
     const gameBoardContainer = document.getElementById('gameboardcontainer');
 
     // UTILITY FUNCTIONS
-
+    
     // Function to show one element
     function displayElement(element, display){
     element.style.display = display;
@@ -95,9 +99,9 @@ const displayControls = (() => {
         onePlayerForm,
         twoPlayerFormContainer,
         twoPlayerForm,
-        // startButton1,
-        // startButton2,
-        // resetButton,
+        startButton1,
+        startButton2,
+        resetButton,
         gameBoardContainer,
         displayElement,
         hideElement,
@@ -106,35 +110,7 @@ const displayControls = (() => {
 //END DISPLAY CONTROLS MODULE
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//FACTORY FUNCTION TO CREATE PLAYERS
+//2 FACTORY FUNCTION TO CREATE PLAYERS
 const playerFactory = (name, playerText) => {
     const turnMessage = `${name}'s turn.`; 
     const winnerMessage = `${name} is the winner!`;
@@ -147,56 +123,36 @@ const playerFactory = (name, playerText) => {
         styleSelector,
     }
 };
+//END FACTORY FUNCTION TO CREATE PLAYERS
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// GAMEBOARD OBJECT
+// 3 GAMEBOARD OBJECT MODULE
 const gameBoard = (() => {
     
-//new game button opens div to select further options before starting game
-const newGameBtnDiv = document.getElementById('newgamebtndiv');
-const newGameButton = document.getElementById('newgamebutton');
+    //new game button opens div to select further options before starting game
+    const newGameBtnDiv = document.getElementById('newgamebtndiv');
+    const newGameButton = document.getElementById('newgamebutton');
 
     //when you click new game button
-newGameButton.addEventListener('click', function(){
-    console.log('New Game Button was pushed');
-    displayControls.messageArea.textContent='';
-    displayControls.displayElement(displayControls.playerChoiceArea, 'flex');
-    displayControls.hideElement(newGameBtnDiv);
-    displayControls.hideElement(displayControls.playerList);
-    gameBoard.resetCellClass();
-    gameBoard.makeArrayBlank(gameBoard.gameBoardArray);
-    gameBoard.fillCells(gameBoard.gameBoardArray);
-});
+    newGameButton.addEventListener('click', function(){
+        displayControls.twoPlayerForm.reset();
+        displayControls.onePlayerForm.reset();
+        displayControls.messageArea.textContent='';
+        displayControls.displayElement(displayControls.playerChoiceArea, 'flex');
+        displayControls.hideElement(newGameBtnDiv);
+        displayControls.hideElement(displayControls.playerList);
+        gameBoard.resetCellClass();
+        gameBoard.makeArrayBlank(gameBoard.gameBoardArray);
+        gameBoard.fillCells(gameBoard.gameBoardArray);
+    });
+
     //result for checkForWinner fuction
     var resultsValue = '';
     //create array with default text
     var gameBoardArray = ['T','I','C','T','A','C','T','O','E'];
+
     // Function to create cells in gameBoard grid
     const createCells = function() {
-        //Counting variable for naming the cell ID's
-        // let a=1;
         for (let step = 1; step <= 9; step++) {
             var cell = document.createElement('div');
             cell.classList.add('cell');
@@ -205,15 +161,13 @@ newGameButton.addEventListener('click', function(){
             // console.log(cell.id);
           }
     }
+
     //Function to remove player classes from cells after game
     const resetCellClass = function() {
         for (let hey = 1; hey <= 9; hey++){
             var theCell = document.getElementById(`cell-${hey}`);
-            // console.log(`${theCell} class list was ${theCell.classList} `);
             theCell.classList.remove('X-style');
             theCell.classList.remove('O-style');
-            // console.log(`Now ${theCell} class list is ${theCell.classList} `);
-            // console.log(`we have removed player styles from cell-${hey}`)
         }
     }
 
@@ -227,69 +181,70 @@ newGameButton.addEventListener('click', function(){
         let b=1;
         array.forEach((i) => {
             var currentCell = document.getElementById(`cell-${b}`);
-            // console.log(`a is ${b} and i is ${i}`)
-            // console.log(currentCell.id);
             currentCell.textContent=i;
             b=b+1;
         });
     }
 
-// FUNCTION to check for winners or tie
-const checkForWinners = function(array) {
+    // FUNCTION to check for winners or tie
+    const checkForWinners = function(array) {
 
-    //check if array contains all X's
-    const allXs = arr => arr.every(value => value === arr[0] && arr[0] ==='X');
+        //FUNCTION to check if array contains all X's
+        const allXs = arr => arr.every(value => value === arr[0] && arr[0] ==='X');
 
-    //check if array contains all O's
-    const allOs = arr => arr.every(value => value === arr[0] && arr[0] ==='O');
+        //FUNCTION to check if array contains all O's
+        const allOs = arr => arr.every(value => value === arr[0] && arr[0] ==='O');
 
-    // utlity function - check if all items in array are full
-    const allFull = arr => arr.every(value => value === 'X' || value === 'O');
-     
-   //create arrays of rows to check
-    var rowOneArray = gameBoardArray.slice(0,3);
-    var rowTwoArray = gameBoardArray.slice(3,6);
-    var rowThreeArray = gameBoardArray.slice(6);
-    var columnOneArray = [gameBoardArray.at(0), gameBoardArray.at(3), gameBoardArray.at(6)];
-    var columnTwoArray = [gameBoardArray.at(1), gameBoardArray.at(4), gameBoardArray.at(7)];
-    var columnThreeArray = [gameBoardArray.at(2), gameBoardArray.at(5), gameBoardArray.at(8)];
-    var diagonalOneArray = [gameBoardArray.at(0), gameBoardArray.at(4),gameBoardArray.at(8)];
-    var diagonalTwoArray = [gameBoardArray.at(2), gameBoardArray.at(4),gameBoardArray.at(6)];
+        //FUNCTION to check if all items in array are full
+        const allFull = arr => arr.every(value => value === 'X' || value === 'O');
+        
+    //create arrays of rows to check
+        var rowOneArray = gameBoardArray.slice(0,3);
+        var rowTwoArray = gameBoardArray.slice(3,6);
+        var rowThreeArray = gameBoardArray.slice(6);
+        var columnOneArray = [gameBoardArray.at(0), gameBoardArray.at(3), gameBoardArray.at(6)];
+        var columnTwoArray = [gameBoardArray.at(1), gameBoardArray.at(4), gameBoardArray.at(7)];
+        var columnThreeArray = [gameBoardArray.at(2), gameBoardArray.at(5), gameBoardArray.at(8)];
+        var diagonalOneArray = [gameBoardArray.at(0), gameBoardArray.at(4),gameBoardArray.at(8)];
+        var diagonalTwoArray = [gameBoardArray.at(2), gameBoardArray.at(4),gameBoardArray.at(6)];
 
-   //should I then make an array of these arrays?
-   var rowsToCheckArray = [
-       rowOneArray,
-       rowTwoArray,
-       rowThreeArray,
-       columnOneArray,
-       columnTwoArray,
-       columnThreeArray,
-       diagonalOneArray,
-       diagonalTwoArray,
-   ]
-   console.log('Below is the rowsToCheckArray');
-   console.log(rowsToCheckArray);
+    //create array of arrays to check
+    var rowsToCheckArray = [
+        rowOneArray,
+        rowTwoArray,
+        rowThreeArray,
+        columnOneArray,
+        columnTwoArray,
+        columnThreeArray,
+        diagonalOneArray,
+        diagonalTwoArray,
+    ]
 
-//if one of the arrays to check has all X's
+    //if X wins
     if (rowsToCheckArray.some(allXs) == true){
         const playerOneName = document.getElementById('player1name2').value;
         displayControls.hideElement(displayControls.playerList);
         //show the New Game Button
         displayControls.displayElement(newGameBtnDiv,'block');
         resultsValue = `${playerOneName} wins!`
-        console.log(`${playerOneName} wins!`)
+        //something weird going on here
+        console.log(gameFlow.playerOne.winnerMessage);
+        console.log(`${gameFlow.playerOneName} wins!`)
         displayControls.messageArea.textContent = resultsValue;
         displayControls.gameBoardContainer.classList.remove('gameboardcontainer-active');
         gameBoard.resetCellClass();
+
+    //if O wins
     } else if (rowsToCheckArray.some(allOs) == true){
         displayControls.hideElement(displayControls.playerList);
         const playerTwoName = document.getElementById('player2name').value;
         resultsValue = `${playerTwoName} wins!`
-        console.log(`${playerTwoName} wins!`)
         displayControls.messageArea.textContent = resultsValue;
         displayControls.gameBoardContainer.classList.remove('gameboardcontainer-active');
         displayControls.displayElement(newGameBtnDiv,'block');
         gameBoard.resetCellClass();
+
+    //if it's a tie
     } else if (allFull(gameBoardArray) == true){
         displayControls.hideElement(displayControls.playerList);
         console.log('tie');
@@ -299,6 +254,8 @@ const checkForWinners = function(array) {
         displayControls.gameBoardContainer.classList.remove('gameboardcontainer-active');
         displayControls.displayElement(newGameBtnDiv,'block');
         gameBoard.resetCellClass();
+
+    //if not win or no tie, keep playing
     } else {
         console.log('play');
         resultsValue='play';
@@ -320,59 +277,38 @@ const checkForWinners = function(array) {
  } 
 })();
 
+//END GAMEBOARD OBJECT MODULE
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// GAME FLOW OBJECT
+// 4 GAME FLOW OBJECT MODULE
 const gameFlow = (() => {
 
+let currentPlayer = '';  
 let playerOne = '';
 let playerTwo = '';
-let currentPlayer = '';
-
-const startButton2 = document.getElementById('startbutton2');
 
     //FUNCTION to start two player game
     const startTwoPlayerGame = function(){
         console.log('start 2 player game button was pushed');
         //hide the form you just filled out
         displayControls.twoPlayerButton.classList.remove('clicked');
-        displayControls.hideElement(displayControls.twoPlayerFormContainer);
         displayControls.hideElement(displayControls.playerChoiceArea);
+        displayControls.hideElement(displayControls.twoPlayerFormContainer);
         //get name of playerOne from the form input
         const playerOneName = document.getElementById('player1name2').value;
         //get name of playerTwo from the form input
         const playerTwoName = document.getElementById('player2name').value;
-        displayControls.twoPlayerForm.reset();
-        //display player names
-        displayControls.playerOneDisplay.textContent=`${playerOneName}`;
-        displayControls.textContent=`${playerTwoName}`;
-        displayControls.displayElement(displayControls.playerList,'flex');
         //create playerOne using factory function and assign to X
         playerOne = playerFactory(playerOneName,'X');
         console.log(`Player One is named ${playerOne.name} and text is ${playerOne.playerText}`);
         //create playerTwo using factory function and assign to O
         playerTwo = playerFactory(playerTwoName,'O');
         console.log(`Player Two is named ${playerTwo.name} and text is ${playerTwo.playerText}`);
+        //display player names
+        displayControls.playerOneDisplay.textContent=`${playerOne.name}`;
+        displayControls.textContent=`${playerTwo.name}`;
+        displayControls.displayElement(displayControls.playerList,'flex');
+        
         //set first turn at player one's turn
         currentPlayer = playerOne;
         console.log(`current player is ${currentPlayer.name} and their style is ${currentPlayer.styleSelector}`);
@@ -440,8 +376,8 @@ const startButton2 = document.getElementById('startbutton2');
     }
     //end make a move function
 
-    startButton2.addEventListener('click', startTwoPlayerGame);
-    resetButton.addEventListener('click', resetGame);
+    displayControls.startButton2.addEventListener('click', startTwoPlayerGame);
+    displayControls.resetButton.addEventListener('click', resetGame);
 
     return {
         playerOne,
@@ -451,6 +387,4 @@ const startButton2 = document.getElementById('startbutton2');
     }
 })();
 
-   
-
-
+//END GAME FLOW OBJECT MODULE
