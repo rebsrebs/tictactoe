@@ -118,7 +118,7 @@ const playerFactory = (name, playerText, type) => {
     let makeAMove = '';
 
     const makeAMoveHuman = function(event){
-        console.log('make a human move');
+        console.log('begin makeAMoveHuman function');
         let target = event.target;
         if (target.innerText === '' && target.classList.contains('cell') && displayControls.gameBoardContainer.classList.contains('gameboardcontainer-active')) {
             target.classList.add(styleSelector);
@@ -126,15 +126,16 @@ const playerFactory = (name, playerText, type) => {
             gameBoard.gameBoardArray[indexNum] = playerText;
             console.log(`Now we will make an ${playerText}`);
             target.textContent = playerText;
-            console.log('I am about to check for winners');
+            console.log('end makeAMoveHuman function');
             gameBoard.checkForWinners();
         } else {
             console.log(`target class list is ${target.classList} and i cannot make a move`);
         } //end if statement
+        
     } //end makeAMove function
 
     const makeAMoveEasy = function(){
-        console.log('make an Easy AI move');
+        console.log('start makeAMoveEasy function');
         var emptyCells = [];
         for (const element of gameBoard.gameBoardArray) {
         //if element is empty
@@ -154,9 +155,8 @@ const playerFactory = (name, playerText, type) => {
         console.log(`Now we will make an ${playerText}`);
         cellTarget.classList.add(styleSelector);
         cellTarget.textContent = playerText;
-        console.log('I am about to check for winners');
+        console.log('end makeAMoveEasy function');
         gameBoard.checkForWinners();
-        console.log('I am checking for winners');
     } //end makeAMoveEasy function
     
 
@@ -249,6 +249,7 @@ const gameBoard = (() => {
 
     // FUNCTION to check for winners or tie
     const checkForWinners = function(array) {
+        console.log('begin checkForWinners function')
 
         //FUNCTION to check if array contains all X's
         const allXs = arr => arr.every(value => value === arr[0] && arr[0] ==='X');
@@ -283,45 +284,51 @@ const gameBoard = (() => {
 
         //if X wins
         if (rowsToCheckArray.some(allXs) == true){
-            const playerOneName = document.getElementById('player1name2').value;
+            resultsValue = gameFlow.playerOne.winnerMessage;
+            // displayControls.messageArea.textContent = resultsValue;
+            displayControls.messageArea.textContent = `The winner is ${gameFlow.playerOne.name}`;
             displayControls.hideElement(displayControls.playerList);
-            //show the New Game Button
             displayControls.displayElement(newGameBtnDiv,'block');
-            resultsValue = `${playerOneName} wins!`
-            console.log(gameFlow.playerOne.winnerMessage);
-            console.log(`${gameFlow.playerOneName} wins!`)
-            displayControls.messageArea.textContent = resultsValue;
+            
             displayControls.gameBoardContainer.classList.remove('gameboardcontainer-active');
+            displayControls.gameBoardContainer.removeEventListener('click', gameFlow.playerOne.makeAMove);
+            displayControls.gameBoardContainer.removeEventListener('click', gameFlow.playerTwo.makeAMove);
             gameBoard.resetCellClass();
 
         //if O wins
         } else if (rowsToCheckArray.some(allOs) == true){
+            resultsValue = gameFlow.playerTwo.winnerMessage;
+            // displayControls.messageArea.textContent = resultsValue;
+            displayControls.messageArea.textContent = `The winner is ${gameFlow.playerTwo.name}`;
             displayControls.hideElement(displayControls.playerList);
-            const playerTwoName = document.getElementById('player2name').value;
-            resultsValue = `${playerTwoName} wins!`
-            displayControls.messageArea.textContent = resultsValue;
-            displayControls.gameBoardContainer.classList.remove('gameboardcontainer-active');
             displayControls.displayElement(newGameBtnDiv,'block');
+            displayControls.gameBoardContainer.classList.remove('gameboardcontainer-active');
+            displayControls.gameBoardContainer.removeEventListener('click', gameFlow.playerOne.makeAMove);
+            displayControls.gameBoardContainer.removeEventListener('click', gameFlow.playerTwo.makeAMove);
             gameBoard.resetCellClass();
 
         //if it's a tie
         } else if (allFull(gameBoardArray) == true){
             displayControls.hideElement(displayControls.playerList);
+            displayControls.displayElement(newGameBtnDiv,'block');
             console.log('tie');
             resultsValue='It\'s a tie!';
             displayControls.messageArea.textContent = resultsValue;
             //stop background highlighting on gameBoard
             displayControls.gameBoardContainer.classList.remove('gameboardcontainer-active');
-            displayControls.displayElement(newGameBtnDiv,'block');
+            displayControls.gameBoardContainer.removeEventListener('click', gameFlow.playerOne.makeAMove);
+            displayControls.gameBoardContainer.removeEventListener('click', gameFlow.playerTwo.makeAMove);
             gameBoard.resetCellClass();
 
         //if not win or no tie, keep playing
         } else {
             console.log('play');
             resultsValue='play';
+            console.log('end checkForWinners function')
             gameFlow.switchPlayers();
         }
-        // return resultsValue;
+
+        
     }
 // END FUNCTION to check for winners
 
@@ -349,6 +356,7 @@ const gameFlow = (() => {
 
     //FUNCTION to start two player game
     const startGame = function(event){
+        console.log('start game');
         let target = event.target;
         console.log(target);
 
@@ -399,7 +407,7 @@ const gameFlow = (() => {
         displayControls.gameBoardContainer.classList.add('gameboardcontainer-active');
 
         if (currentPlayer.type === 'human'){
-        displayControls.gameBoardContainer.addEventListener('click', playerOne.makeAMove);
+        displayControls.gameBoardContainer.addEventListener('click', currentPlayer.makeAMove);
         } else if (currentPlayer.type === 'easy'){
             currentPlayer.makeAMove();
         }
@@ -415,31 +423,37 @@ const gameFlow = (() => {
         gameBoard.makeArrayBlank(gameBoard.gameBoardArray);
         gameBoard.fillCells(gameBoard.gameBoardArray);
         displayControls.gameBoardContainer.classList.add('gameboardcontainer-active');
+        displayControls.gameBoardContainer.removeEventListener('click', gameFlow.playerTwo.makeAMove);
         displayControls.gameBoardContainer.addEventListener('click', currentPlayer.makeAMove);
     }
 
     // FUNCTION to switch players
     const switchPlayers = function(){
 
+        console.log('begin switchPlayers function')
+
         displayControls.gameBoardContainer.removeEventListener('click', playerOne.makeAMove);
+        displayControls.gameBoardContainer.removeEventListener('click', playerTwo.makeAMove);
         console.log(`Switching from ${currentPlayer.name} whose letter is ${currentPlayer.playerText} and type ${currentPlayer.type}`);
 
         if (currentPlayer === playerOne) {
             currentPlayer = playerTwo;
+            console.log(`New player is ${currentPlayer.name} with style ${currentPlayer.playerText} and type ${currentPlayer.type}`);
                 displayControls.messageArea.textContent = currentPlayer.turnMessage;
                 if (currentPlayer.type === 'human') {
-                    displayControls.gameBoardContainer.addEventListener('click', currentPlayer.makeAMove);
+                    console.log('end switchPlayers function')
+                    displayControls.gameBoardContainer.addEventListener('click', playerTwo.makeAMove);
                 } else if (currentPlayer.type === 'easy') {
-                    currentPlayer.makeAMove();
+                    console.log('end switchPlayers function')
+                    playerTwo.makeAMove();
                 }
             } else if (currentPlayer === playerTwo) {
                 currentPlayer = playerOne;
+                console.log(`New player is ${currentPlayer.name} with style ${currentPlayer.playerText} and type ${currentPlayer.type}`);
                 displayControls.messageArea.textContent = currentPlayer.turnMessage;
-                displayControls.gameBoardContainer.addEventListener('click', currentPlayer.makeAMove);
+                displayControls.gameBoardContainer.addEventListener('click', playerOne.makeAMove);
+                console.log('end switchPlayers function')
             }
-        
-        console.log(`New player is ${currentPlayer.name} with style ${currentPlayer.playerText} and type ${currentPlayer.type}`);
-    
     } //END Fuction to switch players
 
 
