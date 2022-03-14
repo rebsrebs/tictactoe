@@ -111,16 +111,73 @@ const displayControls = (() => {
 
 
 //2 FACTORY FUNCTION TO CREATE PLAYERS
-const playerFactory = (name, playerText) => {
+const playerFactory = (name, playerText, type) => {
     const turnMessage = `${name}'s turn.`; 
     const winnerMessage = `${name} is the winner!`;
     const styleSelector = `${playerText}-style`;
+    let makeAMove = '';
+
+    const makeAMoveHuman = function(event){
+        console.log('make a human move');
+        let target = event.target;
+        if (target.innerText === '' && target.classList.contains('cell') && displayControls.gameBoardContainer.classList.contains('gameboardcontainer-active')) {
+            target.classList.add(styleSelector);
+            let indexNum = target.id.slice(-1);
+            gameBoard.gameBoardArray[indexNum] = playerText;
+            console.log(`Now we will make an ${playerText}`);
+            target.textContent = playerText;
+            console.log('I am about to check for winners');
+            gameBoard.checkForWinners();
+        } else {
+            console.log(`target class list is ${target.classList} and i cannot make a move`);
+        } //end if statement
+    } //end makeAMove function
+
+    const makeAMoveEasy = function(){
+        console.log('make an Easy AI move');
+        var emptyCells = [];
+        for (const element of gameBoard.gameBoardArray) {
+        //if element is empty
+            if (element === '') {
+                //get index of element
+                var indexNo = gameBoard.gameBoardArray.indexOf(element);
+                //put index number into emptyCells array
+                emptyCells.push(indexNo);
+            }
+        }
+        const randomIndex = Math.floor(Math.random() * emptyCells.length);
+        const computerMoveLocation = emptyCells[randomIndex];
+        //put playerText in that index number of the gameboard array
+        gameBoard.gameBoardArray[computerMoveLocation]=playerText;
+        //and put playerText in that cell ID number
+        var cellTarget = document.getElementById(`cell-${computerMoveLocation}`);
+        console.log(`Now we will make an ${playerText}`);
+        cellTarget.classList.add(styleSelector);
+        cellTarget.textContent = playerText;
+        console.log('I am about to check for winners');
+        gameBoard.checkForWinners();
+        console.log('I am checking for winners');
+    } //end makeAMoveEasy function
+    
+
+    if (type==='human'){
+        console.log('human');
+        makeAMove = makeAMoveHuman;
+    } else if (type==='easy'){
+        console.log('easy type')
+        makeAMove = makeAMoveEasy;
+        
+    } //end type if statement
+
     return {
         name,
         playerText,
         turnMessage,
         winnerMessage,
         styleSelector,
+        makeAMove,
+        makeAMoveHuman,
+        type,
     }
 };
 //END FACTORY FUNCTION TO CREATE PLAYERS
@@ -160,6 +217,7 @@ const gameBoard = (() => {
             var cell = document.createElement('div');
             cell.classList.add('cell');
             cell.id=`cell-${step}`;
+            // cell.addEventListener('click', playerFactory.currentPlayer.makeAMove);
             displayControls.gameBoardContainer.appendChild(cell);
             // console.log(cell.id);
           }
@@ -262,7 +320,6 @@ const gameBoard = (() => {
             console.log('play');
             resultsValue='play';
             gameFlow.switchPlayers();
-            console.log('we have switched players!')
         }
         // return resultsValue;
     }
@@ -290,73 +347,40 @@ const gameFlow = (() => {
     let playerTwo = '';
     let difficultyLevel = '';
 
-    // //In Progress - FUNCTION to start one player game
-    // const startOnePlayerGame = function(){
-    //     console.log('start 1 player game button was pushed');
-
-    //     //hide the forms and buttons
-    //     displayControls.onePlayerButton.classList.remove('clicked');
-    //     displayControls.hideElement(displayControls.playerChoiceArea);
-    //     displayControls.hideElement(displayControls.onePlayerFormContainer);
-
-    //     //get name of playerOne from the form input
-    //     const playerOneName = document.getElementById('player1name1').value;
-
-    //     if (document.getElementById('easy').checked) {
-    //         console.log('easy radio button is checked');
-    //        difficultyLevel = 'easy';
-    //        }else if (document.getElementById('hard').checked) {
-    //         console.log('hard radio button is checked');
-    //        difficultyLevel = 'hard';
-    //        } else if (document.getElementById('impossible').checked) {
-    //        console.log('impossible radio button is checked');
-    //        difficultyLevel = 'impossible';
-    //        }
-
-    //     //Create players
-    //     playerOne = playerFactory(playerOneName,'X');
-    //     playerTwo = playerFactory('Computer','O');
-    //     console.log(playerTwo);
-
-    //      //display player names
-    //      displayControls.playerOneDisplay.textContent=`${playerOne.name}`;
-    //      displayControls.playerTwoDisplay.textContent=`${playerTwo.name}`;
-    //      displayControls.displayElement(displayControls.playerList,'flex');
-         
-    //      //set first turn to player one's turn and display turn message
-    //      currentPlayer = playerOne;
-    //      displayControls.messageArea.textContent=playerOne.turnMessage;
- 
-    //      // Make array blank and fill cells with it
-    //      gameBoard.makeArrayBlank(gameBoard.gameBoardArray);
-    //      gameBoard.fillCells(gameBoard.gameBoardArray);
- 
-    //      // Change gameboard style to active and make clickable
-    //      displayControls.gameBoardContainer.classList.add('gameboardcontainer-active');
-    //      displayControls.gameBoardContainer.addEventListener('click', makeAMove);
-    // }
-    // //END start one player game
-
-
     //FUNCTION to start two player game
-    
-    const startTwoPlayerGame = function(){
-        console.log('start 2 player game button was pushed');
+    const startGame = function(event){
+        let target = event.target;
+        console.log(target);
 
         //hide forms and buttons
+        displayControls.onePlayerButton.classList.remove('clicked');
         displayControls.twoPlayerButton.classList.remove('clicked');
         displayControls.hideElement(displayControls.playerChoiceArea);
         displayControls.hideElement(displayControls.twoPlayerFormContainer);
+        displayControls.hideElement(displayControls.onePlayerFormContainer);
 
-        //get player names from form inputs
-        const playerOneName = document.getElementById('player1name2').value;
-        const playerTwoName = document.getElementById('player2name').value;
-
-        //create players and assign letters
-        playerOne = playerFactory(playerOneName,'X');
-        console.log(`Player One is named ${playerOne.name} and text is ${playerOne.playerText}`);
-        playerTwo = playerFactory(playerTwoName,'O');
-        console.log(`Player Two is named ${playerTwo.name} and text is ${playerTwo.playerText}`);
+        //if two player game selected
+        if (target.id === 'startbutton2') {
+            console.log('start 2 player was pushed');
+            //get player names from form inputs
+            const playerOneName = document.getElementById('player1name2').value;
+            const playerTwoName = document.getElementById('player2name').value;
+            //create players and assign letters
+            playerOne = playerFactory(playerOneName,'X','human');
+            console.log(`Player One is named ${playerOne.name} and text is ${playerOne.playerText} and type is ${playerOne.type}`);
+            playerTwo = playerFactory(playerTwoName,'O','human');
+            console.log(`Player Two is named ${playerTwo.name} and text is ${playerTwo.playerText} and type is ${playerTwo.type}`);
+        //if one player game selected
+        } else if (target.id === 'startbutton1') {
+            console.log('start one player was pushed');
+            const playerOneName = document.getElementById('player1name1').value;
+            playerOne = playerFactory(playerOneName,'X','human');
+            console.log(`Player One is named ${playerOne.name} and text is ${playerOne.playerText}`);
+            console.log(playerOne.makeAMove);
+            playerTwo = playerFactory('Computer','O','easy');
+            console.log(`Player Two is named ${playerTwo.name} and text is ${playerTwo.playerText}`);
+            console.log(playerTwo.makeAMove);
+        }
 
         //display player names
         displayControls.playerOneDisplay.textContent=`${playerOne.name}`;
@@ -373,10 +397,15 @@ const gameFlow = (() => {
 
         // Change gameboard style to active and make clickable
         displayControls.gameBoardContainer.classList.add('gameboardcontainer-active');
-        displayControls.gameBoardContainer.addEventListener('click', makeAMove);
-    
+
+        if (currentPlayer.type === 'human'){
+        displayControls.gameBoardContainer.addEventListener('click', playerOne.makeAMove);
+        } else if (currentPlayer.type === 'easy'){
+            currentPlayer.makeAMove();
+        }
     }
-    // End startTwoPlayerGame
+    // End startGame
+
 
     // FUNCTION to reset game
     const resetGame = function(){
@@ -386,95 +415,36 @@ const gameFlow = (() => {
         gameBoard.makeArrayBlank(gameBoard.gameBoardArray);
         gameBoard.fillCells(gameBoard.gameBoardArray);
         displayControls.gameBoardContainer.classList.add('gameboardcontainer-active');
-        displayControls.gameBoardContainer.addEventListener('click', makeAMove);
+        displayControls.gameBoardContainer.addEventListener('click', currentPlayer.makeAMove);
     }
 
     // FUNCTION to switch players
     const switchPlayers = function(){
+
+        displayControls.gameBoardContainer.removeEventListener('click', playerOne.makeAMove);
+        console.log(`Switching from ${currentPlayer.name} whose letter is ${currentPlayer.playerText} and type ${currentPlayer.type}`);
+
         if (currentPlayer === playerOne) {
-            console.log(`Current player is 1 and switching from ${currentPlayer.name}`);
             currentPlayer = playerTwo;
-                console.log(`to ${currentPlayer.name}`);
                 displayControls.messageArea.textContent = currentPlayer.turnMessage;
-                
+                if (currentPlayer.type === 'human') {
+                    displayControls.gameBoardContainer.addEventListener('click', currentPlayer.makeAMove);
+                } else if (currentPlayer.type === 'easy') {
+                    currentPlayer.makeAMove();
+                }
             } else if (currentPlayer === playerTwo) {
-                console.log(`Current player is 2 and switching from ${currentPlayer.name}`);
                 currentPlayer = playerOne;
-                console.log(`to ${currentPlayer.name}`);
                 displayControls.messageArea.textContent = currentPlayer.turnMessage;
+                displayControls.gameBoardContainer.addEventListener('click', currentPlayer.makeAMove);
             }
-            return;
-        }
-
-     // FUNCTION to make a move
-     const makeAMove = function(event){
-
-        // if (currentPlayer.playerName == 'Computer'){
-        // computerMakeAMove();
-        // } else {
-
-
-
-        //Find out where player clicked
-        let target = event.target;
         
-        //if cell is empty and has classname 'cell'
-        if (target.innerText == '' && target.classList.contains('cell') && displayControls.gameBoardContainer.classList.contains('gameboardcontainer-active')) {
-            console.log(`target class list is ${target.classList} and we can make an ${currentPlayer.playerText}`);
-            //styling
-            target.classList.add(currentPlayer.styleSelector);
-            //get corresponding index number for gameBoardArray by finding cell ID name number minus one
-            indexNum = target.id.slice(-1);
-            //put current player text into the corresponding index in the array
-            gameBoard.gameBoardArray[indexNum] = currentPlayer.playerText;
-                console.log(gameBoard.gameBoardArray[indexNum]);
-            //put current player text into game board grid cell
-            target.textContent = currentPlayer.playerText;
-                // console.log(`Player One text is ${playerOne.playerText} and Player Two text is ${playerTwo.playerText} and current player text is ${currentPlayer.playerText}`);
-            //check to see if there's a winner
-           gameBoard.checkForWinners();
-        }else {
-            console.log(`target class list is ${target.classList} and i cannot make a move`);
-        }
-    // }
-    }
-    //end make a move function
-
+        console.log(`New player is ${currentPlayer.name} with style ${currentPlayer.playerText} and type ${currentPlayer.type}`);
     
-    // //FUNCTION for computer to make a move
-    // const computerMakeAMove = function() {
-    //     //make array for empty cells
-    //     var emptyCells = [];
-
-    //     for (const element of gameBoard.gameBoardArray) {
-    //     //if element is empty
-    //         if (element == '') {
-    //         //get index of element
-    //         var indexNo = gameBoard.gameBoardArray.indexOf(element);
-    //         //put index number into emptyCells array
-    //         emptyCells.push(indexNo);
-    //         }
-    //     }
-        //pick a random element/number from emptyCells
-        //save it as computerMoveLocation
-    //     const randomIndex = Math.floor(Math.random() * emptyCells.length);
-    //     const computerMoveLocation = emptyCells[randomIndex];
-    //     //put playerText in that index number of the gameboard array
-    //     gameBoard.gameBoardArray(computerMoveLocation)=playerTwo.playerText;
-    //     //and put playerText in that cell ID number
-    //     var cellTarget = document.getElementById(`cell-${computerMoveLocation}`);
-    //     cellTarget.textContent = playerTwo.playerText;
-
-    //     //check to see if there's a winner
-    //     gameBoard.checkForWinners();
-    //     console.log('I am checking for winners');
-    // }
-    //END computer make a move
+    } //END Fuction to switch players
 
 
-
-    // displayControls.startButton1.addEventListener('click', startOnePlayerGame);
-    displayControls.startButton2.addEventListener('click', startTwoPlayerGame);
+    displayControls.startButton1.addEventListener('click', startGame);
+    displayControls.startButton2.addEventListener('click', startGame);
     displayControls.resetButton.addEventListener('click', resetGame);
 
     return {
