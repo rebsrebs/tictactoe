@@ -250,6 +250,7 @@ const gameBoard = (() => {
     // FUNCTION to check for winners or tie
     const checkForWinners = function(array) {
         console.log('begin checkForWinners function')
+        console.log(`Current player is ${gameFlow.currentPlayer.name}`);
 
         //FUNCTION to check if array contains all X's
         const allXs = arr => arr.every(value => value === arr[0] && arr[0] ==='X');
@@ -282,51 +283,72 @@ const gameBoard = (() => {
             diagonalTwoArray,
         ]
 
-        //if X wins
+        //what happens
         if (rowsToCheckArray.some(allXs) == true){
-            resultsValue = gameFlow.playerOne.winnerMessage;
-            // displayControls.messageArea.textContent = resultsValue;
-            displayControls.messageArea.textContent = `The winner is ${gameFlow.playerOne.name}`;
-            displayControls.hideElement(displayControls.playerList);
-            displayControls.displayElement(newGameBtnDiv,'block');
-            
-            displayControls.gameBoardContainer.classList.remove('gameboardcontainer-active');
-            displayControls.gameBoardContainer.removeEventListener('click', gameFlow.playerOne.makeAMove);
-            displayControls.gameBoardContainer.removeEventListener('click', gameFlow.playerTwo.makeAMove);
-            gameBoard.resetCellClass();
-
-        //if O wins
+        resultsValue = 'playeronewins'; 
+        console.log(resultsValue);
+        // return resultsValue;
         } else if (rowsToCheckArray.some(allOs) == true){
-            resultsValue = gameFlow.playerTwo.winnerMessage;
-            // displayControls.messageArea.textContent = resultsValue;
-            displayControls.messageArea.textContent = `The winner is ${gameFlow.playerTwo.name}`;
-            displayControls.hideElement(displayControls.playerList);
-            displayControls.displayElement(newGameBtnDiv,'block');
-            displayControls.gameBoardContainer.classList.remove('gameboardcontainer-active');
-            displayControls.gameBoardContainer.removeEventListener('click', gameFlow.playerOne.makeAMove);
-            displayControls.gameBoardContainer.removeEventListener('click', gameFlow.playerTwo.makeAMove);
-            gameBoard.resetCellClass();
-
-        //if it's a tie
+            resultsValue = 'playertwowins';
+            console.log(resultsValue);
+            // return resultsValue;
         } else if (allFull(gameBoardArray) == true){
-            displayControls.hideElement(displayControls.playerList);
-            displayControls.displayElement(newGameBtnDiv,'block');
-            console.log('tie');
-            resultsValue='It\'s a tie!';
-            displayControls.messageArea.textContent = resultsValue;
-            //stop background highlighting on gameBoard
-            displayControls.gameBoardContainer.classList.remove('gameboardcontainer-active');
-            displayControls.gameBoardContainer.removeEventListener('click', gameFlow.playerOne.makeAMove);
-            displayControls.gameBoardContainer.removeEventListener('click', gameFlow.playerTwo.makeAMove);
-            gameBoard.resetCellClass();
-
-        //if not win or no tie, keep playing
+            resultsValue = 'tie';
+            console.log(resultsValue);
+            // return resultsValue;
         } else {
-            console.log('play');
             resultsValue='play';
+            console.log(resultsValue);
             console.log('end checkForWinners function')
             gameFlow.switchPlayers();
         }
+
+
+        // //if X wins
+        // if (rowsToCheckArray.some(allXs) == true){
+        //     resultsValue = gameFlow.playerOne.winnerMessage;
+        //     // displayControls.messageArea.textContent = resultsValue;
+        //     displayControls.messageArea.textContent = `The winner is ${gameFlow.playerOne.name}`;
+        //     displayControls.hideElement(displayControls.playerList);
+        //     displayControls.displayElement(newGameBtnDiv,'block');
+            
+        //     displayControls.gameBoardContainer.classList.remove('gameboardcontainer-active');
+        //     displayControls.gameBoardContainer.removeEventListener('click', gameFlow.playerOne.makeAMove);
+        //     displayControls.gameBoardContainer.removeEventListener('click', gameFlow.playerTwo.makeAMove);
+        //     gameBoard.resetCellClass();
+
+        // //if O wins
+        // } else if (rowsToCheckArray.some(allOs) == true){
+        //     resultsValue = gameFlow.playerTwo.winnerMessage;
+        //     // displayControls.messageArea.textContent = resultsValue;
+        //     displayControls.messageArea.textContent = `The winner is ${gameFlow.playerTwo.name}`;
+        //     displayControls.hideElement(displayControls.playerList);
+        //     displayControls.displayElement(newGameBtnDiv,'block');
+        //     displayControls.gameBoardContainer.classList.remove('gameboardcontainer-active');
+        //     displayControls.gameBoardContainer.removeEventListener('click', gameFlow.playerOne.makeAMove);
+        //     displayControls.gameBoardContainer.removeEventListener('click', gameFlow.playerTwo.makeAMove);
+        //     gameBoard.resetCellClass();
+
+        // //if it's a tie
+        // } else if (allFull(gameBoardArray) == true){
+        //     displayControls.hideElement(displayControls.playerList);
+        //     displayControls.displayElement(newGameBtnDiv,'block');
+        //     console.log('tie');
+        //     resultsValue='It\'s a tie!';
+        //     displayControls.messageArea.textContent = resultsValue;
+        //     //stop background highlighting on gameBoard
+        //     displayControls.gameBoardContainer.classList.remove('gameboardcontainer-active');
+        //     displayControls.gameBoardContainer.removeEventListener('click', gameFlow.playerOne.makeAMove);
+        //     displayControls.gameBoardContainer.removeEventListener('click', gameFlow.playerTwo.makeAMove);
+        //     gameBoard.resetCellClass();
+
+        // //if not win or no tie, keep playing
+        // } else {
+        //     console.log('play');
+        //     resultsValue='play';
+        //     console.log('end checkForWinners function')
+        //     gameFlow.switchPlayers();
+        // }
 
         
     }
@@ -411,7 +433,24 @@ const gameFlow = (() => {
         } else if (currentPlayer.type === 'easy'){
             currentPlayer.makeAMove();
         }
-    }
+
+        if (gameBoard.resultsValue === 'playeronewins'){
+            displayControls.messageArea.textContent = `The winner is ${playerOne.name}`;
+        } else if (gameBoard.resultsValue === 'playertwowins'){
+            displayControls.messageArea.textContent = `The winner is ${playerTwo.name}`;
+        } else if (gameBoard.resultsValue === 'tie'){
+            displayControls.messageArea.textContent = `Tie`;
+        }
+
+            displayControls.hideElement(displayControls.playerList);
+            displayControls.displayElement(gameBoard.newGameBtnDiv,'block');
+            displayControls.gameBoardContainer.classList.remove('gameboardcontainer-active');
+            displayControls.gameBoardContainer.removeEventListener('click', gameFlow.playerOne.makeAMove);
+            displayControls.gameBoardContainer.removeEventListener('click', gameFlow.playerTwo.makeAMove);
+            gameBoard.resetCellClass();
+
+        }
+    
     // End startGame
 
 
