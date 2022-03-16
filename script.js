@@ -137,6 +137,24 @@ const playerFactory = (name, playerText, type) => {
     const makeAMoveEasy = function(){
         console.log(`${gameFlow.currentPlayer} begins makeAMoveEasy function`);
 
+
+//experiment
+//FUNCTION to check if array contains all X's
+// const hasXX = gameBoard.getRowsToCheckArray().find(array => array[0] === 'X' && array[1] === 'X') | (array[1] === 'X' && array[2] === 'X');
+
+// const has00 = gameBoard.getRowsToCheckArray().find(array => array[0] === 'X' && array[1] === 'X') | (array[1] === 'X' && array[2] === 'X');
+
+// if (hasXX == true){
+// console.log('there are two xs');
+// } else if (has00 == true){
+// console.log('there are two os');
+// } else { 
+// console.log('its just random');
+// }
+
+
+
+
         let emptyCells = gameBoard.gameBoardArray.map((element,index) => element === ''?  index : '').filter(String);
         console.log(emptyCells);
         const randomIndex = Math.floor(Math.random() * emptyCells.length);
@@ -179,6 +197,17 @@ const playerFactory = (name, playerText, type) => {
 
 // 3 GAMEBOARD OBJECT MODULE
 const gameBoard = (() => {
+
+    //experiment
+        var rowOneArray = [];
+        var rowTwoArray = [];
+        var rowThreeArray = [];
+        var columnOneArray = [];
+        var columnTwoArray = [];
+        var columnThreeArray = [];
+        var diagonalOneArray = [];
+        var diagonalTwoArray = [];
+        var rowsToCheckArray = [];
     
     //new game button opens div to select further options before starting game
     const newGameBtnDiv = document.getElementById('newgamebtndiv');
@@ -253,19 +282,19 @@ const gameBoard = (() => {
 
         //FUNCTION to check if all items in array are full
         const allFull = arr => arr.every(value => value === 'X' || value === 'O');
-        
+
         //create arrays of rows to check
-        var rowOneArray = gameBoardArray.slice(0,3);
-        var rowTwoArray = gameBoardArray.slice(3,6);
-        var rowThreeArray = gameBoardArray.slice(6);
-        var columnOneArray = [gameBoardArray.at(0), gameBoardArray.at(3), gameBoardArray.at(6)];
-        var columnTwoArray = [gameBoardArray.at(1), gameBoardArray.at(4), gameBoardArray.at(7)];
-        var columnThreeArray = [gameBoardArray.at(2), gameBoardArray.at(5), gameBoardArray.at(8)];
-        var diagonalOneArray = [gameBoardArray.at(0), gameBoardArray.at(4),gameBoardArray.at(8)];
-        var diagonalTwoArray = [gameBoardArray.at(2), gameBoardArray.at(4),gameBoardArray.at(6)];
+        rowOneArray = gameBoardArray.slice(0,3);
+        rowTwoArray = gameBoardArray.slice(3,6);
+        rowThreeArray = gameBoardArray.slice(6);
+        columnOneArray = [gameBoardArray.at(0), gameBoardArray.at(3), gameBoardArray.at(6)];
+        columnTwoArray = [gameBoardArray.at(1), gameBoardArray.at(4), gameBoardArray.at(7)];
+        columnThreeArray = [gameBoardArray.at(2), gameBoardArray.at(5), gameBoardArray.at(8)];
+        diagonalOneArray = [gameBoardArray.at(0), gameBoardArray.at(4),gameBoardArray.at(8)];
+        diagonalTwoArray = [gameBoardArray.at(2), gameBoardArray.at(4),gameBoardArray.at(6)];
 
         //create array of arrays to check
-        var rowsToCheckArray = [
+        rowsToCheckArray = [
             rowOneArray,
             rowTwoArray,
             rowThreeArray,
@@ -275,6 +304,28 @@ const gameBoard = (() => {
             diagonalOneArray,
             diagonalTwoArray,
         ]
+        
+        // //create arrays of rows to check
+        // var rowOneArray = gameBoardArray.slice(0,3);
+        // var rowTwoArray = gameBoardArray.slice(3,6);
+        // var rowThreeArray = gameBoardArray.slice(6);
+        // var columnOneArray = [gameBoardArray.at(0), gameBoardArray.at(3), gameBoardArray.at(6)];
+        // var columnTwoArray = [gameBoardArray.at(1), gameBoardArray.at(4), gameBoardArray.at(7)];
+        // var columnThreeArray = [gameBoardArray.at(2), gameBoardArray.at(5), gameBoardArray.at(8)];
+        // var diagonalOneArray = [gameBoardArray.at(0), gameBoardArray.at(4),gameBoardArray.at(8)];
+        // var diagonalTwoArray = [gameBoardArray.at(2), gameBoardArray.at(4),gameBoardArray.at(6)];
+
+        // //create array of arrays to check
+        // var rowsToCheckArray = [
+        //     rowOneArray,
+        //     rowTwoArray,
+        //     rowThreeArray,
+        //     columnOneArray,
+        //     columnTwoArray,
+        //     columnThreeArray,
+        //     diagonalOneArray,
+        //     diagonalTwoArray,
+        // ]
 
         //if X wins
         if (rowsToCheckArray.some(allXs) == true){
@@ -320,14 +371,17 @@ const gameBoard = (() => {
     }
 // END FUNCTION to check for winners
 
+//experiment
+// const getRowsToCheckArray = () => rowsToCheckArray;
+
  return {
      gameBoardArray,
      createCells,
      makeArrayBlank,
      fillCells,
      checkForWinners,
-    //  resultsValue,
      resetCellClass,
+    //  getRowsToCheckArray,
  } 
 })();
 
@@ -340,7 +394,6 @@ const gameFlow = (() => {
     let currentPlayer = '';  
     let playerOne = '';
     let playerTwo = '';
-    let difficultyLevel = '';
 
     //FUNCTION to start two player game
     const startGame = function(event){
