@@ -136,23 +136,17 @@ const playerFactory = (name, playerText, type) => {
 
     const makeAMoveEasy = function(){
         console.log(`${gameFlow.currentPlayer} begins makeAMoveEasy function`);
-        var emptyCells = [];
-        for (const element of gameBoard.gameBoardArray) {
-        //if element is empty
-            if (element === '') {
-                //get index of element
-                var indexNo = gameBoard.gameBoardArray.indexOf(element);
-                //put index number into emptyCells array
-                emptyCells.push(indexNo);
-            }
-        }
+
+        let emptyCells = gameBoard.gameBoardArray.map((element,index) => element === ''?  index : '').filter(String);
+        console.log(emptyCells);
         const randomIndex = Math.floor(Math.random() * emptyCells.length);
         const computerMoveLocation = emptyCells[randomIndex];
+        console.log(computerMoveLocation);
         //put playerText in that index number of the gameboard array
         gameBoard.gameBoardArray[computerMoveLocation]=playerText;
         //and put playerText in that cell ID number
         var cellTarget = document.getElementById(`cell-${computerMoveLocation}`);
-        console.log(`Now we will make an ${playerText}`);
+        console.log(`Now we will make an ${playerText} in cell-${computerMoveLocation}`);
         cellTarget.classList.add(styleSelector);
         cellTarget.textContent = playerText;
         console.log('end makeAMoveEasy function');
