@@ -34,6 +34,13 @@ button{
     padding:10px;
 }
 
+.tempmessagediv {
+    color:gray;
+    margin-top:-20px;
+    text-align:center;
+    line-height:1.5em;
+}
+
 /* .newgamebtndiv {
     background-color:rgb(228, 196, 228);
 } */
