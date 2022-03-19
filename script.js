@@ -5,42 +5,40 @@
     // 3 - Game Board Object
     // 4 - Game Flow Object
 
-
-
 // - 1 DISPLAY CONTROLS OBJECT
 const displayControls = (() => {
 
     // DOM VARIABLES
 
-    // buttons to choose one player or two player game 
+    // Buttons to choose one player or two player game 
     const playerChoiceArea = document.querySelector('#playerchoicearea');
     const onePlayerButton = document.getElementById('oneplayerbutton');
     const twoPlayerButton = document.getElementById('twoplayerbutton');
 
-    // section that lists the current player names
+    // Section that lists the current player names
     const playerList = document.getElementById('playerlist');
 
-    // displays current player names in the player list area
+    // Displays current player names in the player list area
     const playerOneDisplay = document.getElementById('player1display');
     const playerTwoDisplay = document.getElementById('player2display');
 
-    // shows whose turn it is or results of game
+    // Shows whose turn it is or results of game
     const messageArea = document.getElementById('messagearea');
 
-    // form containers and forms for one player name, difficulty level, and two player names
+    // Form containers and forms for one player name, difficulty level, and two player names
     const onePlayerFormContainer = document.getElementById('oneplayerformcontainer');
     const onePlayerForm = document.getElementById('oneplayerform');
     const twoPlayerFormContainer = document.getElementById('twoplayerformcontainer');
     const twoPlayerForm = document.getElementById('twoplayerform');
 
-    // buttons to start one and two player games
+    // Buttons to start one and two player games
     const startButton1 = document.getElementById('startbutton1');
     const startButton2 = document.getElementById('startbutton2');
 
-    // reset button
+    // Reset button
     const resetButton = document.getElementById('resetbutton');
 
-    // for gameBoard styling
+    // GameBoard styling
     const gameBoardContainer = document.getElementById('gameboardcontainer');
 
     // UTILITY FUNCTIONS
@@ -57,13 +55,13 @@ const displayControls = (() => {
 
     // EVENT LISTENERS
 
-    // when you load page, create game board but grayed out
+    // When you load page, create game board but grayed out
     document.addEventListener('DOMContentLoaded', function(){
         gameBoard.createCells();
         gameBoard.fillCells(gameBoard.gameBoardArray);
     });
 
-    // when you click one player button
+    // When you click one player button
     onePlayerButton.addEventListener('click', function(){
         if (twoPlayerButton.classList.contains('clicked')) {
             twoPlayerButton.classList.remove('clicked');
@@ -73,7 +71,7 @@ const displayControls = (() => {
             displayElement(onePlayerFormContainer,'block');
     });
 
-    // when you click two player button
+    // When you click two player button
     twoPlayerButton.addEventListener('click', function(){
         if (onePlayerButton.classList.contains('clicked')) {
             onePlayerButton.classList.remove('clicked');
@@ -189,14 +187,14 @@ const gameBoard = (() => {
         var diagonalTwoArray = [];
         var rowsToCheckArray = [];
     
-    //new game button opens div to select further options before starting game
+    // new game button opens div to select further options before starting game
     const newGameBtnDiv = document.getElementById('newgamebtndiv');
     const newGameButton = document.getElementById('newgamebutton');
         
-    //create array with default text
+    // create array with default text
     var gameBoardArray = ['T','I','C','T','A','C','T','O','E'];
 
-    //when you click new game button
+    // when you click new game button
     newGameButton.addEventListener('click', function(){
         displayControls.gameBoardContainer.removeEventListener('click', gameFlow.getCurrentPlayer().makeAMove);
         displayControls.twoPlayerForm.reset();
@@ -212,19 +210,17 @@ const gameBoard = (() => {
 
     // FUNCTIONS
 
-    // Function to create cells in gameBoard grid
+    // FUNCTION to create cells in gameBoard grid
     const createCells = function() {
         for (let step = 0; step <= 8; step++) {
             var cell = document.createElement('div');
             cell.classList.add('cell');
             cell.id=`cell-${step}`;
-            // cell.addEventListener('click', playerFactory.currentPlayer.makeAMove);
             displayControls.gameBoardContainer.appendChild(cell);
-            // console.log(cell.id);
           }
     }
 
-    // Function to remove player classes from cells after game
+    // FUNCTION to remove player classes from cells after game
     const resetCellClass = function() {
         console.log('Reset cell classes.');
         for (let hey = 0; hey <= 8; hey++){
@@ -253,10 +249,10 @@ const gameBoard = (() => {
     const checkForWinners = function(array) {
         console.log('BEGIN CHECKFORWINNERS FUNCTION')
 
-        //FUNCTION to check if array contains all X's
+        // FUNCTION to check if array contains all X's
         const allXs = arr => arr.every(value => value === arr[0] && arr[0] ==='X');
 
-        //FUNCTION to check if array contains all O's
+        // FUNCTION to check if array contains all O's
         const allOs = arr => arr.every(value => value === arr[0] && arr[0] ==='O');
 
         // FUNCTION to check if all items in array are full
@@ -319,11 +315,9 @@ const gameBoard = (() => {
         } else {
             console.log('Keep playing');
             gameFlow.togglePlayers();
-            //gameFlow.updateUI
         }
     }
 // end function to check for winners
-
 
  return {
      gameBoardArray,
@@ -334,7 +328,6 @@ const gameBoard = (() => {
      resetCellClass,
  } 
 })();
-
 // END GAMEBOARD OBJECT MODULE
 
 
@@ -345,7 +338,7 @@ const gameFlow = (() => {
     let playerOne = '';
     let playerTwo = '';
 
-    //FUNCTION to start two player game
+    // FUNCTION to start two player game
     const startGame = function(event){
         console.log('BEGIN STARTGAME FUNCTION.');
         let target = event.target;
@@ -357,7 +350,7 @@ const gameFlow = (() => {
         displayControls.hideElement(displayControls.twoPlayerFormContainer);
         displayControls.hideElement(displayControls.onePlayerFormContainer);
 
-        //if two player game selected
+        // if two player game selected
         if (target.id === 'startbutton2') {
             console.log('Two player game selected');
             //get player names from form inputs
@@ -368,7 +361,7 @@ const gameFlow = (() => {
             console.log(`Player One is named ${playerOne.name} and text is ${playerOne.playerText} and type is ${playerOne.type}`);
             playerTwo = playerFactory(playerTwoName,'O','human');
             console.log(`Player Two is named ${playerTwo.name} and text is ${playerTwo.playerText} and type is ${playerTwo.type}`);
-        //if one player game selected
+        // if one player game selected
         } else if (target.id === 'startbutton1') {
             console.log('start one player was pushed');
             const playerOneName = document.getElementById('player1name1').value;
@@ -378,7 +371,7 @@ const gameFlow = (() => {
             console.log(`Player Two is named ${playerTwo.name} and text is ${playerTwo.playerText}`);
         }
 
-        //display player names
+        // Display player names
         displayControls.playerOneDisplay.textContent=`${playerOne.name}`;
         displayControls.playerTwoDisplay.textContent=`${playerTwo.name}`;
         displayControls.displayElement(displayControls.playerList,'flex');
@@ -457,5 +450,4 @@ const gameFlow = (() => {
         togglePlayers,
     }
 })();
-
 //END GAME FLOW OBJECT MODULE
